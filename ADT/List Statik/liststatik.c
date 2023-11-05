@@ -9,6 +9,7 @@ void CreateListStatik(ListStatik* l) {
         ELMT(*l, i) = MARK;
     }
 }
+
 /* I.S. l sembarang */
 /* F.S. Terbentuk List l kosong dengan kapasitas CAPACITY */
 /* Proses: Inisialisasi semua elemen List l dengan MARK */
@@ -20,7 +21,7 @@ int listLength(ListStatik l) {
 
     count = 0;
     for (i = 0; i < CAPACITY; i++) {
-        if (ELMT(l, i) != MARK) {
+        if (l.contents != MARK) {
             count += 1;
         }
     }
@@ -232,6 +233,7 @@ void insertLast(ListStatik* l, ElType val) {
     }
     else {
         ELMT(*l, listLength(*l)) = val;
+        *l->contents[listLength(*l)]
     }
 }
 /* Proses: Menambahkan val sebagai elemen terakhir List */
