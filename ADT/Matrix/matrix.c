@@ -85,7 +85,21 @@ void displayMatrix(Matrix m) {
    8 9 10
    */
 
-   /* ********** KELOMPOK OPERASI ARITMATIKA TERHADAP TYPE ********** */
+void displayMatrixChar(Matrix m) {
+    int i, j;
+    for (i = 0; i < ROW_EFF(m); i++) {
+        printf("%c", ELMT(m, i, 0));
+        for (j = 1; j < COL_EFF(m); j++) {
+            printf(" %c", ELMT(m, i, j));
+        }
+        if (i != (ROW_EFF(m) - 1)) {
+            printf("\n");
+        }
+    }
+    printf("\n");
+}
+
+/* ********** KELOMPOK OPERASI ARITMATIKA TERHADAP TYPE ********** */
 Matrix addMatrix(Matrix m1, Matrix m2) {
     int i, j;
 
