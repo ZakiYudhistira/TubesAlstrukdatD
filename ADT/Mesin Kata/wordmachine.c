@@ -50,7 +50,7 @@ void ADVWORD()
     {
         EndWord = false;
         CopyWord();
-        IgnoreBlanks();
+        // IgnoreBlanks();
     }
 }
 
@@ -63,7 +63,7 @@ void CopyWord()
               currentChar adalah karakter sesudah karakter terakhir yang diakuisisi.
               Jika panjang kata melebihi CAPACITY, maka sisa kata terpotong */
     currentWord.Length = 0;
-    while (currentChar != BLANK && currentChar != MARK)
+    while (currentChar != MARK)
     {
         if (currentChar == '\n') {
             ADV();

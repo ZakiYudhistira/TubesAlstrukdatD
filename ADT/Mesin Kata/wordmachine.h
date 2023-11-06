@@ -7,7 +7,7 @@
 #include "../../boolean.h"
 #include "../Mesin Karakter/charmachine.h"
 
-#define NMax 50
+#define NMax 300
 #define BLANK ' '
 
 typedef struct
