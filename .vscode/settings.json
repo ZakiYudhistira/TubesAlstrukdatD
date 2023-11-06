@@ -1,6 +1,7 @@
 {
   "files.associations": {
     "charmachine.h": "c",
-    "boolean.h": "c"
+    "boolean.h": "c",
+    "perintah.h": "c"
   }
 }
