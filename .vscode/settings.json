@@ -2,6 +2,8 @@
   "files.associations": {
     "charmachine.h": "c",
     "boolean.h": "c",
+    "perintah.h": "c",
+
     "wordmachine.h": "c",
     "kicauan.h": "c"
   },

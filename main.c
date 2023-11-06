@@ -1,6 +1,18 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include "Fitur\perintah.h"
 
 int main() {
-    printf("Hello World\n");
+    char *test = perintah();
+
+    if (test != NULL) {
+        if (isValid(test, "tubes")) {
+            printf("Hello %s\n", test);
+        }
+
+        free(test); // Jangan lupa membebaskan memori yang dialokasikan
+    }
+
+
     return 0;
 }
