@@ -4,7 +4,7 @@
 #ifndef __WORDMACHINE_H__
 #define __WORDMACHINE_H__
 
-#include "../boolean.h"
+#include "../../boolean.h"
 #include "../Mesin Karakter/charmachine.h"
 
 #define NMax 300
@@ -46,4 +46,7 @@ void CopyWord();
           currentChar adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 
+Word InputKata();
+Word UbahPublik();
+boolean mintamasuk(Word kata);
 #endif

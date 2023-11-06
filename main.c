@@ -13,6 +13,7 @@ int main() {
         free(test); // Jangan lupa membebaskan memori yang dialokasikan
     }
 
-
     return 0;
+    
+    
 }

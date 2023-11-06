@@ -50,7 +50,7 @@ void ADVWORD()
     {
         EndWord = false;
         CopyWord();
-        IgnoreBlanks();
+        // IgnoreBlanks();
     }
 }
 
@@ -63,8 +63,11 @@ void CopyWord()
               currentChar adalah karakter sesudah karakter terakhir yang diakuisisi.
               Jika panjang kata melebihi CAPACITY, maka sisa kata terpotong */
     currentWord.Length = 0;
-    while (currentChar != BLANK && currentChar != MARK)
+    while (currentChar != MARK)
     {
+        if (currentChar == '\n') {
+            ADV();
+        }
         if (currentWord.Length < NMax)
         { // jika lebih akan terpotong
             currentWord.TabWord[currentWord.Length++] = currentChar;
@@ -74,3 +77,24 @@ void CopyWord()
             break;
     }
 }
+
+Word InputKata() {
+    Word kata;
+    IgnoreBlanks();
+    STARTWORD();
+    return currentWord;
+}
+
+Word UbahPublik() {
+    Word kata;
+    kata.TabWord[0] = 'P';
+    kata.TabWord[1] = 'u';
+    kata.TabWord[2] = 'b';
+    kata.TabWord[3] = 'l';
+    kata.TabWord[4] = 'i';
+    kata.TabWord[5] = 'k';
+    kata.Length = 6;
+    return kata;
+}
+
+
