@@ -3,9 +3,10 @@
     "charmachine.h": "c",
     "boolean.h": "c",
     "perintah.h": "c",
-
     "wordmachine.h": "c",
-    "kicauan.h": "c"
+    "kicauan.h": "c",
+    "queuelinked.h": "c"
   },
-  "C_Cpp.errorSquiggles": "disabled"
+  "C_Cpp.errorSquiggles": "disabled",
+  // "C_Cpp.errorSquiggles": "disabled"
 }
