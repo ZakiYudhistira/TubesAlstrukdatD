@@ -39,28 +39,7 @@ void CreateQueueQT(Queue_Teman *q)
 {
     HEAD_TEMAN(*q) = NULL;
     TAIL_TEMAN(*q) = NULL;
-}
-void DisplayQueueQT(Queue_Teman q)
-/* Proses : Menuliskan isi Queue, ditulis di antara kurung siku; antara dua elemen 
-    dipisahkan dengan separator "koma", tanpa tambahan karakter di depan, di tengah, 
-    atau di belakang, termasuk spasi dan enter */
-/* I.S. q boleh kosong */
-/* F.S. Jika q tidak kosong: [e1,e2,...,en] */
-/* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
-/* Jika Queue kosong : menulis [] */
-{
-    boolean first = true;
-    Address_teman p = HEAD_TEMAN(q);
-    while(p != NULL){
-        if(first){
-            printf("ID : %d | jumlah teman : %d\n",INFO_TEMAN(p),JUMLAH_TEMAN(p));
-            first = false;
-        p = NEXT_TEMAN(p);
-        } else {
-            printf("ID : %d | jumlah teman : %d\n",INFO_TEMAN(p),JUMLAH_TEMAN(p));
-        p = NEXT_TEMAN(p);
-        }
-    }
+    (*q).length = 0;
 }
 
 /*** Primitif Enqueue/Dequeue ***/
@@ -92,6 +71,7 @@ void enqueueQT(Queue_Teman *q, IDTeman id, int jumlah_teman)
             }
         }
     }
+    (*q).length++;
 }
 void dequeueQT(Queue_Teman *q, IDTeman *id)
 /* Proses: Menghapus x pada bagian HEAD dari q dan mendealokasi elemen HEAD */
@@ -109,4 +89,5 @@ void dequeueQT(Queue_Teman *q, IDTeman *id)
         HEAD_TEMAN(*q) = NEXT_TEMAN(p);
         free(p);
     }
+    (*q).length--;
 }

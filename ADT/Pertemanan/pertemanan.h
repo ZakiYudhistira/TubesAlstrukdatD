@@ -37,6 +37,10 @@ void loadMatrixTeman(Matrix_pertemanan *m);
 /*I.S. sembarang*/
 /*F.S. matriks pertemanan terisi berdasarkan file config*/
 
+void loadQueuePertemanan(Queue_Teman *q, int array[][3], int jumlah_permintaan_pertemanan, id_user id);
+/*I.S. q sembarang, array terisi permintaan pertemanan*/
+/*F.S. q terisi urutan permintaan pertemanan user tertentu*/
+
 void daftarTeman(Matrix_pertemanan m, id_user id, nama_user array);
 /*Menampilkan daftar pertemanan suatu user dengan id tertentu*/
 
@@ -56,6 +60,8 @@ void setujuiPertemanan(Matrix_pertemanan *m, Queue_Teman *q, id_user id);
 
 void tulisMatriksPertemanan(Matrix_pertemanan m);
 /*Menuliskan kondisi matriks pertemanan program saat ini*/
+
+void DisplayQueueQT(Queue_Teman q, nama_user array);
 
 boolean isTeman(Matrix_pertemanan m, id_user id1, id_user id2);
 /*Mengeluarkan true bila user dengan id1 merupakan teman user dengan id2*/
