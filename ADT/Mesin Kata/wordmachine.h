@@ -7,7 +7,7 @@
 #include "../boolean.h"
 #include "../Mesin Karakter/charmachine.h"
 
-#define NMax 50
+#define NMax 300
 #define BLANK ' '
 
 typedef struct
@@ -46,4 +46,7 @@ void CopyWord();
           currentChar adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 
+Word InputKata();
+Word UbahPublik();
+boolean mintamasuk(Word kata);
 #endif

@@ -3,7 +3,7 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
-#include "boolean.h"
+#include "../../boolean.h"
 
 /* Ukuran maksimum baris dan kolom */
 #define ROW_CAP 100
@@ -13,9 +13,9 @@ typedef int IdxType; /* Index baris, kolom */
 typedef int ElType;
 typedef struct
 {
-    ElType mem[ROW_CAP][COL_CAP];
-    int rowEff; /* banyaknya/ukuran baris yg terdefinisi */
-    int colEff; /* banyaknya/ukuran kolom yg terdefinisi */
+   ElType mem[ROW_CAP][COL_CAP];
+   int rowEff; /* banyaknya/ukuran baris yg terdefinisi */
+   int colEff; /* banyaknya/ukuran kolom yg terdefinisi */
 } Matrix;
 /* rowEff >= 1 dan colEff >= 1 */
 /* Indeks matriks yang digunakan: [0..ROW_CAP-1][0..COL_CAP-1] */
@@ -72,7 +72,7 @@ void displayMatrix(Matrix m);
    4 5 6
    8 9 10
    */
-
+void displayMatrixChar (Matrix m);
    /* ********** KELOMPOK OPERASI ARITMATIKA TERHADAP TYPE ********** */
 Matrix addMatrix(Matrix m1, Matrix m2);
 /* Prekondisi : m1 berukuran sama dengan m2 */
