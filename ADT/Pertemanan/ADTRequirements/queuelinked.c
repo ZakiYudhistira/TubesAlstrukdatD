@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/* Prototype manajemen memori */
 Address_teman newNodeQueueTeman(IDTeman id, int jumlah_teman)
 /* Mengembalikan alamat sebuah Node hasil alokasi dengan info = x, 
    atau NIL jika alokasi gagal */
@@ -111,14 +110,3 @@ void dequeueQT(Queue_Teman *q, IDTeman *id)
         free(p);
     }
 }
-
-// int main(){
-//     Queue l;
-//     CreateQueue(&l);
-//     enqueue(&l,5);
-//     enqueue(&l,5);
-//     enqueue(&l,5);
-//     enqueue(&l,5);
-//     DisplayQueue(l);
-//     return 0;
-// }
