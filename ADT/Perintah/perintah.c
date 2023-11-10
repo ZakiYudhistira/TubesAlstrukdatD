@@ -1,11 +1,10 @@
-#include "../Mesin Kata/wordmachine.h"
-#include "../Mesin Kata/wordmachine.c"
+#include "../Mesin Kata/wordmachine.h" /*BTW, INI MARKNYA udah diganti jadi TITIK KOMA*/
 #include "../Mesin Karakter/charmachine.h"
-#include "../Mesin Karakter/charmachine.c"
 #include <stdio.h>
 #include <stdlib.h>
+#include "../boolean.h"
 
-//bedanya dengan copyword pada persyaratan looping, jadi boleh ada BLANK atau SPASI//
+/*bedanya dengan copyword pada persyaratan looping, jadi boleh ada BLANK atau SPASI*/
 void simpanword() {
     int i = 0;
     while ((currentChar != MARK) && i != NMax) {
@@ -17,7 +16,7 @@ void simpanword() {
 }
 
 char* perintah() {
-    // ini isinya sama kayak algoritma STARTWORD, cuman karena  pakainya simpanword() dan bukan copyword, jadi gw tulis ulang aja//
+    // ini isinya sama kayak algoritma STARTWORD, cuman karena  pakainya simpanword() dan bukan copyword, jadi gw tulis ulang aja
     START();
     IgnoreBlanks();
     if (currentChar == MARK) {
@@ -30,20 +29,45 @@ char* perintah() {
     }
 
     // Mengalokasikan memori untuk string perintah dengan panjang yang sesuai
-    char* perintah = (char*)malloc(currentWord.Length + 1);
+    char* result = (char*)malloc(currentWord.Length + 1);
 
-    if (perintah == NULL) {
+    if (result == NULL) {
         printf("Gagal mengalokasikan memori\n");
         return NULL;
     }
 
     // Null-terminator sebagai penanda akhir dalam string
-    perintah[currentWord.Length] = '\0';
+    result[currentWord.Length] = '\0';
 
     // Menggabungkan karakter-karakter dalam list menjadi sebuah string
     for (int i = 0; i < currentWord.Length; i++) {
-        perintah[i] = currentWord.TabWord[i];
+        result[i] = currentWord.TabWord[i];
     }
 
-    return perintah;
+    return result;
+}
+
+int lengthString(char* s) {
+    int count = 0;
+    int i = 0;
+
+    while (s[i] != '\0') {
+        ++count;
+        ++i;
+    }
+    return count;
+}
+
+boolean isValid(char* s, char* valid) {
+    boolean check = (lengthString(s) == lengthString(valid));
+    if (check) {
+        int i = 0;
+        while (s[i] != '\0' && check) {
+            if (s[i] != valid[i]) {
+                check = false;
+            }
+            i++;
+        }
+    }
+    return check;
 }
