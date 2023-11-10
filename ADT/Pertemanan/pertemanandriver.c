@@ -1,5 +1,5 @@
 #include "pertemanan.h"
-#include "../../boolean.h"
+#include "../boolean.h"
 #include "ADTRequirements/queuelinked.h"
 #include <stdio.h>
 #define endif printf("\n")

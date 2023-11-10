@@ -1,5 +1,5 @@
 #include "pertemanan.h"
-#include "../../boolean.h"
+#include "../boolean.h"
 #include "ADTRequirements/queuelinked.h"
 #include <stdio.h>
 
@@ -165,7 +165,10 @@ void perintahTambahTeman(Matrix_Permintaan *array, id_user id)
 
 void perintahHapusTeman(Matrix_pertemanan *m, id_user id)
 {
-
+    printf("Masukkan nama pengguna:\n");
+    // diisi nama pengguna
+    id_user id_hapus;
+    printf("Apakah anda yakin ingin menghapus Bob dari daftar teman anda? (YA/TIDAK) : ");
 }
 
 void hapusBaris(Matrix_Permintaan *array, id_user id, id_user id_hapus)

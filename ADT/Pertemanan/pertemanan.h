@@ -4,7 +4,7 @@
 #ifndef PERTEMANAN_H
 #define PERTEMANAN_H
 
-#include "../../boolean.h"
+#include "../boolean.h"
 #include "../Mesin Kata/wordmachine.h"
 #include "ADTRequirements/queuelinked.h"
 
