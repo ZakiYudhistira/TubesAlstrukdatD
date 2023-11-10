@@ -49,11 +49,11 @@ Word inputbio() {
     return kata;
 }
 
-boolean inputHP(nomor) {
-    boolean valid = true;
-    for (int i = 0; i < nomor.length)
+// boolean inputHP(nomor) {
+//     boolean valid = true;
+//     for (int i = 0; i < nomor.length)
 
-}
+// }
 
 void ReadPengguna(Pengguna *p, databaseprofil *l) {
     CreatePengguna(p);
@@ -217,8 +217,9 @@ void cekProfil (int idx, databaseprofil *data) {
 }
 
 int getId(databaseprofil *l, Word username) {
-    for (int i = 0; i < listLength(l)) {
-        if (isWordEqual(nama(*l,i)) == username) {
+    int i;
+    for ( i = 0 ; i < listLength(l) ; i++) {
+        if (isWordEqual(nama(*l,i), username)) {
             return i;
         }
     }
