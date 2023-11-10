@@ -88,5 +88,5 @@ Word inputusername();
 Word inputbio();
 /* Inpur Bio */
 
-int getId(databaseprofil *l);
+int getId(databaseprofil *l, Word username);
 #endif
