@@ -1,21 +1,15 @@
 #include "kicauan.h"
-#include "../Mesin Kata/wordmachine.c"
-#include "../Mesin Karakter/charmachine.c"
+#include "../Mesin Kata/wordmachine.h"
+#include "../Mesin Karakter/charmachine.h"
+#include "../Perintah/perintah.c"
 #include <stdio.h>
 
 /* *** Kreator *** */
 void CreateKicauan(Kicauan* k) {
-    int i;
-    Word empty;
-    for (i = 0; i < NMax; i++) {
-        empty.TabWord[i] = '\0';
-    }
-    empty.Length = 0;
-
     ID(*k) = 0;
-    TEXT(*k) = empty;
+    TEXT(*k) = NULL;
     LIKE(*k) = 0;
-    AUTHOR(*k) = empty;
+    AUTHOR(*k) = NULL;
     DATETIME(*k) = time(NULL);
 }
 /* I.S. sembarang */
@@ -23,14 +17,16 @@ void CreateKicauan(Kicauan* k) {
 
 void ReadKicauan(Kicauan* k) {
     CreateKicauan(k);
-    STARTWORD();
-    ID(*k) = 0;
-    TEXT(*k) = currentWord;
-    ADVWORD();
-    LIKE(*k) = 0;
-    AUTHOR(*k) = currentWord;
-    ADVWORD();
-    DATETIME(*k) = time(NULL);
+    printf("ID: ");
+    scanf("%d", &ID(*k));
+    printf("Text: ");
+    scanf("%s", TEXT(*k));
+    printf("Like: ");
+    scanf("%d", &LIKE(*k));
+    printf("Author: ");
+    scanf("%s", AUTHOR(*k));
+    printf("Datetime: ");
+    scanf("%s", TimeToString(DATETIME(*k)));
 }
 /* I.S. sembarang */
 /* F.S. Sebuah k terbentuk dengan isi masing-masing berupa Word dan int yang diakuisisi
@@ -53,20 +49,20 @@ time_t StringToTime(const char* str) {
 
 /* *** Display Pengguna *** */
 void displayKicauan(Kicauan k) {
-    printf("ID: ");
-    printf("%d\n", ID(k));
-    printf("Text: ");
-    for (int i = 0; i < TEXT(k).Length; i++) {
-        printf("%c", TEXT(k).TabWord[i]);
-    }
-    printf("\n");
-    printf("Like: ");
-    printf("%d\n", LIKE(k));
-    printf("Author: ");
-    for (int i = 0; i < AUTHOR(k).Length; i++) {
-        printf("%c", AUTHOR(k).TabWord[i]);
-    }
-    printf("\n");
+    // printf("ID: ");
+    // printf("%d\n", ID(k));
+    // printf("Text: ");
+    // for (int i = 0; i < TEXT(k).Length; i++) {
+    //     printf("%c", TEXT(k).TabWord[i]);
+    // }
+    // printf("\n");
+    // printf("Like: ");
+    // printf("%d\n", LIKE(k));
+    // printf("Author: ");
+    // for (int i = 0; i < AUTHOR(k).Length; i++) {
+    //     printf("%c", AUTHOR(k).TabWord[i]);
+    // }
+    // printf("\n");
 
     printf("Datetime: %s\n", TimeToString(DATETIME(k)));
 }

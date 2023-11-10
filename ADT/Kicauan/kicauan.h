@@ -12,12 +12,11 @@
 /* Definisi elemen dan address */
 typedef struct {
    int id;
-   Word text;
+   char[] text;
    int like;
-   Word author;
+   char[] author;
    time_t datetime;
 } Kicauan;
-
 
 /* ********* AKSES (Selektor) ********* */
 /* Jika k adalah Kicauan, maka akses elemen : */
@@ -27,10 +26,35 @@ typedef struct {
 #define AUTHOR(k) (k).author
 #define DATETIME(k) (k).datetime
 
+/*  Kamus Umum */
+#define IDX_MIN 0
+/* Indeks minimum list */
+#define IDX_UNDEF -1
+/* Indeks tak terdefinisi*/
+
+typedef Kicauan ElType; /* type elemen list */
+typedef struct
+{
+   ElType* buffer; /* memori tempat penyimpan elemen (container) */
+   int nEff;       /* >=0, banyaknya elemen efektif */
+   int capacity;   /* ukuran elemen */
+} ListDinKicau;
+
+/* ********** SELEKTOR ********** */
+#define NEFF(l) (l).nEff
+#define BUFFER(l) (l).buffer
+#define ELMT(l, i) (l).buffer[i]
+#define CAPACITY(l) (l).capacity
+
+
 /* *** Kreator *** */
 void CreateKicauan(Kicauan* k);
 /* I.S. sembarang */
 /* F.S. Sebuah k kosong dan datetime now*/
+
+void CreateListKicauan(ListDinKicau* l, int capacity);
+/* I.S. sembarang */
+/* F.S. Terbentuk ListDinKicau kosong dengan kapasitas capacity */
 
 void ReadKicauan(Kicauan* k);
 /* I.S. sembarang */
