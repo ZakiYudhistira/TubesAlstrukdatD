@@ -5,7 +5,8 @@
     "perintah.h": "c",
     "wordmachine.h": "c",
     "kicauan.h": "c",
-    "queuelinked.h": "c"
+    "queuelinked.h": "c",
+    "time.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled",
   // "C_Cpp.errorSquiggles": "disabled"
