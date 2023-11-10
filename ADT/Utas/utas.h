@@ -1,28 +1,43 @@
-#ifndef UTAS_H
-#define UTAS_H
+#ifndef utas_H
+#define utas_H
 
-#include "../../ADT/boolean.h"
-#include "../../ADT/Mesin Kata/wordmachine.h"
-#include "../LinkedList/linkedlist.h"
+#include "../../boolean.h"
 
-typedef int infotype;
-typedef int address;
+/* Definisi Node : */
+typedef char ElType;
+typedef struct node* Address;
+typedef struct node {
+    ElType info;
+    Address next;
+} Node;
 
-typedef struct {
-    int id;
-    int idKicau;
-    List firstUtas;
+#define INFO(p) (p)->info
+#define NEXT(p) (p)->next
+
+Address newNode(ElType val);
+
+typedef struct utas {
+    int idKicauan;
+    int length;
+    Address First;
 } Utas;
 
-extern Utas arrayUtas[20];
+extern Utas dbUtasUser[20];
+extern int lastID;
 
-#define ID(U) (U).id
-#define IDKICAU(U) (U).idKicau
-#define ADDRESS(U) (U).firstUtas
+#define IDX_UNDEF (-1)
+#define FIRST(U) (U).First
+#define LENGTH(U) (U).length
+#define IDKicau(U) (U).idKicauan
 
-void CreateUtas(Utas* U, int idKicau);
-void SambungUtas(Utas* U);
-void CetakUtas(Utas* U);
-void HapusUtas(Utas* U);
+void CreateEmptyUtas(int IDKicau);
+
+void insertFirstUtas(Utas *U, ElType val);
+void insertAtUtas(Utas *U, ElType val, int idx);
+
+void deleteFirstUtas(Utas *U, ElType *val);
+void deleteAtUtas(Utas *U, ElType *val, int idx);
+
+// void displayUtas(Utas U);
 
 #endif
