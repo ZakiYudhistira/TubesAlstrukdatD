@@ -1,17 +1,19 @@
-// /* File: perintah.h */
-// /* Definisi Perintah (input mesin kata) */
+/* File: perintah.h */
+/* Definisi Perintah (input mesin kata) */
 
-// #ifndef PERINTAH_H
-// #define PERINTAH_H
+#ifndef PERINTAH_H
+#define PERINTAH_H
 
-// #include "C:\Users\ASUS\Documents\GitHub\TubesAlstrukdatD\ADT\boolean.h"
+#include "../boolean.h"
 
-// void simpanword();
+void simpanword();
 
-// char* perintah();
+char* perintah();
 
-// int lengthString (char *s);
+int lengthString (char *s);
 
-// boolean isValid(char *s, char *valid);
+boolean isValid(char *s, char *valid);
 
-// #endif
+char* concatString(char* s1, char* s2);
+
+#endif
