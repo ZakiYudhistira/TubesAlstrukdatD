@@ -1,15 +1,15 @@
 #include "perintah.c"
-#include <string.h> // Untuk menggunakan strcmp
+#include "../Mesin Kata/wordmachine.c" /*BTW, INI MARKNYA udah diganti jadi TITIK KOMA*/
+#include "../Mesin Karakter/charmachine.c"
+#include <stdio.h>
 
 int main() {
     char* test = perintah();
 
     if (test != NULL) {
-        if (strcmp(test, "MASUK") == 0) {
-            printf("%s\n", test);
+        if (isValid(test, "hai")) {
+            printf("Valid\n");
         }
-
-        free(test); //dialokasikan
     }
 
     return 0;

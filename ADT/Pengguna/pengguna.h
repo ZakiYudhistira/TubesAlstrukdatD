@@ -75,4 +75,18 @@ int login(databaseprofil *data);
 // Mendapatkan nilai dari indeks username dan password sesuai
 void cekProfil (int idx, databaseprofil *data);
 // Pengguna cek profil
+
+void ubahProfil(databaseprofil *data);
+// Mengubah profil
+
+boolean inputHP(Word nomor);
+/* Validasi nomor HP */
+
+Word inputusername();
+/* Input username */
+
+Word inputbio();
+/* Inpur Bio */
+
+int getId(databaseprofil *l);
 #endif
