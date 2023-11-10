@@ -73,19 +73,20 @@ void enqueueQT(Queue_Teman *q, IDTeman id, int jumlah_teman)
     }
     (*q).length++;
 }
-void dequeueQT(Queue_Teman *q, IDTeman *id)
+void dequeueQT(Queue_Teman *q, IDTeman *id, int *jumlah_teman)
 /* Proses: Menghapus x pada bagian HEAD dari q dan mendealokasi elemen HEAD */
 /* Pada dasarnya operasi deleteFirst */
 /* I.S. q tidak mungkin kosong */
 /* F.S. x = nilai elemen HEAD pd I.S., HEAD "mundur" */
 {
-    *id = TEMAN(*q);
+    Address_teman p = HEAD_TEMAN(*q);
+    *id = INFO_TEMAN(p);
+    *jumlah_teman = JUMLAH_TEMAN(p);
     if(lengthQT(*q) == 1){
         free(HEAD_TEMAN(*q));
         HEAD_TEMAN(*q) = NULL;
         TAIL_TEMAN(*q) = NULL;
     } else {
-        Address_teman p = HEAD_TEMAN(*q);
         HEAD_TEMAN(*q) = NEXT_TEMAN(p);
         free(p);
     }

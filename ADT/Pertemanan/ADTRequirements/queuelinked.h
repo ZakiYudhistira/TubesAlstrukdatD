@@ -52,7 +52,7 @@ void enqueueQT(Queue_Teman *q, IDTeman id, int jumlah_teman);
 /* Pada dasarnya adalah proses insertLast */
 /* I.S. q mungkin kosong */
 /* F.S. x menjadi Tail, Tail "maju" */
-void dequeueQT(Queue_Teman *q, IDTeman *id);
+void dequeueQT(Queue_Teman *q, IDTeman *id, int *jumlah_teman);
 /* Proses: Menghapus x pada bagian HEAD dari q dan mendealokasi elemen HEAD */
 /* Pada dasarnya operasi deleteFirst */
 /* I.S. q tidak mungkin kosong */

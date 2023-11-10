@@ -6,8 +6,12 @@
 
 int main(){
     char nama[4][20] = {"Joko","Santoso","Budi","Sugemi"};
-    int array[3][3] = {{1,2,2},{0,2,5},{0,3,8}};
+    // int array[19][3] = {{1,2,2},{0,2,5},{0,3,8}};
     Matrix_pertemanan ini;
+    Matrix_Permintaan dua = {
+        {{1,2,2},{0,2,5},{0,3,8}},
+        3
+    };
     createMatrixTeman(&ini);
     addPengguna(&ini);
     addPengguna(&ini);
@@ -25,7 +29,7 @@ int main(){
     daftarTeman(ini,2,nama);
     Queue_Teman queue_0;
     CreateQueueQT(&queue_0);
-    loadQueuePertemanan(&queue_0, array, 3, 0);
+    loadQueuePertemanan(&queue_0, dua, 0);
     endif;
     DisplayQueueQT(queue_0, nama);
 }

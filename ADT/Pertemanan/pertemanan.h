@@ -11,6 +11,10 @@
 typedef int id_user;
 typedef char nama_user[20][20];
 typedef struct {
+    int permintaan_teman[19][3];
+    int length;
+} Matrix_Permintaan;
+typedef struct {
     boolean buffer[20][20] ;
     int rowEff;
     int colEff;
@@ -37,7 +41,9 @@ void loadMatrixTeman(Matrix_pertemanan *m);
 /*I.S. sembarang*/
 /*F.S. matriks pertemanan terisi berdasarkan file config*/
 
-void loadQueuePertemanan(Queue_Teman *q, int array[][3], int jumlah_permintaan_pertemanan, id_user id);
+void loadMatrixPermintaanTeman(Matrix_Permintaan *pm);
+
+void loadQueuePertemanan(Queue_Teman *q, Matrix_Permintaan array, id_user id);
 /*I.S. q sembarang, array terisi permintaan pertemanan*/
 /*F.S. q terisi urutan permintaan pertemanan user tertentu*/
 
@@ -55,7 +61,7 @@ void tambahTeman(Matrix_pertemanan *m, id_user id1, id_user id2);
 void daftarPermintaanPertemanan(Queue_Teman q, id_user id);
 /*menampilkan daftar pertemanan seorang user*/
 
-void setujuiPertemanan(Matrix_pertemanan *m, Queue_Teman *q, id_user id);
+void setujuiPertemanan(Matrix_pertemanan *m, Queue_Teman *q, id_user id, nama_user array);
 /*Menyetujui pertemanan yang ada di antrian pertemanan*/
 
 void tulisMatriksPertemanan(Matrix_pertemanan m);
@@ -65,5 +71,12 @@ void DisplayQueueQT(Queue_Teman q, nama_user array);
 
 boolean isTeman(Matrix_pertemanan m, id_user id1, id_user id2);
 /*Mengeluarkan true bila user dengan id1 merupakan teman user dengan id2*/
+
+void perintahTambahTeman(Matrix_Permintaan *array, id_user id);
+/**/
+
+void perintahHapusTeman(Matrix_pertemanan *m, id_user id);
+
+void hapusBaris(Matrix_Permintaan *array, id_user id);
 
 #endif

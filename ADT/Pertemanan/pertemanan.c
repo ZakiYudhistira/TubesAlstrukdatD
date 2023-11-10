@@ -43,12 +43,14 @@ void loadMatrixTeman(Matrix_pertemanan *m);
 /*I.S. sembarang*/
 /*F.S. matriks pertemanan terisi berdasarkan file config*/
 
-void loadQueuePertemanan(Queue_Teman *q, int array[][3], int jumlah_permintaan_pertemanan, id_user id)
+void loadMatrixPermintaanTeman(Matrix_Permintaan *pm);
+
+void loadQueuePertemanan(Queue_Teman *q, Matrix_Permintaan array, id_user id)
 {
     int i;
-    for(i = 0 ; i < jumlah_permintaan_pertemanan ; i++){
-        if(array[i][0] == id){
-            enqueueQT(q, array[i][1], array[i][2]); 
+    for(i = 0 ; i < array.length ; i++){
+        if(array.permintaan_teman[i][0] == id){
+            enqueueQT(q, array.permintaan_teman[i][1], array.permintaan_teman[i][2]); 
         }
     }
 }
@@ -92,8 +94,27 @@ void tambahTeman(Matrix_pertemanan *m, id_user id1, id_user id2)
 }
 
 
-void setujuiPertemanan(Matrix_pertemanan *m, Queue_Teman *q, id_user id);
+void setujuiPertemanan(Matrix_pertemanan *m, Queue_Teman *q, id_user id, nama_user array)
 /*Menyetujui pertemanan yang ada di antrian pertemanan*/
+{
+    if(isEmptyQT(*q)){
+        printf("Anda tidak memiliki permintaan pertemanan masuk.\n\n");
+    } else {
+        boolean setuju = false;
+        id_user id2;
+        int jumlah_teman_id2;
+        dequeueQT(q, &id2, &jumlah_teman_id2);
+        printf("Permintaan pertemanan teratas dari Bob\n| %s\n| Jumlah teman : %d\n\n",array[id2], jumlah_teman_id2);
+        printf("Apakah Anda ingin menyetujui permintaan pertemanan ini ?\n(YA/TIDAK) ");
+        printf("\n\n");
+        if(setuju){
+            printf("Permintaan pertemnan dari %s telah disetujui. Selamat! Anda telah berteman dengan %s.\n\n",array[id2], array[id2]);
+            tambahTeman(m, id, id2);
+        } else {
+            printf("Permintaan pertemanan dari %s telah ditolak.\n\n",array[id2]);
+        }
+    }
+}
 
 void tulisMatriksPertemanan(Matrix_pertemanan m){
     int i,j;
@@ -129,6 +150,24 @@ void DisplayQueueQT(Queue_Teman q, nama_user array)
     }
 }
 
-boolean isTeman(Matrix_pertemanan m, id_user id1, id_user id2);
+boolean isTeman(Matrix_pertemanan m, id_user id1, id_user id2)
 /*Mengeluarkan true bila user dengan id1 merupakan teman user dengan id2*/
+{
+    return m.buffer[id1][id2] && m.buffer[id2][id1];
+}
 
+void perintahTambahTeman(Matrix_Permintaan *array, id_user id)
+/**/
+{
+
+}
+
+void perintahHapusTeman(Matrix_pertemanan *m, id_user id)
+{
+
+}
+
+void hapusBaris(Matrix_Permintaan *array, id_user id)
+{
+    
+}
