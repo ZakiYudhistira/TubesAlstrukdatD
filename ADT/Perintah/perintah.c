@@ -1,8 +1,8 @@
-#include "..\ADT\Mesin Kata\wordmachine.h" /*BTW, INI MARKNYA udah diganti jadi TITIK KOMA*/
-#include "..\ADT\Mesin Karakter\charmachine.h"
+#include "../Mesin Kata/wordmachine.h" /*BTW, INI MARKNYA udah diganti jadi TITIK KOMA*/
+#include "../Mesin Karakter/charmachine.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "..\ADT\boolean.h"
+#include "../boolean.h"
 
 /*bedanya dengan copyword pada persyaratan looping, jadi boleh ada BLANK atau SPASI*/
 void simpanword() {
