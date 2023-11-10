@@ -47,6 +47,7 @@ void loadMatrixPermintaanTeman(Matrix_Permintaan *pm);
 
 void loadQueuePertemanan(Queue_Teman *q, Matrix_Permintaan array, id_user id)
 {
+    CreateQueueQT(q);
     int i;
     for(i = 0 ; i < array.length ; i++){
         if(array.permintaan_teman[i][0] == id){
@@ -159,7 +160,7 @@ boolean isTeman(Matrix_pertemanan m, id_user id1, id_user id2)
 void perintahTambahTeman(Matrix_Permintaan *array, id_user id)
 /**/
 {
-
+    
 }
 
 void perintahHapusTeman(Matrix_pertemanan *m, id_user id)
@@ -167,7 +168,19 @@ void perintahHapusTeman(Matrix_pertemanan *m, id_user id)
 
 }
 
-void hapusBaris(Matrix_Permintaan *array, id_user id)
+void hapusBaris(Matrix_Permintaan *array, id_user id, id_user id_hapus)
 {
-    
+    int i;
+    for(i = 0 ; i < (*array).length ; i++){
+        if((*array).permintaan_teman[i][0] == id && (*array).permintaan_teman[i][1] == id_hapus){
+            break;
+        }
+    }
+    int j;
+    for(j = i ; j < (*array).length - 1 ; j++){
+        (*array).permintaan_teman[j][0] = (*array).permintaan_teman[j+1][0];
+        (*array).permintaan_teman[j][1] = (*array).permintaan_teman[j+1][1];
+        (*array).permintaan_teman[j][2] = (*array).permintaan_teman[j+1][2];
+    }
+    (*array).length--;
 }

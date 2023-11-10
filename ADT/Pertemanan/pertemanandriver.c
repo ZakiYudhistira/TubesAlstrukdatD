@@ -4,6 +4,16 @@
 #include <stdio.h>
 #define endif printf("\n")
 
+void displayMP(Matrix_Permintaan array){
+    int i,j;
+    for(i = 0 ; i < array.length ; i++){
+        for(j = 0 ; j < 3 ; j++){
+            printf("%d ", array.permintaan_teman[i][j]);
+        }
+        endif;
+    }
+}
+
 int main(){
     char nama[4][20] = {"Joko","Santoso","Budi","Sugemi"};
     // int array[19][3] = {{1,2,2},{0,2,5},{0,3,8}};
@@ -30,6 +40,13 @@ int main(){
     Queue_Teman queue_0;
     CreateQueueQT(&queue_0);
     loadQueuePertemanan(&queue_0, dua, 0);
-    endif;
     DisplayQueueQT(queue_0, nama);
+    displayMP(dua);
+    endif;
+    hapusBaris(&dua,0,3);
+    displayMP(dua);
+    endif;
+    loadQueuePertemanan(&queue_0, dua, 0);
+    DisplayQueueQT(queue_0, nama);
+    endif;
 }

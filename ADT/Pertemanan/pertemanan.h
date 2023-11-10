@@ -77,6 +77,6 @@ void perintahTambahTeman(Matrix_Permintaan *array, id_user id);
 
 void perintahHapusTeman(Matrix_pertemanan *m, id_user id);
 
-void hapusBaris(Matrix_Permintaan *array, id_user id);
+void hapusBaris(Matrix_Permintaan *array, id_user id, id_user id_hapus);
 
 #endif
