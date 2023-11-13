@@ -12,54 +12,45 @@
 /* Definisi elemen dan address */
 typedef struct {
    int id;
-   char[] text;
+   char* text;
    int like;
-   char[] author;
+   char* author;
    time_t datetime;
 } Kicauan;
 
 /* ********* AKSES (Selektor) ********* */
 /* Jika k adalah Kicauan, maka akses elemen : */
-#define ID(k) (k).id
-#define TEXT(k) (k).text
-#define LIKE(k) (k).like
-#define AUTHOR(k) (k).author
-#define DATETIME(k) (k).datetime
+#define ID_KICAU(k) (k).id
+#define TEXT_KICAU(k) (k).text
+#define LIKE_KICAU(k) (k).like
+#define AUTHOR_KICAU(k) (k).author
+#define DATETIME_KICAU(k) (k).datetime
 
 /*  Kamus Umum */
-#define IDX_MIN 0
+#define IDX_MIN_KICAU 0
 /* Indeks minimum list */
-#define IDX_UNDEF -1
+#define IDX_UNDEF_KICAU -1
 /* Indeks tak terdefinisi*/
 
-typedef Kicauan ElType; /* type elemen list */
+typedef Kicauan ElTypeKicau; /* type elemen list */
 typedef struct
 {
-   ElType* buffer; /* memori tempat penyimpan elemen (container) */
+   ElTypeKicau* buffer; /* memori tempat penyimpan elemen (container) */
    int nEff;       /* >=0, banyaknya elemen efektif */
    int capacity;   /* ukuran elemen */
 } ListDinKicau;
 
 /* ********** SELEKTOR ********** */
-#define NEFF(l) (l).nEff
-#define BUFFER(l) (l).buffer
-#define ELMT(l, i) (l).buffer[i]
-#define CAPACITY(l) (l).capacity
+#define NEFF_KICAU(l) (l).nEff
+#define BUFFER_KICAU(l) (l).buffer
+#define ELMT_KICAU(l, i) (l).buffer[i]
+#define CAPACITY_KICAU(l) (l).capacity
 
 
 /* *** Kreator *** */
 void CreateKicauan(Kicauan* k);
 /* I.S. sembarang */
 /* F.S. Sebuah k kosong dan datetime now*/
-
-void CreateListKicauan(ListDinKicau* l, int capacity);
-/* I.S. sembarang */
-/* F.S. Terbentuk ListDinKicau kosong dengan kapasitas capacity */
-
-void ReadKicauan(Kicauan* k);
-/* I.S. sembarang */
-/* F.S. Sebuah k terbentuk dengan isi masing-masing berupa Word dan int yang diakuisisi
-   dari stdin */
 
    /* *** Operasi Lain *** */
 const char* TimeToString(time_t t);
@@ -69,8 +60,42 @@ time_t StringToTime(const char* s);
 /* Mengubah string dengan format "DD-MM-YYYY HH:MM:SS" menjadi time_t */
 
 /* *** Display Pengguna *** */
-void displayKicauan(Kicauan k);
+void DisplayKicauan(Kicauan k);
 /* Proses : Menuliskan isi Kicauan dengan traversal. Informasi kicauan
    ditulis satu persatu dan diakhiri dengan newline */
+
+
+void CreateListKicauan(ListDinKicau* l, int capacity);
+/* I.S. sembarang */
+/* F.S. Terbentuk ListDinKicau kosong dengan kapasitas capacity */
+
+   /* ********** SELEKTOR (TAMBAHAN) ********** */
+   /* *** Banyaknya elemen *** */
+int ListKicauLength(ListDinKicau l);
+/* Mengirimkan banyaknya elemen efektif list */
+/* Mengirimkan nol jika list l kosong */
+/* *** Daya tampung container *** */
+
+/* ********** MENAMBAH DAN MENGHAPUS ELEMEN DI AKHIR ********** */
+/* *** Menambahkan elemen terakhir *** */
+void InsertLastKicau(ListDinKicau* l, ElTypeKicau val);
+/* Proses: Menambahkan val sebagai elemen terakhir list */
+/* I.S. List l boleh kosong, tetapi tidak penuh */
+/* F.S. val adalah elemen terakhir l yang baru */
+
+/* ********* MENGUBAH UKURAN ARRAY ********* */
+void ExpandListKicau(ListDinKicau* l, int num);
+/* Proses : Menambahkan capacity l sebanyak num */
+/* I.S. List sudah terdefinisi */
+/* F.S. Ukuran list bertambah sebanyak num */
+
+
+boolean isSuka(char* option);
+// I.S. option terdefinisi
+// F.S. mengembalikan true jika option adalah "SUKA_KICAUAN [IDKicau]"
+
+boolean isUbah(char* option);
+// I.S. option terdefinisi
+// F.S. mengembalikan true jika option adalah "UBAH_KICAUAN [IDKicau]"
 
 #endif
