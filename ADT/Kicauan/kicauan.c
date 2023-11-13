@@ -1,36 +1,20 @@
 #include "kicauan.h"
 #include "../Mesin Kata/wordmachine.h"
 #include "../Mesin Karakter/charmachine.h"
-#include "../Perintah/perintah.c"
+#include "../Perintah/perintah.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 /* *** Kreator *** */
 void CreateKicauan(Kicauan* k) {
-    ID(*k) = 0;
-    TEXT(*k) = NULL;
-    LIKE(*k) = 0;
-    AUTHOR(*k) = NULL;
-    DATETIME(*k) = time(NULL);
+    ID_KICAU(*k) = 0;
+    TEXT_KICAU(*k) = NULL;
+    LIKE_KICAU(*k) = 0;
+    AUTHOR_KICAU(*k) = NULL;
+    DATETIME_KICAU(*k) = time(NULL);
 }
 /* I.S. sembarang */
 /* F.S. Sebuah k kosong dan datetime now*/
-
-void ReadKicauan(Kicauan* k) {
-    CreateKicauan(k);
-    printf("ID: ");
-    scanf("%d", &ID(*k));
-    printf("Text: ");
-    scanf("%s", TEXT(*k));
-    printf("Like: ");
-    scanf("%d", &LIKE(*k));
-    printf("Author: ");
-    scanf("%s", AUTHOR(*k));
-    printf("Datetime: ");
-    scanf("%s", TimeToString(DATETIME(*k)));
-}
-/* I.S. sembarang */
-/* F.S. Sebuah k terbentuk dengan isi masing-masing berupa Word dan int yang diakuisisi
-   dari stdin */
 
 const char* TimeToString(time_t t) {
     struct tm tm;
@@ -48,23 +32,92 @@ time_t StringToTime(const char* str) {
 }
 
 /* *** Display Pengguna *** */
-void displayKicauan(Kicauan k) {
-    // printf("ID: ");
-    // printf("%d\n", ID(k));
-    // printf("Text: ");
-    // for (int i = 0; i < TEXT(k).Length; i++) {
-    //     printf("%c", TEXT(k).TabWord[i]);
-    // }
-    // printf("\n");
-    // printf("Like: ");
-    // printf("%d\n", LIKE(k));
-    // printf("Author: ");
-    // for (int i = 0; i < AUTHOR(k).Length; i++) {
-    //     printf("%c", AUTHOR(k).TabWord[i]);
-    // }
-    // printf("\n");
-
-    printf("Datetime: %s\n", TimeToString(DATETIME(k)));
+void DisplayKicauan(Kicauan k) {
+    printf("| ID = %d\n", ID_KICAU(k));
+    printf("| %s\n", AUTHOR_KICAU(k));
+    printf("| %s\n", TimeToString(DATETIME_KICAU(k)));
+    printf("| %s\n", TEXT_KICAU(k));
+    printf("| Disukai: %d\n", LIKE_KICAU(k));
 }
 /* Proses : Menuliskan isi Kicauan dengan traversal. Informasi kicauan
    ditulis satu persatu dan diakhiri dengan newline */
+
+
+void CreateListKicauan(ListDinKicau* l, int capacity) {
+    BUFFER_KICAU(*l) = malloc(capacity * sizeof(ElTypeKicau));
+    CAPACITY_KICAU(*l) = capacity;
+    NEFF_KICAU(*l) = 0;
+}
+/* I.S. sembarang */
+/* F.S. Terbentuk ListDinKicau kosong dengan kapasitas capacity */
+
+   /* ********** SELEKTOR (TAMBAHAN) ********** */
+   /* *** Banyaknya elemen *** */
+int ListKicauLength(ListDinKicau l) {
+    return NEFF_KICAU(l);
+}
+/* Mengirimkan banyaknya elemen efektif list */
+/* Mengirimkan nol jika list l kosong */
+
+/* ********** MENAMBAH DAN MENGHAPUS ELEMEN DI AKHIR ********** */
+/* *** Menambahkan elemen terakhir *** */
+void InsertLastKicau(ListDinKicau* l, ElTypeKicau val) {
+    if (NEFF_KICAU(*l) == CAPACITY_KICAU(*l)) {
+        ExpandListKicau(l, 10);
+    }
+    ELMT_KICAU(*l, NEFF_KICAU(*l)) = val;
+    NEFF_KICAU(*l)++;
+}
+/* Proses: Menambahkan val sebagai elemen terakhir list */
+/* I.S. List l boleh kosong, tetapi tidak penuh */
+/* F.S. val adalah elemen terakhir l yang baru */
+
+/* ********* MENGUBAH UKURAN ARRAY ********* */
+void ExpandListKicau(ListDinKicau* l, int num) {
+    BUFFER_KICAU(*l) = realloc(BUFFER_KICAU(*l), (CAPACITY_KICAU(*l) + num) * sizeof(ElTypeKicau));
+    CAPACITY_KICAU(*l) += num;
+}
+/* Proses : Menambahkan capacity l sebanyak num */
+/* I.S. List sudah terdefinisi */
+/* F.S. Ukuran list bertambah sebanyak num */
+
+
+boolean isSuka(char* option) {
+    char* suka = "SUKA_KICAUAN";
+    int i = 0;
+
+    if (lengthString(option) > 13) {
+        for (i = 0; i < 12; i++) {
+            if (option[i] != suka[i]) {
+                return false;
+            }
+        }
+    }
+    else {
+        return false;
+    }
+    return true;
+}
+// I.S. option terdefinisi
+// F.S. mengembalikan true jika option adalah "SUKA_KICAUAN [IDKicau]"
+
+boolean isUbah(char* option) {
+    char* ubah = "UBAH_KICAUAN";
+    int i = 0;
+
+    if (lengthString(option) > 13) {
+        for (i = 0; i < 12; i++) {
+            if (option[i] != ubah[i]) {
+                return false;
+            }
+        }
+    }
+    else {
+        return false;
+    }
+
+    return true;
+
+}
+// I.S. option terdefinisi
+// F.S. mengembalikan true jika option adalah "UBAH_KICAUAN [IDKicau]"
