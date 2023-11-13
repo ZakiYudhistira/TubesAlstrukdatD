@@ -10,8 +10,10 @@ void simpanword();
 
 char* perintah();
 
-int lengthString(char* s);
+int lengthString (char *s);
 
-boolean isValid(char* s, char* valid);
+boolean isValid(char *s, char *valid);
+
+char* concatString(char* s1, char* s2);
 
 #endif

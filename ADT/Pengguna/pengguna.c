@@ -29,6 +29,31 @@ void CreatePengguna(Pengguna* p) {
 /* I.S. sembarang */
 /* F.S. Sebuah p kosong terbentuk dengan isi masing-masing berupa Word kosong dan profil berupa matriks
    kosong yang berisi R dan * */
+Word inputusername() {
+    Word kata;
+    STARTWORD();
+    kata = currentWord;
+    if (kata.Length > 15) {
+        kata.Length = 15;
+    }
+    return kata;
+}
+
+Word inputbio() {
+    Word kata;
+    STARTWORD();
+    kata = currentWord;
+    if (kata.Length > 135) {
+        kata.Length = 135;
+    }
+    return kata;
+}
+
+// boolean inputHP(nomor) {
+//     boolean valid = true;
+//     for (int i = 0; i < nomor.length)
+
+// }
 
 void ReadPengguna(Pengguna *p, databaseprofil *l) {
     CreatePengguna(p);
@@ -36,11 +61,10 @@ void ReadPengguna(Pengguna *p, databaseprofil *l) {
     while (namavalid == false)
     {
         printf("Silahkan masukkan username: ");
-        STARTWORD();
+        Word kata = inputusername();
         int sama = 0;
         for (int i = 0; i < listLength(l); i++) {
             Word name = nama(*l,i);
-            Word kata = currentWord;
             if (isWordEqual(name, kata)) {
                 sama += 1;
             }
@@ -54,7 +78,7 @@ void ReadPengguna(Pengguna *p, databaseprofil *l) {
         }
     }
     printf("Silahkan masukkan password: ");
-    STARTWORD();
+    Word password = inputusername();
     PASSWORD(*p) = currentWord;
     JENIS(*p) = UbahPublik();
 }
@@ -190,4 +214,14 @@ void cekProfil (int idx, databaseprofil *data) {
     else {
         displayPengguna(data->contents[idx]);
     }
+}
+
+int getId(databaseprofil *l, Word username) {
+    int i;
+    for ( i = 0 ; i < listLength(l) ; i++) {
+        if (isWordEqual(nama(*l,i), username)) {
+            return i;
+        }
+    }
+    return -1;
 }

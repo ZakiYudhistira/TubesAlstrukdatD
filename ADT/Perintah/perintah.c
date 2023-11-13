@@ -71,3 +71,19 @@ boolean isValid(char* s, char* valid) {
     }
     return check;
 }
+
+char* concatString(char* s1, char* s2){
+    int length1 = lengthString(s1);
+    int length2 = lengthString(s2);
+    char* s3[length1+length2];
+    int i = 0, j = 0;
+    while(s1[i] != '\0'){
+        s3[0] = s1[i];
+        i++;
+    }
+    while(s2 != '\0'){
+        s3[i] = s2[j];
+        j++;
+    }
+    return s3;
+}

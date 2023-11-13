@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/* Prototype manajemen memori */
 Address_teman newNodeQueueTeman(IDTeman id, int jumlah_teman)
 /* Mengembalikan alamat sebuah Node hasil alokasi dengan info = x, 
    atau NIL jika alokasi gagal */
@@ -40,28 +39,7 @@ void CreateQueueQT(Queue_Teman *q)
 {
     HEAD_TEMAN(*q) = NULL;
     TAIL_TEMAN(*q) = NULL;
-}
-void DisplayQueueQT(Queue_Teman q)
-/* Proses : Menuliskan isi Queue, ditulis di antara kurung siku; antara dua elemen 
-    dipisahkan dengan separator "koma", tanpa tambahan karakter di depan, di tengah, 
-    atau di belakang, termasuk spasi dan enter */
-/* I.S. q boleh kosong */
-/* F.S. Jika q tidak kosong: [e1,e2,...,en] */
-/* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
-/* Jika Queue kosong : menulis [] */
-{
-    boolean first = true;
-    Address_teman p = HEAD_TEMAN(q);
-    while(p != NULL){
-        if(first){
-            printf("ID : %d | jumlah teman : %d\n",INFO_TEMAN(p),JUMLAH_TEMAN(p));
-            first = false;
-        p = NEXT_TEMAN(p);
-        } else {
-            printf("ID : %d | jumlah teman : %d\n",INFO_TEMAN(p),JUMLAH_TEMAN(p));
-        p = NEXT_TEMAN(p);
-        }
-    }
+    (*q).length = 0;
 }
 
 /*** Primitif Enqueue/Dequeue ***/
@@ -93,32 +71,24 @@ void enqueueQT(Queue_Teman *q, IDTeman id, int jumlah_teman)
             }
         }
     }
+    (*q).length++;
 }
-void dequeueQT(Queue_Teman *q, IDTeman *id)
+void dequeueQT(Queue_Teman *q, IDTeman *id, int *jumlah_teman)
 /* Proses: Menghapus x pada bagian HEAD dari q dan mendealokasi elemen HEAD */
 /* Pada dasarnya operasi deleteFirst */
 /* I.S. q tidak mungkin kosong */
 /* F.S. x = nilai elemen HEAD pd I.S., HEAD "mundur" */
 {
-    *id = TEMAN(*q);
+    Address_teman p = HEAD_TEMAN(*q);
+    *id = INFO_TEMAN(p);
+    *jumlah_teman = JUMLAH_TEMAN(p);
     if(lengthQT(*q) == 1){
         free(HEAD_TEMAN(*q));
         HEAD_TEMAN(*q) = NULL;
         TAIL_TEMAN(*q) = NULL;
     } else {
-        Address_teman p = HEAD_TEMAN(*q);
         HEAD_TEMAN(*q) = NEXT_TEMAN(p);
         free(p);
     }
+    (*q).length--;
 }
-
-// int main(){
-//     Queue l;
-//     CreateQueue(&l);
-//     enqueue(&l,5);
-//     enqueue(&l,5);
-//     enqueue(&l,5);
-//     enqueue(&l,5);
-//     DisplayQueue(l);
-//     return 0;
-// }
