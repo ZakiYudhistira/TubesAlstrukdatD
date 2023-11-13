@@ -52,11 +52,16 @@ void CreateKicauan(Kicauan* k);
 /* I.S. sembarang */
 /* F.S. Sebuah k kosong dan datetime now*/
 
+
+void LoadKicauan(ListDinKicau* l, char* path);
+/* I.S. sembarang */
+/* F.S. Sebuah k yang diload dari kicauan.config*/
+
    /* *** Operasi Lain *** */
 const char* TimeToString(time_t t);
 /* Mengubah time_t menjadi string dengan format "DD-MM-YYYY HH:MM:SS" */
 
-time_t StringToTime(const char* s);
+time_t StringToTime(char* s);
 /* Mengubah string dengan format "DD-MM-YYYY HH:MM:SS" menjadi time_t */
 
 /* *** Display Pengguna *** */
@@ -75,6 +80,9 @@ int ListKicauLength(ListDinKicau l);
 /* Mengirimkan banyaknya elemen efektif list */
 /* Mengirimkan nol jika list l kosong */
 /* *** Daya tampung container *** */
+
+int ListKicauMaxId(ListDinKicau l);
+/* Mengirimkan nilai id terbesar dari list l */
 
 /* ********** MENAMBAH DAN MENGHAPUS ELEMEN DI AKHIR ********** */
 /* *** Menambahkan elemen terakhir *** */
