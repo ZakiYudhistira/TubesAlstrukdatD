@@ -9,9 +9,12 @@
 
 int main() {
     boolean end = false;
-    int id = 0;
     ListDinKicau l;
     CreateListKicauan(&l, 10);
+
+    LoadKicauan(&l, "../../Konfigurasi/config-1/kicauan.config");
+
+    int id = ListKicauMaxId(l) + 1;
 
     while (!end) {
         char* option = perintah();

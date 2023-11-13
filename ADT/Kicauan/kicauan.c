@@ -16,18 +16,58 @@ void CreateKicauan(Kicauan* k) {
 /* I.S. sembarang */
 /* F.S. Sebuah k kosong dan datetime now*/
 
+void LoadKicauan(ListDinKicau* l, char* path) {
+    FILE* file = fopen(path, "r");
+    char line[300];
+
+    if (file == NULL) {
+        printf("File tidak ditemukan\n");
+        exit(EXIT_FAILURE);
+    }
+
+    fgets(line, 300, file);
+    int banyak_kicau = atoi(removeNewline(line));
+    for (int i = 0; i < banyak_kicau; i++) {
+        Kicauan k;
+        CreateKicauan(&k);
+
+        fgets(line, 300, file);
+        ID_KICAU(k) = atoi(removeNewline(line));
+
+        fgets(line, 300, file);
+        TEXT_KICAU(k) = malloc(lengthString(removeNewline(line)) * sizeof(char));
+        CopyString(removeNewline(line), TEXT_KICAU(k));
+
+        fgets(line, 300, file);
+        LIKE_KICAU(k) = atoi(removeNewline(line));
+
+        fgets(line, 300, file);
+        AUTHOR_KICAU(k) = malloc(lengthString(removeNewline(line)) * sizeof(char));
+        CopyString(removeNewline(line), AUTHOR_KICAU(k));
+
+        fgets(line, 300, file);
+        DATETIME_KICAU(k) = StringToTime(removeNewline(line));
+
+        InsertLastKicau(l, k);
+    }
+
+    fclose(file);
+}
+/* I.S. sembarang */
+/* F.S. Sebuah k yang diload dari kicauan.config*/
+
 const char* TimeToString(time_t t) {
     struct tm tm;
     localtime_r(&t, &tm);
     static char buf[20];
-    strftime(buf, sizeof(buf), "%d-%m-%Y %H:%M:%S", &tm);
+    strftime(buf, sizeof(buf), "%d/%m/%Y %H:%M:%S", &tm);
     return buf;
 }
 
 
-time_t StringToTime(const char* str) {
+time_t StringToTime(char* str) {
     struct tm tm;
-    strptime(str, "%d-%m-%Y %H:%M:%S", &tm);
+    strptime(str, "%d/%m/%Y %H:%M:%S", &tm);
     return mktime(&tm);
 }
 
@@ -58,6 +98,17 @@ int ListKicauLength(ListDinKicau l) {
 }
 /* Mengirimkan banyaknya elemen efektif list */
 /* Mengirimkan nol jika list l kosong */
+
+int ListKicauMaxId(ListDinKicau l) {
+    int max = 0;
+    for (int i = 0; i < ListKicauLength(l); i++) {
+        if (ID_KICAU(ELMT_KICAU(l, i)) > max) {
+            max = ID_KICAU(ELMT_KICAU(l, i));
+        }
+    }
+    return max;
+}
+/* Mengirimkan nilai id terbesar dari list l */
 
 /* ********** MENAMBAH DAN MENGHAPUS ELEMEN DI AKHIR ********** */
 /* *** Menambahkan elemen terakhir *** */
