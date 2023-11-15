@@ -21,7 +21,7 @@ char* perintah() {
     IgnoreBlanks();
     if (currentChar == MARK) {
         EndWord = true;
-        printf("Input Kosong!!!");
+        simpanword();
     }
     else {
         EndWord = false;
@@ -108,4 +108,34 @@ char* removeNewline(char* s) {
         i++;
     }
     return s;
+}
+
+boolean isBlanks(char* s) {
+    int i = 0;
+    boolean check = true;
+
+    while (s[i] != '\0' && check) {
+        if (s[i] != ' ') {
+            check = false;
+        }
+        i++;
+    }
+    return check;
+}
+
+char* sliceString(char* str, int start, int end)
+{
+
+    int i;
+    int size = (end - start) + 2;
+    char* output = (char*)malloc(size * sizeof(char));
+
+    for (i = 0; start <= end; start++, i++)
+    {
+        output[i] = str[start];
+    }
+
+    output[size] = '\0';
+
+    return output;
 }

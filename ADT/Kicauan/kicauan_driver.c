@@ -6,6 +6,10 @@
 #include "../Mesin Karakter/charmachine.h"
 #include "../Mesin Kata/wordmachine.c"
 #include "../Mesin Karakter/charmachine.c"
+#include "../Datetime/datetime.h"
+#include "../Datetime/datetime.c"
+#include "../Time/time.h"
+#include "../Time/time.c"
 
 int main() {
     boolean end = false;
@@ -21,36 +25,20 @@ int main() {
         ADV();
 
         if (isValid(option, "KICAU")) {
-            Kicauan k;
-            CreateKicauan(&k);
-            printf("Masukan kicauan:\n");
-            char* kicau = perintah();
-            ADV();
-
-            ID_KICAU(k) = id;
-            TEXT_KICAU(k) = kicau;
-            LIKE_KICAU(k) = 0;
-            AUTHOR_KICAU(k) = "user";
-            DATETIME_KICAU(k) = time(NULL);
-            printf("\n");
-            printf("Selamat! kicauan telah diterbitkan!\n");
-            printf("Detil kicauan:\n");
-            DisplayKicauan(k);
-            printf("\n");
-            InsertLastKicau(&l, k);
-            id++;
+            HandleKicau(&l, "Bacin", &id);
         }
         else if (isValid(option, "KICAUAN")) {
-            for (int i = 0; i < ListKicauLength(l); i++) {
-                DisplayKicauan(ELMT_KICAU(l, i));
-                printf("\n");
-            }
+            HandleKicauan(SortedKicauan(l));
         }
         else if (isSuka(option)) {
-            printf("%s\n", option);
+            char* id_kicau = sliceString(option, 13, lengthString(option));
+            int id_kicauan = atoi(id_kicau);
+            HandleSukaKicau(&l, id_kicauan);
         }
         else if (isUbah(option)) {
-            printf("%s\n", option);
+            char* id_kicau = sliceString(option, 13, lengthString(option));
+            int id_kicauan = atoi(id_kicau);
+            HandleUbahKicau(&l, "Bacin", id_kicauan);
         }
         else {
             printf("Perintah tidak valid\n");
