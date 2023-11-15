@@ -20,4 +20,8 @@ void CopyString(char* st1, char* st2);
 
 char* removeNewline(char* s);
 
+boolean isBlanks(char* s);
+
+char* sliceString(char* str, int start, int end);
+
 #endif

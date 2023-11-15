@@ -8,6 +8,8 @@
 #include "../boolean.h"
 #include "../Mesin Kata/wordmachine.h"
 #include <time.h>
+#include "../Datetime/datetime.h"
+#include "../Time/time.h"
 
 /* Definisi elemen dan address */
 typedef struct {
@@ -15,7 +17,7 @@ typedef struct {
    char* text;
    int like;
    char* author;
-   time_t datetime;
+   DATETIME datetime;
 } Kicauan;
 
 /* ********* AKSES (Selektor) ********* */
@@ -58,11 +60,11 @@ void LoadKicauan(ListDinKicau* l, char* path);
 /* F.S. Sebuah k yang diload dari kicauan.config*/
 
    /* *** Operasi Lain *** */
-const char* TimeToString(time_t t);
-/* Mengubah time_t menjadi string dengan format "DD-MM-YYYY HH:MM:SS" */
+const char* TimeToString(DATETIME D);
+/* Mengubah DATETIME menjadi string dengan format "DD-MM-YYYY HH:MM:SS" */
 
-time_t StringToTime(char* s);
-/* Mengubah string dengan format "DD-MM-YYYY HH:MM:SS" menjadi time_t */
+DATETIME StringToTime(char* s);
+/* Mengubah string dengan format "DD-MM-YYYY HH:MM:SS" menjadi DATETIME */
 
 /* *** Display Pengguna *** */
 void DisplayKicauan(Kicauan k);
@@ -105,5 +107,19 @@ boolean isSuka(char* option);
 boolean isUbah(char* option);
 // I.S. option terdefinisi
 // F.S. mengembalikan true jika option adalah "UBAH_KICAUAN [IDKicau]"
+
+ListDinKicau SortedKicauan(ListDinKicau l);
+// I.S. l terdefinisi
+// F.S. mengembalikan list kicauan yang sudah terurut berdasarkan waktu terbaru
+
+
+// Command Handler
+void HandleKicau(ListDinKicau* l, char* username, int* idKicauan);
+
+void HandleKicauan(ListDinKicau l);
+
+void HandleSukaKicau(ListDinKicau* l, int idKicauan);
+
+void HandleUbahKicau(ListDinKicau* l, char* username, int idKicauan);
 
 #endif
