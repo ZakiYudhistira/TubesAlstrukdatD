@@ -59,13 +59,6 @@ void LoadKicauan(ListDinKicau* l, char* path);
 /* I.S. sembarang */
 /* F.S. Sebuah k yang diload dari kicauan.config*/
 
-   /* *** Operasi Lain *** */
-const char* TimeToString(DATETIME D);
-/* Mengubah DATETIME menjadi string dengan format "DD-MM-YYYY HH:MM:SS" */
-
-DATETIME StringToTime(char* s);
-/* Mengubah string dengan format "DD-MM-YYYY HH:MM:SS" menjadi DATETIME */
-
 /* *** Display Pengguna *** */
 void DisplayKicauan(Kicauan k);
 /* Proses : Menuliskan isi Kicauan dengan traversal. Informasi kicauan

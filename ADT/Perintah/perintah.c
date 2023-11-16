@@ -123,8 +123,7 @@ boolean isBlanks(char* s) {
     return check;
 }
 
-char* sliceString(char* str, int start, int end)
-{
+char* sliceString(char* str, int start, int end) {
 
     int i;
     int size = (end - start) + 2;
