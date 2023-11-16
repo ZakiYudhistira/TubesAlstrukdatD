@@ -32,11 +32,37 @@ void CreatePengguna(Pengguna* p) {
 Word inputusername() {
     Word kata;
     STARTWORD();
-    kata = currentWord;
-    if (kata.Length > 15) {
-        kata.Length = 15;
+    printf("%d\n",currentWord.Length);
+    if (currentWord.Length >= 15) {
+        for (int i = 0; i < 15; i++) {
+            kata.TabWord[i] = currentWord.TabWord[i];
+            kata.Length += 1;
+        }
     }
+    else {
+        kata = currentWord;
+    }
+    printf("%d\n",kata.Length);
     return kata;
+}
+
+Word inputpass() {
+    Word kat;
+    kat.Length = 0;
+    STARTWORD();
+    printf("%d\n",kat.Length);
+    int panjang = currentWord.Length;
+    if (panjang >= 15) {
+        while (kat.Length < 15) {
+            kat.TabWord[kat.Length] = currentWord.TabWord[kat.Length];
+            kat.Length += 1;
+        }
+    }
+    else {
+        kat = currentWord;
+    }
+    printf("%d\n",kat.Length);
+    return kat;
 }
 
 Word inputbio() {
@@ -49,10 +75,16 @@ Word inputbio() {
     return kata;
 }
 
-boolean inputHP(nomor) {
+boolean inputHP(Word nomor) {
     boolean valid = true;
-    for (int i = 0; i < nomor.length)
-
+    for (int i = 0; i < nomor.Length; i++) {
+        if (48 <= (int)nomor.TabWord[i] <= 57) {
+            valid = true;
+        }
+        else {
+            valid = false;
+        }
+    }
 }
 
 void ReadPengguna(Pengguna *p, databaseprofil *l) {
@@ -73,13 +105,13 @@ void ReadPengguna(Pengguna *p, databaseprofil *l) {
             printf("Username telah digunakan, silahkan masukkan yang lain\n");
         }
         else {
-            NAMA(*p) = currentWord;
+            NAMA(*p) = kata;
             namavalid = true;
         }
     }
     printf("Silahkan masukkan password: ");
-    Word password = inputusername();
-    PASSWORD(*p) = currentWord;
+    Word password = inputpass();
+    PASSWORD(*p) = password;
     JENIS(*p) = UbahPublik();
 }
 /* I.S. sembarang */
@@ -217,10 +249,26 @@ void cekProfil (int idx, databaseprofil *data) {
 }
 
 int getId(databaseprofil *l, Word username) {
-    for (int i = 0; i < listLength(l)) {
-        if (isWordEqual(nama(*l,i)) == username) {
+    for (int i = 0; i < listLength(l); i++) {
+        if (isWordEqual(nama(*l,i),username)) {
             return i;
         }
     }
     return -1;
+}
+
+void ubahProfil(databaseprofil *l, int id) {
+    printf("Masukkan bio: ");
+    bio(*l, id) = inputbio();
+    printf("Masukkan weton: ");
+    weton(*l,id) = inputbio();
+    printf("Masukkan No HP: ");
+    STARTWORD();
+    boolean isValid = inputHP(currentWord);
+    if (isValid == true) {
+        hp(*l,id) = currentWord;
+    }
+    else {
+        printf("No hp salah\n");
+    }
 }

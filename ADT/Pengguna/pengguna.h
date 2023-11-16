@@ -4,7 +4,7 @@
 #define PENGGUNA_H
 
 
-#include "../../boolean.h"
+#include "../boolean.h"
 #include "../Mesin Kata/wordmachine.h"
 #include "../Matrix/matrix.h"
 
@@ -76,7 +76,7 @@ int login(databaseprofil *data);
 void cekProfil (int idx, databaseprofil *data);
 // Pengguna cek profil
 
-void ubahProfil(databaseprofil *data);
+void ubahProfil(databaseprofil *data, int id);
 // Mengubah profil
 
 boolean inputHP(Word nomor);
@@ -87,6 +87,6 @@ Word inputusername();
 
 Word inputbio();
 /* Inpur Bio */
-
-int getId(databaseprofil *l);
+Word inputpass();
+int getId(databaseprofil *l, Word username);
 #endif

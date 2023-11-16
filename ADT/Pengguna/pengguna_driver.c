@@ -12,12 +12,12 @@ int main() {
     createDatabase(&data);
     ReadPengguna(&p, &data);
     insertLast(&data, p);
-    ReadPengguna(&p, &data);
-    insertLast(&data, p);
     length = listLength(&data);
     printf("%d\n",length);
-    index = login(&data);
-    printf("Anda memiliki id %d\n",index);
-    cekProfil(index,&data);
+    // index = login(&data);
+    // printf("Anda memiliki id %d\n",index);
+    // ubahProfil(&data,index);
+    cekProfil(0, &data);
+    
     return 0;
 }
