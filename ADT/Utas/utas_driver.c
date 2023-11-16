@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 int main() {
-    CreateEmptyUtas(1);
+    Utas U;
+    CreateEmptyUtas(&U, 1);
     return 0;
 }

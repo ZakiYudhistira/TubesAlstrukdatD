@@ -1,10 +1,10 @@
 #ifndef utas_H
 #define utas_H
 
-#include "../../boolean.h"
+#include "../boolean.h"
 
 /* Definisi Node : */
-typedef char ElType;
+typedef char* ElType;
 typedef struct node* Address;
 typedef struct node {
     ElType info;
@@ -30,7 +30,7 @@ extern int lastID;
 #define LENGTH(U) (U).length
 #define IDKicau(U) (U).idKicauan
 
-void CreateEmptyUtas(int IDKicau);
+void CreateEmptyUtas(Utas* U, int IDKicau);
 
 void insertFirstUtas(Utas *U, ElType val);
 void insertAtUtas(Utas *U, ElType val, int idx);

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "utas.h"
+#include "../Perintah/perintah.h"
 
 Utas dbUtasUser[20];
 int lastID = 0;
@@ -14,32 +15,34 @@ Address newNode(ElType val) {
     return p;
 }
 
-void CreateEmptyUtas(int IDKicau) {
-    Utas U;
-    LENGTH(U) = 0;
-    IDKicau(U) = IDKicau;
-    FIRST(U) = NULL;
+void CreateEmptyUtas(Utas* U, int IDKicau) {
+    LENGTH(*U) = 0;
+    IDKicau(*U) = IDKicau;
+    FIRST(*U) = NULL;
 
     printf("Utas berhasil dibuat!\n");
-    dbUtasUser[lastID] = U;
+    dbUtasUser[lastID] = *U;
 
     boolean lanjut = true;
 
-    // while (lanjut) {
-    //     printf("Masukkan kicauan:\n");
-    //     char b = 'a';
-    //     printf("xs");
-    //     LENGTH(U) = LENGTH(U) + 1;
-    //     insertAtUtas(&U, b, LENGTH(U));
+    while (lanjut) {
+        printf("Masukkan kicauan:\n");
 
-    //     printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK)\n");
+        char* text;
+        text = perintah();
+        printf("A");
+        LENGTH(*U) += 1;
+        
+        insertAtUtas(U, text, LENGTH(*U));
 
-    //     if (b == 'a') {
-    //         lanjut = false;
-    //     } else {
-    //         printf("hehe");
-    //     }
-    // }
+        printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK)\n");
+
+        if (true) {
+            lanjut = false;
+        } else {
+            printf("hehe");
+        }
+    }
 
     printf("Utas selesai!\n");
 }
