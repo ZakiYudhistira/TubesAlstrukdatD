@@ -1,6 +1,7 @@
 #include "pertemanan.h"
-#include "../../boolean.h"
+#include "../boolean.h"
 #include "ADTRequirements/queuelinked.h"
+#include "../Perintah/perintah.h"
 #include <stdio.h>
 
 boolean isFull(Matrix_pertemanan m)
@@ -39,11 +40,12 @@ void addPengguna(Matrix_pertemanan *m)
     }
 }
 
-void loadMatrixTeman(Matrix_pertemanan *m);
+void loadMatrixTemanandPermintaanTeman(Matrix_pertemanan *m, Matrix_Permintaan *pm, char* folder)
 /*I.S. sembarang*/
 /*F.S. matriks pertemanan terisi berdasarkan file config*/
-
-void loadMatrixPermintaanTeman(Matrix_Permintaan *pm);
+{
+    
+}
 
 void loadQueuePertemanan(Queue_Teman *q, Matrix_Permintaan array, id_user id)
 {
@@ -157,15 +159,61 @@ boolean isTeman(Matrix_pertemanan m, id_user id1, id_user id2)
     return m.buffer[id1][id2] && m.buffer[id2][id1];
 }
 
-void perintahTambahTeman(Matrix_Permintaan *array, id_user id)
+void perintahTambahTeman(Matrix_Permintaan *pm, id_user id, nama_user array, Queue_Teman queue)
 /**/
 {
-    
+    if(isEmptyQT(queue)){
+        printf("Masukkan nama pengguna:\n");
+        // nanti minta input di sini
+        int jumlah_teman_user;
+        id_user id_tambah;
+        if(id_tambah == -1){
+            printf("Pengguna bernama %s tidak ditemukan.\n");
+        } else {
+            boolean isSent = false;
+            int i;
+            for(i = 0 ; i < (*pm).length ; i++){
+                if((*pm).permintaan_teman[0] == id_tambah && (*pm).permintaan_teman[0][1] == id){
+                    isSent = true;
+                    break;
+                }
+            }
+            if(!isSent){
+                (*pm).permintaan_teman[(*pm).length][0] = id_tambah;
+                (*pm).permintaan_teman[(*pm).length][1] = id;
+                (*pm).permintaan_teman[(*pm).length][2] = jumlah_teman_user;
+                (*pm).length++;
+            } else {
+                printf("Anda sudah mengirimkan permintaan pertemanan kepada %s. Silakan tunggu hingga permintaan Anda disetujui.\n",array[id_tambah]);
+            }
+        }  
+    } else {
+        printf("Terdapat permintaan pertemanan yang belum Anda setujui. Silakan kosongkan daftar permintaan pertemanan untuk Anda terlebih dahulu.\n");
+    }
 }
 
-void perintahHapusTeman(Matrix_pertemanan *m, id_user id)
+void perintahHapusTeman(Matrix_pertemanan *m, id_user id, nama_user array)
 {
-
+    printf("Masukkan nama pengguna:\n");
+    // diisi nama pengguna
+    char* nama_hapus;
+    id_user id_hapus;
+    if(id_hapus == -1){
+        printf("User tidak ditemukan, pastikan user.\n");
+    } else {
+        if(isTeman(*m, id, id_hapus)){
+            printf("Apakah anda yakin ingin menghapus Bob dari daftar teman anda? (YA/TIDAK) : ");
+            boolean cont;
+            if(cont){
+                printf("%s berhasil dihapus dari daftar teman Anda.\n", array[id_hapus]);
+                hapusTeman(m, id, id_hapus);
+            } else {
+                printf("Penghapusan teman dibatalkan.\n");
+            }
+        } else {
+            printf("%s bukan teman Anda.\n", array[id_hapus]);
+        }
+    }
 }
 
 void hapusBaris(Matrix_Permintaan *array, id_user id, id_user id_hapus)
@@ -184,3 +232,5 @@ void hapusBaris(Matrix_Permintaan *array, id_user id, id_user id_hapus)
     }
     (*array).length--;
 }
+
+void writetoConfig(Matrix_Permintaan m, Matrix_Permintaan pm);

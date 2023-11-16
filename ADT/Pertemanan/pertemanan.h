@@ -4,14 +4,15 @@
 #ifndef PERTEMANAN_H
 #define PERTEMANAN_H
 
-#include "../../boolean.h"
+#include "../boolean.h"
 #include "../Mesin Kata/wordmachine.h"
+#include "../Perintah/perintah.h"
 #include "ADTRequirements/queuelinked.h"
 
 typedef int id_user;
 typedef char nama_user[20][20];
 typedef struct {
-    int permintaan_teman[19][3];
+    int permintaan_teman[380][3];
     int length;
 } Matrix_Permintaan;
 typedef struct {
@@ -37,11 +38,9 @@ void addPengguna(Matrix_pertemanan *m);
 /*I.S. matrix pertemanan terdefinisi, bisa kosong bisa penuh*/
 /*F.S. rowEff dan colEff bertambah 1, menandakan dibuatkannya 1 akun baru*/
 
-void loadMatrixTeman(Matrix_pertemanan *m);
+void loadMatrixTeman(Matrix_pertemanan *m, char* folder);
 /*I.S. sembarang*/
 /*F.S. matriks pertemanan terisi berdasarkan file config*/
-
-void loadMatrixPermintaanTeman(Matrix_Permintaan *pm);
 
 void loadQueuePertemanan(Queue_Teman *q, Matrix_Permintaan array, id_user id);
 /*I.S. q sembarang, array terisi permintaan pertemanan*/
@@ -72,11 +71,13 @@ void DisplayQueueQT(Queue_Teman q, nama_user array);
 boolean isTeman(Matrix_pertemanan m, id_user id1, id_user id2);
 /*Mengeluarkan true bila user dengan id1 merupakan teman user dengan id2*/
 
-void perintahTambahTeman(Matrix_Permintaan *array, id_user id);
+void perintahTambahTeman(Matrix_Permintaan *pm, id_user id, nama_user array, Queue_Teman queue);
 /**/
 
-void perintahHapusTeman(Matrix_pertemanan *m, id_user id);
+void perintahHapusTeman(Matrix_pertemanan *m, id_user id, nama_user array);
 
 void hapusBaris(Matrix_Permintaan *array, id_user id, id_user id_hapus);
+
+void writetoConfig(Matrix_Permintaan m, Matrix_Permintaan pm);
 
 #endif

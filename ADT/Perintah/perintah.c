@@ -21,7 +21,7 @@ char* perintah() {
     IgnoreBlanks();
     if (currentChar == MARK) {
         EndWord = true;
-        printf("Input Kosong!!!");
+        simpanword();
     }
     else {
         EndWord = false;
@@ -70,4 +70,72 @@ boolean isValid(char* s, char* valid) {
         }
     }
     return check;
+}
+
+const char* concatString(char* s1, char* s2) {
+    static char s3[300];
+    int i = 0, j = 0;
+    while (s1[i] != '\0') {
+        s3[i] = s1[i];
+        i++;
+    }
+    while (s2[j] != '\0') {
+        s3[i] = s2[j];
+        i++;
+        j++;
+    }
+
+    return s3;
+}
+
+void CopyString(char* st1, char* st2)
+{
+    int i = 0;
+
+    for (i = 0; st1[i] != '\0'; i++)
+    {
+        st2[i] = st1[i];
+    }
+    st2[i] = '\0';
+}
+
+char* removeNewline(char* s) {
+    int i = 0;
+    while (s[i] != '\0') {
+        if (s[i] == '\n') {
+            s[i] = '\0';
+        }
+        i++;
+    }
+    return s;
+}
+
+boolean isBlanks(char* s) {
+    int i = 0;
+    boolean check = true;
+
+    while (s[i] != '\0' && check) {
+        if (s[i] != ' ') {
+            check = false;
+        }
+        i++;
+    }
+    return check;
+}
+
+char* sliceString(char* str, int start, int end)
+{
+
+    int i;
+    int size = (end - start) + 2;
+    char* output = (char*)malloc(size * sizeof(char));
+
+    for (i = 0; start <= end; start++, i++)
+    {
+        output[i] = str[start];
+    }
+
+    output[size] = '\0';
+
+    return output;
 }

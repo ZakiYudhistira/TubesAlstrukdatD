@@ -2,7 +2,7 @@
 
 #ifndef QUEUELINKED_H
 #define QUEUELINKED_H
-#include "../../../boolean.h"
+#include "../boolean.h"
 #include <stdlib.h>
 
 #define NIL NULL
