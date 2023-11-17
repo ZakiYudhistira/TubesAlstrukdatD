@@ -2,7 +2,7 @@
 
 #ifndef QUEUELINKED_H
 #define QUEUELINKED_H
-#include "../../../boolean.h"
+#include "../boolean.h"
 #include <stdlib.h>
 
 #define NIL NULL
@@ -19,6 +19,7 @@ typedef struct node_teman {
 typedef struct {
     Address_teman addrHeadTeman; /* alamat penghapusan */
     Address_teman addrTailTeman; /* alamat penambahan */
+    int length;
 } Queue_Teman;
 
 /* Selektor */
@@ -43,14 +44,6 @@ int lengthQT(Queue_Teman q);
 void CreateQueueQT(Queue_Teman *q);
 /* I.S. sembarang */
 /* F.S. Sebuah q kosong terbentuk */
-void DisplayQueueQT(Queue_Teman q);
-/* Proses : Menuliskan isi Queue, ditulis di antara kurung siku; antara dua elemen 
-    dipisahkan dengan separator "koma", tanpa tambahan karakter di depan, di tengah, 
-    atau di belakang, termasuk spasi dan enter */
-/* I.S. q boleh kosong */
-/* F.S. Jika q tidak kosong: [e1,e2,...,en] */
-/* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
-/* Jika Queue kosong : menulis [] */
 
 /*** Primitif Enqueue/Dequeue ***/
 void enqueueQT(Queue_Teman *q, IDTeman id, int jumlah_teman);
@@ -59,7 +52,7 @@ void enqueueQT(Queue_Teman *q, IDTeman id, int jumlah_teman);
 /* Pada dasarnya adalah proses insertLast */
 /* I.S. q mungkin kosong */
 /* F.S. x menjadi Tail, Tail "maju" */
-void dequeueQT(Queue_Teman *q, IDTeman *id);
+void dequeueQT(Queue_Teman *q, IDTeman *id, int *jumlah_teman);
 /* Proses: Menghapus x pada bagian HEAD dari q dan mendealokasi elemen HEAD */
 /* Pada dasarnya operasi deleteFirst */
 /* I.S. q tidak mungkin kosong */

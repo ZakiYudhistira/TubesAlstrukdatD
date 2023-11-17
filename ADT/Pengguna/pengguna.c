@@ -31,11 +31,13 @@ void CreatePengguna(Pengguna* p) {
    kosong yang berisi R dan * */
 Word inputusername() {
     Word kata;
+    kata.Length = 0;
     STARTWORD();
-    printf("%d\n",currentWord.Length);
-    if (currentWord.Length >= 15) {
-        for (int i = 0; i < 15; i++) {
-            kata.TabWord[i] = currentWord.TabWord[i];
+    printf("%d\n",kata.Length);
+    int panjang = currentWord.Length;
+    if (panjang >= 15) {
+        while (kata.Length < 15) {
+            kata.TabWord[kata.Length] = currentWord.TabWord[kata.Length];
             kata.Length += 1;
         }
     }
@@ -112,7 +114,7 @@ void ReadPengguna(Pengguna *p, databaseprofil *l) {
     printf("Silahkan masukkan password: ");
     Word password = inputpass();
     PASSWORD(*p) = password;
-    JENIS(*p) = UbahPublik();
+    JENIS(*p) = 0;
 }
 /* I.S. sembarang */
 /* F.S. Sebuah p terbentuk dengan isi masing-masing berupa Word yang diakuisisi
@@ -219,23 +221,23 @@ int login(databaseprofil *data) {
     printf("Silahkan masukkan username: ");
     STARTWORD();
     for (int i = 0; i < listLength(data); i++) {
-    if(isWordEqual(currentWord, nama(*data,i))) {
-        boolean passwordbetul = false;
-        while (passwordbetul == false) {
-            printf("Silahkan masukkan password: ");
-            // printf("\n");
-            STARTWORD();
-            if(isWordEqual(currentWord, password(*data,i))) {
-                printf("Selamat datang\n");
-                return i;
+        if(isWordEqual(currentWord, nama(*data,i))) {
+            boolean passwordbetul = false;
+            while (passwordbetul == false) {
+                printf("Silahkan masukkan password: ");
+                // printf("\n");
+                STARTWORD();
+                if(isWordEqual(currentWord, password(*data,i))) {
+                    printf("Selamat datang\n");
+                    return i;
+                }
+                else {
+                    printf("Salah bos ulang kembali mengisi password\n");
+                }
             }
-            else {
-                printf("Salah bos ulang kembali mengisi password\n");
-            }
-        }
+        } 
     }
-        
-}   
+    printf("Maaf, username yang anda masukan tidak ada\n");
 }
 
 
@@ -271,4 +273,9 @@ void ubahProfil(databaseprofil *l, int id) {
     else {
         printf("No hp salah\n");
     }
+}
+
+boolean isChangeValid(Word kata) {
+    int beda = 0;
+    for (int i = 0; i < )
 }

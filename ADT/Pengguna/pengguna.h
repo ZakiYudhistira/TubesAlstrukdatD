@@ -18,7 +18,7 @@ typedef struct {
    Word bio;
    Word hp;
    Word weton;
-   Word jenis;
+   int jenis;
    Matrix profil;
 } Pengguna;
 
@@ -89,4 +89,6 @@ Word inputbio();
 /* Inpur Bio */
 Word inputpass();
 int getId(databaseprofil *l, Word username);
+
+boolean isChangeValid(Word kata);
 #endif
