@@ -1,15 +1,14 @@
 #include "perintah.c"
-#include <string.h> // Untuk menggunakan strcmp
+#include <stdio.h>
 
 int main() {
-    char* test = perintah();
+    perintah(3, true);//true buat PERINTAH dari user ke fitur jadi ada ">>"
 
-    if (test != NULL) {
-        if (strcmp(test, "MASUK") == 0) {
-            printf("%s\n", test);
-        }
-
-        free(test); //dialokasikan
+    if (isValid(currentWord, "hai")) {
+        printWord(currentWord);
+    }
+    else if(isBlanks(currentWord)){
+        printf("Valid\n");
     }
 
     return 0;
