@@ -1,15 +1,14 @@
 #include "perintah.c"
-#include "../Mesin Kata/wordmachine.c" /*BTW, INI MARKNYA udah diganti jadi TITIK KOMA*/
-#include "../Mesin Karakter/charmachine.c"
 #include <stdio.h>
 
 int main() {
-    char* test = perintah();
+    perintah(3, true);//true buat PERINTAH dari user ke fitur jadi ada ">>"
 
-    if (test != NULL) {
-        if (isValid(test, "hai")) {
-            printf("Valid\n");
-        }
+    if (isValid(currentWord, "hai")) {
+        printWord(currentWord);
+    }
+    else if(isBlanks(currentWord)){
+        printf("Valid\n");
     }
 
     return 0;
