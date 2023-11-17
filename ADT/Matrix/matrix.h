@@ -3,7 +3,7 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
-#include "../boolean.h"
+#include "../../boolean.h"
 
 /* Ukuran maksimum baris dan kolom */
 #define ROW_CAP 100
@@ -72,7 +72,7 @@ void displayMatrix(Matrix m);
    4 5 6
    8 9 10
    */
-
+void displayMatrixChar (Matrix m);
    /* ********** KELOMPOK OPERASI ARITMATIKA TERHADAP TYPE ********** */
 Matrix addMatrix(Matrix m1, Matrix m2);
 /* Prekondisi : m1 berukuran sama dengan m2 */

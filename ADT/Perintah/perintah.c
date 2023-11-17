@@ -1,4 +1,3 @@
-
 #include "../Mesin Karakter/charmachine.c"
 #include <stdio.h>
 #include <stdlib.h>
@@ -200,6 +199,7 @@ char* sliceString(char* str, int start, int end)
     }
 
     output[size] = '\0';
+
 
     return output;
 }

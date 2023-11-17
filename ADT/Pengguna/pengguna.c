@@ -1,9 +1,9 @@
 #include "pengguna.h"
-#include "../Matrix/matrix.c"
-#include "../Mesin Kata/wordmachine.c"
-#include "../Mesin Karakter/charmachine.c"
+#include "../Matrix/matrix.h"
+#include "../Mesin Kata/wordmachine.h"
+#include "../Mesin Karakter/charmachine.h"
 #include <stdio.h>
-
+Word author;
 /* *** Kreator *** */
 void CreatePengguna(Pengguna* p) {
     int i;
@@ -29,21 +29,58 @@ void CreatePengguna(Pengguna* p) {
 /* I.S. sembarang */
 /* F.S. Sebuah p kosong terbentuk dengan isi masing-masing berupa Word kosong dan profil berupa matriks
    kosong yang berisi R dan * */
-
-void ReadPengguna(Pengguna* p) {
-    CreatePengguna(p);
+Word inputusername() {
+    Word kata;
     STARTWORD();
-    NAMA(*p) = currentWord;
-    ADVWORD();
+    kata = currentWord;
+    if (kata.Length > 15) {
+        kata.Length = 15;
+    }
+    return kata;
+}
+
+Word inputbio() {
+    Word kata;
+    STARTWORD();
+    kata = currentWord;
+    if (kata.Length > 135) {
+        kata.Length = 135;
+    }
+    return kata;
+}
+
+// boolean inputHP(nomor) {
+//     boolean valid = true;
+//     for (int i = 0; i < nomor.length)
+
+// }
+
+void ReadPengguna(Pengguna *p, databaseprofil *l) {
+    CreatePengguna(p);
+    boolean namavalid = false;
+    while (namavalid == false)
+    {
+        printf("Silahkan masukkan username: ");
+        Word kata = inputusername();
+        int sama = 0;
+        for (int i = 0; i < listLength(l); i++) {
+            Word name = nama(*l,i);
+            if (isWordEqual(name, kata)) {
+                sama += 1;
+            }
+        }
+        if (sama > 0) {
+            printf("Username telah digunakan, silahkan masukkan yang lain\n");
+        }
+        else {
+            NAMA(*p) = currentWord;
+            namavalid = true;
+        }
+    }
+    printf("Silahkan masukkan password: ");
+    Word password = inputusername();
     PASSWORD(*p) = currentWord;
-    ADVWORD();
-    BIO(*p) = currentWord;
-    ADVWORD();
-    HP(*p) = currentWord;
-    ADVWORD();
-    WETON(*p) = currentWord;
-    ADVWORD();
-    JENIS(*p) = currentWord;
+    JENIS(*p) = UbahPublik();
 }
 /* I.S. sembarang */
 /* F.S. Sebuah p terbentuk dengan isi masing-masing berupa Word yang diakuisisi
@@ -85,3 +122,106 @@ void displayPengguna(Pengguna p) {
     displayMatrixChar(PROFIL(p));
 }
 /* Proses : Informasi pengguna ditulis satu persatu dan diakhiri dengan newline */
+
+boolean isWordEqual(Word uname1, Word uname2) {
+    int count = 0;
+    if (uname1.Length != uname2.Length) {
+       return false;
+    }
+    else {
+        for (int i = 0; i < uname1.Length; i++) {
+            if (uname1.TabWord[i] == uname2.TabWord[i]) {
+            count += 1;
+            }
+        }
+        if (count == uname1.Length) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+}
+
+void insertLast(databaseprofil *l, Pengguna val) {
+    l->contents[listLength(l)] = val;
+}
+
+int listLength(databaseprofil *l) {
+    boolean ketemu = false;
+    int length = 0;
+    while (length < CAPACITY && ketemu == false) {
+        if (nama(*l,length).Length == 0) {
+            ketemu = true;
+        }
+        else {
+            length += 1;
+        }
+    }
+    return length;
+}
+
+void listLengthvoid(databaseprofil *l, int *val) {
+    boolean ketemu = false;
+    int length = 0;
+    while (length < CAPACITY && ketemu == false) {
+        if (nama(*l,length).TabWord[0] == ' ') {
+            ketemu = true;
+        }
+        else {
+            length += 1;
+        }
+    }
+    *val = length;
+}
+
+void createDatabase(databaseprofil *l) {
+    int i;
+    for (i = 0; i < CAPACITY; i++) {
+        nama(*l,i).Length = 0;
+    }
+}
+
+int login(databaseprofil *data) {
+    Word uname;
+    printf("Silahkan masukkan username: ");
+    STARTWORD();
+    for (int i = 0; i < listLength(data); i++) {
+    if(isWordEqual(currentWord, nama(*data,i))) {
+        boolean passwordbetul = false;
+        while (passwordbetul == false) {
+            printf("Silahkan masukkan password: ");
+            // printf("\n");
+            STARTWORD();
+            if(isWordEqual(currentWord, password(*data,i))) {
+                printf("Selamat datang\n");
+                return i;
+            }
+            else {
+                printf("Salah bos ulang kembali mengisi password\n");
+            }
+        }
+    }
+        
+}   
+}
+
+
+void cekProfil (int idx, databaseprofil *data) {
+    if(idx == -1) {
+        printf("Login terlebih dahulu");
+    }
+    else {
+        displayPengguna(data->contents[idx]);
+    }
+}
+
+int getId(databaseprofil *l, Word username) {
+    int i;
+    for ( i = 0 ; i < listLength(l) ; i++) {
+        if (isWordEqual(nama(*l,i), username)) {
+            return i;
+        }
+    }
+    return -1;
+}
