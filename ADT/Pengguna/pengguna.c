@@ -2,6 +2,7 @@
 #include "../Matrix/matrix.h"
 #include "../Mesin Kata/wordmachine.h"
 #include "../Mesin Karakter/charmachine.h"
+#include "../Pertemanan/pertemanan.h"
 #include <stdio.h>
 Word author;
 /* *** Kreator *** */

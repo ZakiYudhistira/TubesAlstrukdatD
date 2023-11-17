@@ -4,9 +4,10 @@
 #define PENGGUNA_H
 
 
-#include "../../boolean.h"
+#include "../boolean.h"
 #include "../Mesin Kata/wordmachine.h"
 #include "../Matrix/matrix.h"
+#include "../Pertemanan/pertemanan.h"
 
 #define CAPACITY 20 /* Kapasitas penyimpanan */
 #define IDX_MIN 0 /* Indeks minimum list */
