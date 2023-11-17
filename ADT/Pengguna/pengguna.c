@@ -31,12 +31,40 @@ void CreatePengguna(Pengguna* p) {
    kosong yang berisi R dan * */
 Word inputusername() {
     Word kata;
+    kata.Length = 0;
     STARTWORD();
-    kata = currentWord;
-    if (kata.Length > 15) {
-        kata.Length = 15;
+    printf("%d\n",kata.Length);
+    int panjang = currentWord.Length;
+    if (panjang >= 15) {
+        while (kata.Length < 15) {
+            kata.TabWord[kata.Length] = currentWord.TabWord[kata.Length];
+            kata.Length += 1;
+        }
     }
+    else {
+        kata = currentWord;
+    }
+    printf("%d\n",kata.Length);
     return kata;
+}
+
+Word inputpass() {
+    Word kat;
+    kat.Length = 0;
+    STARTWORD();
+    printf("%d\n",kat.Length);
+    int panjang = currentWord.Length;
+    if (panjang >= 15) {
+        while (kat.Length < 15) {
+            kat.TabWord[kat.Length] = currentWord.TabWord[kat.Length];
+            kat.Length += 1;
+        }
+    }
+    else {
+        kat = currentWord;
+    }
+    printf("%d\n",kat.Length);
+    return kat;
 }
 
 Word inputbio() {
@@ -49,11 +77,17 @@ Word inputbio() {
     return kata;
 }
 
-// boolean inputHP(nomor) {
-//     boolean valid = true;
-//     for (int i = 0; i < nomor.length)
-
-// }
+boolean inputHP(Word nomor) {
+    boolean valid = true;
+    for (int i = 0; i < nomor.Length; i++) {
+        if (48 <= (int)nomor.TabWord[i] <= 57) {
+            valid = true;
+        }
+        else {
+            valid = false;
+        }
+    }
+}
 
 void ReadPengguna(Pengguna *p, databaseprofil *l) {
     CreatePengguna(p);
@@ -73,14 +107,14 @@ void ReadPengguna(Pengguna *p, databaseprofil *l) {
             printf("Username telah digunakan, silahkan masukkan yang lain\n");
         }
         else {
-            NAMA(*p) = currentWord;
+            NAMA(*p) = kata;
             namavalid = true;
         }
     }
     printf("Silahkan masukkan password: ");
-    Word password = inputusername();
-    PASSWORD(*p) = currentWord;
-    JENIS(*p) = UbahPublik();
+    Word password = inputpass();
+    PASSWORD(*p) = password;
+    JENIS(*p) = 0;
 }
 /* I.S. sembarang */
 /* F.S. Sebuah p terbentuk dengan isi masing-masing berupa Word yang diakuisisi
@@ -187,23 +221,23 @@ int login(databaseprofil *data) {
     printf("Silahkan masukkan username: ");
     STARTWORD();
     for (int i = 0; i < listLength(data); i++) {
-    if(isWordEqual(currentWord, nama(*data,i))) {
-        boolean passwordbetul = false;
-        while (passwordbetul == false) {
-            printf("Silahkan masukkan password: ");
-            // printf("\n");
-            STARTWORD();
-            if(isWordEqual(currentWord, password(*data,i))) {
-                printf("Selamat datang\n");
-                return i;
+        if(isWordEqual(currentWord, nama(*data,i))) {
+            boolean passwordbetul = false;
+            while (passwordbetul == false) {
+                printf("Silahkan masukkan password: ");
+                // printf("\n");
+                STARTWORD();
+                if(isWordEqual(currentWord, password(*data,i))) {
+                    printf("Selamat datang\n");
+                    return i;
+                }
+                else {
+                    printf("Salah bos ulang kembali mengisi password\n");
+                }
             }
-            else {
-                printf("Salah bos ulang kembali mengisi password\n");
-            }
-        }
+        } 
     }
-        
-}   
+    printf("Maaf, username yang anda masukan tidak ada\n");
 }
 
 
@@ -217,11 +251,31 @@ void cekProfil (int idx, databaseprofil *data) {
 }
 
 int getId(databaseprofil *l, Word username) {
-    int i;
-    for ( i = 0 ; i < listLength(l) ; i++) {
-        if (isWordEqual(nama(*l,i), username)) {
+    for (int i = 0; i < listLength(l); i++) {
+        if (isWordEqual(nama(*l,i),username)) {
             return i;
         }
     }
     return -1;
+}
+
+void ubahProfil(databaseprofil *l, int id) {
+    printf("Masukkan bio: ");
+    bio(*l, id) = inputbio();
+    printf("Masukkan weton: ");
+    weton(*l,id) = inputbio();
+    printf("Masukkan No HP: ");
+    STARTWORD();
+    boolean isValid = inputHP(currentWord);
+    if (isValid == true) {
+        hp(*l,id) = currentWord;
+    }
+    else {
+        printf("No hp salah\n");
+    }
+}
+
+boolean isChangeValid(Word kata) {
+    int beda = 0;
+    for (int i = 0; i < )
 }
