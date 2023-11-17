@@ -6,7 +6,7 @@
 #define _XOPEN_SOURCE
 
 #include "../boolean.h"
-#include "../Mesin Kata/wordmachine.h"
+#include "../Perintah/wordmachine.h"
 #include <time.h>
 #include "../Datetime/datetime.h"
 #include "../Time/time.h"
@@ -14,9 +14,9 @@
 /* Definisi elemen dan address */
 typedef struct {
    int id;
-   char* text;
+   Word text;
    int like;
-   char* author;
+   Word author;
    DATETIME datetime;
 } Kicauan;
 
@@ -55,7 +55,7 @@ void CreateKicauan(Kicauan* k);
 /* F.S. Sebuah k kosong dan datetime now*/
 
 
-void LoadKicauan(ListDinKicau* l, char* path);
+void LoadKicauan(ListDinKicau* l, Word path);
 /* I.S. sembarang */
 /* F.S. Sebuah k yang diload dari kicauan.config*/
 
@@ -93,11 +93,11 @@ void ExpandListKicau(ListDinKicau* l, int num);
 /* F.S. Ukuran list bertambah sebanyak num */
 
 
-boolean isSuka(char* option);
+boolean isSuka(Word option);
 // I.S. option terdefinisi
 // F.S. mengembalikan true jika option adalah "SUKA_KICAUAN [IDKicau]"
 
-boolean isUbah(char* option);
+boolean isUbah(Word option);
 // I.S. option terdefinisi
 // F.S. mengembalikan true jika option adalah "UBAH_KICAUAN [IDKicau]"
 
@@ -107,12 +107,12 @@ ListDinKicau SortedKicauan(ListDinKicau l);
 
 
 // Command Handler
-void HandleKicau(ListDinKicau* l, char* username, int* idKicauan);
+void HandleKicau(ListDinKicau* l, Word username, int* idKicauan);
 
 void HandleKicauan(ListDinKicau l);
 
 void HandleSukaKicau(ListDinKicau* l, int idKicauan);
 
-void HandleUbahKicau(ListDinKicau* l, char* username, int idKicauan);
+void HandleUbahKicau(ListDinKicau* l, Word username, int idKicauan);
 
 #endif

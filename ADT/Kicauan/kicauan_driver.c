@@ -2,9 +2,8 @@
 #include "kicauan.c"
 #include "../Perintah/perintah.h"
 #include "../Perintah/perintah.c"
-#include "../Mesin Kata/wordmachine.h"
+#include "../Perintah/wordmachine.h"
 #include "../Mesin Karakter/charmachine.h"
-#include "../Mesin Kata/wordmachine.c"
 #include "../Mesin Karakter/charmachine.c"
 #include "../Datetime/datetime.h"
 #include "../Datetime/datetime.c"
@@ -13,32 +12,42 @@
 
 int main() {
     boolean end = false;
+
+    Word path;
+    StringToWord("../../Konfigurasi/config-1/kicauan.config", &path);
+
+    Word id_kicau;
+
     ListDinKicau l;
+
     CreateListKicauan(&l, 10);
 
-    LoadKicauan(&l, "../../Konfigurasi/config-1/kicauan.config");
+    LoadKicauan(&l, path);
 
     int id = ListKicauMaxId(l) + 1;
 
     while (!end) {
-        char* option = perintah();
+        perintah(300, true);
         ADV();
 
-        if (isValid(option, "KICAU")) {
-            HandleKicau(&l, "Bacin", &id);
+
+        if (isValid(currentWord, "KICAU")) {
+            perintah(300, true);
+            ADV();
+            HandleKicau(&l, currentWord, &id);
         }
-        else if (isValid(option, "KICAUAN")) {
+        else if (isValid(currentWord, "KICAUAN")) {
             HandleKicauan(SortedKicauan(l));
         }
-        else if (isSuka(option)) {
-            char* id_kicau = sliceString(option, 13, lengthString(option));
-            int id_kicauan = atoi(id_kicau);
-            HandleSukaKicau(&l, id_kicauan);
+        else if (isSuka(currentWord)) {
+            id_kicau = sliceWord(currentWord, 13, currentWord.Length);
+            HandleSukaKicau(&l, WordToInt(id_kicau));
         }
-        else if (isUbah(option)) {
-            char* id_kicau = sliceString(option, 13, lengthString(option));
-            int id_kicauan = atoi(id_kicau);
-            HandleUbahKicau(&l, "Bacin", id_kicauan);
+        else if (isUbah(currentWord)) {
+            id_kicau = sliceWord(currentWord, 13, currentWord.Length);
+            perintah(300, true);
+            ADV();
+            HandleUbahKicau(&l, currentWord, WordToInt(id_kicau));
         }
         else {
             printf("Perintah tidak valid\n");
