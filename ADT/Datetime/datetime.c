@@ -232,17 +232,17 @@ long int DATETIMEDurasi(DATETIME DAw, DATETIME DAkh) {
 /* Mengirim DAkh-DAw dlm Detik, dengan kalkulasi */
 /* Prekondisi: DAkh > DAw */
 
-const char* TimeToString(DATETIME D) {
-    char* str = malloc(20 * sizeof(char));
-    sprintf(str, "%02d/%02d/%04d %02d:%02d:%02d", Day(D), Month(D), Year(D), Hour(Time(D)), Minute(Time(D)), Second(Time(D)));
-    return str;
+Word TimeToWord(DATETIME D) {
+    Word W;
+    sprintf(W.TabWord, "%02d/%02d/%04d %02d:%02d:%02d", Day(D), Month(D), Year(D), Hour(Time(D)), Minute(Time(D)), Second(Time(D)));
+    W.Length = lengthString(W.TabWord);
+    return W;
 }
 
-
-DATETIME StringToTime(char* str) {
+DATETIME WordToTime(Word W) {
     DATETIME D;
     int DD, MM, YYYY, hh, mm, ss;
-    sscanf(str, "%02d/%02d/%04d %02d:%02d:%02d", &DD, &MM, &YYYY, &hh, &mm, &ss);
+    sscanf(W.TabWord, "%02d/%02d/%04d %02d:%02d:%02d", &DD, &MM, &YYYY, &hh, &mm, &ss);
     CreateDATETIME(&D, DD, MM, YYYY, hh, mm, ss);
     return D;
 }

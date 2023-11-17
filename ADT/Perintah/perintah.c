@@ -1,4 +1,4 @@
-#include "../Mesin Karakter/charmachine.c"
+#include "../Mesin Karakter/charmachine.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include "wordmachine.h"
@@ -89,8 +89,8 @@ void simpanword(int max) {
 
 void perintah(int max, boolean user) {
     // ini isinya sama kayak algoritma STARTWORD, cuman karena  pakainya simpanword() dan bukan copyword, jadi gw tulis ulang aja//
-    if(user){
-        printf(">>");
+    if (user) {
+        printf(">> ");
     }
     START();
     IgnoreBlanks();
@@ -104,10 +104,10 @@ void perintah(int max, boolean user) {
 }
 
 void printWord(Word word) {
-   int i;
-   for (i = 0; i < word.Length; i++) {
-      printf("%c", word.TabWord[i]);
-   }
+    int i;
+    for (i = 0; i < word.Length; i++) {
+        printf("%c", word.TabWord[i]);
+    }
 }
 
 int lengthString(char* s) {
@@ -170,6 +170,7 @@ Word removeNewline(Word s) {
         }
         i++;
     }
+    s.Length--;
     return s;
 }
 
@@ -177,7 +178,7 @@ boolean isBlanks(Word s) {
     int i = 0;
     boolean check = true;
 
-    while (i <s.Length && check) {
+    while (i < s.Length && check) {
         if (s.TabWord[i] != ' ') {
             check = false;
         }
@@ -186,19 +187,46 @@ boolean isBlanks(Word s) {
     return check;
 }
 
-char* sliceString(char* str, int start, int end) {
-
-    int i;
-    int size = (end - start) + 2;
-    char* output = (char*)malloc(size * sizeof(char));
-
-    for (i = 0; start <= end; start++, i++)
-    {
-        output[i] = str[start];
+Word sliceWord(Word str, int start, int end) {
+    Word newWord;
+    int i = 0;
+    while (i < end - start) {
+        newWord.TabWord[i] = str.TabWord[start + i];
+        i++;
     }
+    newWord.Length = i;
+    return newWord;
+}
 
-    output[size] = '\0';
+void StringToWord(char* str, Word* w) {
+    int i = 0;
+    while (str[i] != '\0') {
+        w->TabWord[i] = str[i];
+        i++;
+    }
+    w->Length = i;
+}
 
+int WordToInt(Word w) {
+    int i = 0;
+    int result = 0;
+    while (i < w.Length) {
+        result = result * 10 + (w.TabWord[i] - '0');
+        i++;
+    }
+    return result;
+}
 
-    return output;
+boolean isSame(Word w1, Word w2) {
+    boolean check = (w1.Length == w2.Length);
+    if (check) {
+        int i = 0;
+        while (w1.TabWord[i] != '\0' && check) {
+            if (w1.TabWord[i] != w2.TabWord[i]) {
+                check = false;
+            }
+            i++;
+        }
+    }
+    return check;
 }
