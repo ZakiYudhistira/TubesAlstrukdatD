@@ -58,21 +58,6 @@ void LoadKicauan(ListDinKicau* l, char* path) {
 /* I.S. sembarang */
 /* F.S. Sebuah k yang diload dari kicauan.config*/
 
-const char* TimeToString(DATETIME D) {
-    char* str = malloc(20 * sizeof(char));
-    sprintf(str, "%02d/%02d/%04d %02d:%02d:%02d", Day(D), Month(D), Year(D), Hour(Time(D)), Minute(Time(D)), Second(Time(D)));
-    return str;
-}
-
-
-DATETIME StringToTime(char* str) {
-    DATETIME D;
-    int DD, MM, YYYY, hh, mm, ss;
-    sscanf(str, "%02d/%02d/%04d %02d:%02d:%02d", &DD, &MM, &YYYY, &hh, &mm, &ss);
-    CreateDATETIME(&D, DD, MM, YYYY, hh, mm, ss);
-    return D;
-}
-
 /* *** Display Pengguna *** */
 void DisplayKicauan(Kicauan k) {
     printf("| ID = %d\n", ID_KICAU(k));

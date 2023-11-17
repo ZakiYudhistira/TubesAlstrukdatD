@@ -92,4 +92,11 @@ long int DATETIMEDurasi(DATETIME DAw, DATETIME DAkh);
 /* Mengirim DAkh-DAw dlm Detik, dengan kalkulasi */
 /* Prekondisi: DAkh > DAw */
 
+   /* *** Operasi Lain *** */
+const char* TimeToString(DATETIME D);
+/* Mengubah DATETIME menjadi string dengan format "DD-MM-YYYY HH:MM:SS" */
+
+DATETIME StringToTime(char* s);
+/* Mengubah string dengan format "DD-MM-YYYY HH:MM:SS" menjadi DATETIME */
+
 #endif
