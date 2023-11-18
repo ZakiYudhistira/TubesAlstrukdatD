@@ -96,6 +96,17 @@ int ListKicauLength(ListDinKicau l) {
 /* Mengirimkan banyaknya elemen efektif list */
 /* Mengirimkan nol jika list l kosong */
 
+boolean isIdKicauValid(ListDinKicau l, int idKicau) {
+    int i = 0;
+    while (ID_KICAU(ELMT_KICAU(l, i)) != idKicau && i < ListKicauLength(l)) {
+        i++;
+    }
+
+    return i != ListKicauLength(l);
+}
+// I.S. l terdefinisi
+// F.S. mengembalikan true jika idKicau ada di list kicauan
+
 int ListKicauMaxId(ListDinKicau l) {
     int max = 0;
     for (int i = 0; i < ListKicauLength(l); i++) {
@@ -259,6 +270,7 @@ void HandleUbahKicau(ListDinKicau* l, Word username, int idKicauan) {
     }
     else {
         if (isSame(AUTHOR_KICAU(ELMT_KICAU(*l, i)), username)) {
+            DATETIME D;
             printf("Masukan kicauan baru:\n");
             perintah(280, false);
             ADV();
@@ -272,6 +284,8 @@ void HandleUbahKicau(ListDinKicau* l, Word username, int idKicauan) {
             }
 
             TEXT_KICAU(ELMT_KICAU(*l, i)) = currentWord;
+            GetLocalDATETIME(&D);
+            DATETIME_KICAU(ELMT_KICAU(*l, i)) = D;
             printf("\n");
             printf("Selamat! kicauan telah diterbitkan!\n");
             printf("Detil kicauan:\n");

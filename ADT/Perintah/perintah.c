@@ -210,10 +210,22 @@ void StringToWord(char* str, Word* w) {
 int WordToInt(Word w) {
     int i = 0;
     int result = 0;
+    boolean isNegative = false;
+
+    if (w.TabWord[0] == '-') {
+        isNegative = true;
+        i++;
+    }
+
     while (i < w.Length) {
         result = result * 10 + (w.TabWord[i] - '0');
         i++;
     }
+
+    if (isNegative) {
+        result = -result;
+    }
+
     return result;
 }
 
@@ -229,4 +241,46 @@ boolean isSame(Word w1, Word w2) {
         }
     }
     return check;
+}
+
+void splitWord(Word w, Word* w1, Word* w2) {
+    int i = 0;
+    while (w.TabWord[i] != ' ') {
+        w1->TabWord[i] = w.TabWord[i];
+        i++;
+    }
+    w1->Length = i;
+    i++;
+    int j = 0;
+    while (i < w.Length) {
+        w2->TabWord[j] = w.TabWord[i];
+        i++;
+        j++;
+    }
+    w2->Length = j;
+}
+
+void split3Word(Word w, Word* w1, Word* w2, Word* w3) {
+    int i = 0;
+    while (w.TabWord[i] != ' ') {
+        w1->TabWord[i] = w.TabWord[i];
+        i++;
+    }
+    w1->Length = i;
+    i++;
+    int j = 0;
+    while (w.TabWord[i] != ' ') {
+        w2->TabWord[j] = w.TabWord[i];
+        i++;
+        j++;
+    }
+    w2->Length = j;
+    i++;
+    j = 0;
+    while (i < w.Length) {
+        w3->TabWord[j] = w.TabWord[i];
+        i++;
+        j++;
+    }
+    w3->Length = j;
 }
