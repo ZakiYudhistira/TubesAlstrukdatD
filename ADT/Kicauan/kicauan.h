@@ -79,6 +79,10 @@ int ListKicauLength(ListDinKicau l);
 int ListKicauMaxId(ListDinKicau l);
 /* Mengirimkan nilai id terbesar dari list l */
 
+boolean isIdKicauValid(ListDinKicau l, int idKicau);
+// I.S. l terdefinisi
+// F.S. mengembalikan true jika idKicau ada di list kicauan
+
 /* ********** MENAMBAH DAN MENGHAPUS ELEMEN DI AKHIR ********** */
 /* *** Menambahkan elemen terakhir *** */
 void InsertLastKicau(ListDinKicau* l, ElTypeKicau val);
