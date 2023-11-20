@@ -7,6 +7,7 @@
 
 StackDraf dbDrafUser[20];
 
+/* Primitive Function Stack */
 void CreateEmpty(StackDraf *S) {
     IDXTOP(*S) = -1;
 }
@@ -29,13 +30,15 @@ void Pop(StackDraf *S, Draf *X) {
     IDXTOP(*S) -= 1;
 }
 
+/* Primitive Function Draf */
+// Inisialisasi Stackdraf setiap membuat user baru.
 void InitStackDraf(int User) {
     StackDraf SD;
     
     CreateEmpty(&SD);
     dbDrafUser[User] = SD;
 }
-
+// Untuk input == 'BUAT_DRAF'
 void CreateDraf(int User) {
     Draf D;
     StackDraf SD;
@@ -57,17 +60,17 @@ void CreateDraf(int User) {
 
     if (isValid(input, "TERBIT")) {
         PublishDraf(D);
-        printf("\nSelamat telah terbit!\n");
+        printf("\nSelamat! Draf kicauan telah diterbitkan!\n");
     } else if (isValid(input, "HAPUS")) {
         DeleteDraf(User);
-        printf("\nDihapus\n");
+        printf("\nDraf telah berhasil dihapus!\n");
     } else if (isValid(input, "SIMPAN")) {
         printf("\nDraf telah berhasil disimpan!\n");
     } else {
         printf("\nMasukkan input yang valid!\n");
     }
 }
-
+// Untuk input == 'LIHAT_DRAF'
 void DisplayDraf(int User) {
     StackDraf SD;
     char* input;
@@ -79,7 +82,6 @@ void DisplayDraf(int User) {
         Draf D = LASTDRAF(SD);
 
         printf("Ini draf terakhir anda:");
-        printf("\n| "); printf("ID = %d", IDXTOP(SD)+1);
         printf("\n| "); TulisDATETIME(DATETIME(D));
         printf("\n| "); printf(TEXT(D));
 
@@ -89,7 +91,7 @@ void DisplayDraf(int User) {
 
         if (isValid(input, "TERBIT")) {
             PublishDraf(D);
-            printf("\nSelamat telah terbit!\n");
+            printf("\nSelamat! Draf kicauan telah diterbitkan!\n");
         } else if (isValid(input, "HAPUS")) {
             DeleteDraf(User);
             printf("\nDraf telah berhasil dihapus!\n");
@@ -100,6 +102,7 @@ void DisplayDraf(int User) {
         }
     }
 }
+// Untuk input == 'HAPUS'
 void DeleteDraf(int User) {
     Draf D;
     StackDraf SD;
@@ -109,11 +112,12 @@ void DeleteDraf(int User) {
 
     dbDrafUser[User] = SD;
 }
-
+// Untuk input == 'UBAH'
 void EditDraf(int User) {
     DeleteDraf(User);
     CreateDraf(User);
 }
+// Untuk input == 'TERBIT'
 void PublishDraf(Draf D) {
     Kicauan kicau;
     CreateKicauan(&kicau);
