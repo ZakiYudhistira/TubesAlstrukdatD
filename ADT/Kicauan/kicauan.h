@@ -6,7 +6,7 @@
 #define _XOPEN_SOURCE
 
 #include "../boolean.h"
-#include "../Mesin Kata/wordmachine.h"
+#include "../Perintah/wordmachine.h"
 #include <time.h>
 #include "../Datetime/datetime.h"
 #include "../Time/time.h"
@@ -14,9 +14,9 @@
 /* Definisi elemen dan address */
 typedef struct {
    int id;
-   char* text;
+   Word text;
    int like;
-   char* author;
+   Word author;
    DATETIME datetime;
 } Kicauan;
 
@@ -55,16 +55,9 @@ void CreateKicauan(Kicauan* k);
 /* F.S. Sebuah k kosong dan datetime now*/
 
 
-void LoadKicauan(ListDinKicau* l, char* path);
+void LoadKicauan(ListDinKicau* l, Word path);
 /* I.S. sembarang */
 /* F.S. Sebuah k yang diload dari kicauan.config*/
-
-   /* *** Operasi Lain *** */
-const char* TimeToString(DATETIME D);
-/* Mengubah DATETIME menjadi string dengan format "DD-MM-YYYY HH:MM:SS" */
-
-DATETIME StringToTime(char* s);
-/* Mengubah string dengan format "DD-MM-YYYY HH:MM:SS" menjadi DATETIME */
 
 /* *** Display Pengguna *** */
 void DisplayKicauan(Kicauan k);
@@ -86,6 +79,10 @@ int ListKicauLength(ListDinKicau l);
 int ListKicauMaxId(ListDinKicau l);
 /* Mengirimkan nilai id terbesar dari list l */
 
+boolean isIdKicauValid(ListDinKicau l, int idKicau);
+// I.S. l terdefinisi
+// F.S. mengembalikan true jika idKicau ada di list kicauan
+
 /* ********** MENAMBAH DAN MENGHAPUS ELEMEN DI AKHIR ********** */
 /* *** Menambahkan elemen terakhir *** */
 void InsertLastKicau(ListDinKicau* l, ElTypeKicau val);
@@ -100,11 +97,11 @@ void ExpandListKicau(ListDinKicau* l, int num);
 /* F.S. Ukuran list bertambah sebanyak num */
 
 
-boolean isSuka(char* option);
+boolean isSuka(Word option);
 // I.S. option terdefinisi
 // F.S. mengembalikan true jika option adalah "SUKA_KICAUAN [IDKicau]"
 
-boolean isUbah(char* option);
+boolean isUbah(Word option);
 // I.S. option terdefinisi
 // F.S. mengembalikan true jika option adalah "UBAH_KICAUAN [IDKicau]"
 
@@ -114,12 +111,12 @@ ListDinKicau SortedKicauan(ListDinKicau l);
 
 
 // Command Handler
-void HandleKicau(ListDinKicau* l, char* username, int* idKicauan);
+void HandleKicau(ListDinKicau* l, Word username, int* idKicauan);
 
 void HandleKicauan(ListDinKicau l);
 
 void HandleSukaKicau(ListDinKicau* l, int idKicauan);
 
-void HandleUbahKicau(ListDinKicau* l, char* username, int idKicauan);
+void HandleUbahKicau(ListDinKicau* l, Word username, int idKicauan);
 
 #endif

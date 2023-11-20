@@ -1,5 +1,5 @@
 #include "kicauan.h"
-#include "../Mesin Kata/wordmachine.h"
+#include "../Perintah/wordmachine.h"
 #include "../Mesin Karakter/charmachine.h"
 #include "../Perintah/perintah.h"
 #include <stdio.h>
@@ -9,17 +9,17 @@
 void CreateKicauan(Kicauan* k) {
     DATETIME D;
     ID_KICAU(*k) = 0;
-    TEXT_KICAU(*k) = NULL;
+    TEXT_KICAU(*k) = currentWord;
     LIKE_KICAU(*k) = 0;
-    AUTHOR_KICAU(*k) = NULL;
+    AUTHOR_KICAU(*k) = currentWord;
     GetLocalDATETIME(&D);
     DATETIME_KICAU(*k) = D;
 }
 /* I.S. sembarang */
 /* F.S. Sebuah k kosong dan datetime now*/
 
-void LoadKicauan(ListDinKicau* l, char* path) {
-    FILE* file = fopen(path, "r");
+void LoadKicauan(ListDinKicau* l, Word path) {
+    FILE* file = fopen(path.TabWord, "r");
     char line[300];
 
     if (file == NULL) {
@@ -28,27 +28,31 @@ void LoadKicauan(ListDinKicau* l, char* path) {
     }
 
     fgets(line, 300, file);
-    int banyak_kicau = atoi(removeNewline(line));
+    StringToWord(line, &currentWord);
+    int banyak_kicau = WordToInt(removeNewline(currentWord));
     for (int i = 0; i < banyak_kicau; i++) {
         Kicauan k;
         CreateKicauan(&k);
 
         fgets(line, 300, file);
-        ID_KICAU(k) = atoi(removeNewline(line));
+        StringToWord(line, &currentWord);
+        ID_KICAU(k) = WordToInt(removeNewline(currentWord));
 
         fgets(line, 300, file);
-        TEXT_KICAU(k) = malloc(lengthString(removeNewline(line)) * sizeof(char));
-        CopyString(removeNewline(line), TEXT_KICAU(k));
+        StringToWord(line, &currentWord);
+        TEXT_KICAU(k) = removeNewline(currentWord);
 
         fgets(line, 300, file);
-        LIKE_KICAU(k) = atoi(removeNewline(line));
+        StringToWord(line, &currentWord);
+        LIKE_KICAU(k) = WordToInt(removeNewline(currentWord));
 
         fgets(line, 300, file);
-        AUTHOR_KICAU(k) = malloc(lengthString(removeNewline(line)) * sizeof(char));
-        CopyString(removeNewline(line), AUTHOR_KICAU(k));
+        StringToWord(line, &currentWord);
+        AUTHOR_KICAU(k) = removeNewline(currentWord);
 
         fgets(line, 300, file);
-        DATETIME_KICAU(k) = StringToTime(removeNewline(line));
+        StringToWord(line, &currentWord);
+        DATETIME_KICAU(k) = WordToTime(removeNewline(currentWord));
 
         InsertLastKicau(l, k);
     }
@@ -58,27 +62,18 @@ void LoadKicauan(ListDinKicau* l, char* path) {
 /* I.S. sembarang */
 /* F.S. Sebuah k yang diload dari kicauan.config*/
 
-const char* TimeToString(DATETIME D) {
-    char* str = malloc(20 * sizeof(char));
-    sprintf(str, "%02d/%02d/%04d %02d:%02d:%02d", Day(D), Month(D), Year(D), Hour(Time(D)), Minute(Time(D)), Second(Time(D)));
-    return str;
-}
-
-
-DATETIME StringToTime(char* str) {
-    DATETIME D;
-    int DD, MM, YYYY, hh, mm, ss;
-    sscanf(str, "%02d/%02d/%04d %02d:%02d:%02d", &DD, &MM, &YYYY, &hh, &mm, &ss);
-    CreateDATETIME(&D, DD, MM, YYYY, hh, mm, ss);
-    return D;
-}
-
 /* *** Display Pengguna *** */
 void DisplayKicauan(Kicauan k) {
     printf("| ID = %d\n", ID_KICAU(k));
-    printf("| %s\n", AUTHOR_KICAU(k));
-    printf("| %s\n", TimeToString(DATETIME_KICAU(k)));
-    printf("| %s\n", TEXT_KICAU(k));
+    printf("| ");
+    printWord(AUTHOR_KICAU(k));
+    printf("\n");
+    printf("| ");
+    printWord(TimeToWord(DATETIME_KICAU(k)));
+    printf("\n");
+    printf("| ");
+    printWord(TEXT_KICAU(k));
+    printf("\n");
     printf("| Disukai: %d\n", LIKE_KICAU(k));
 }
 /* Proses : Menuliskan isi Kicauan dengan traversal. Informasi kicauan
@@ -100,6 +95,17 @@ int ListKicauLength(ListDinKicau l) {
 }
 /* Mengirimkan banyaknya elemen efektif list */
 /* Mengirimkan nol jika list l kosong */
+
+boolean isIdKicauValid(ListDinKicau l, int idKicau) {
+    int i = 0;
+    while (ID_KICAU(ELMT_KICAU(l, i)) != idKicau && i < ListKicauLength(l)) {
+        i++;
+    }
+
+    return i != ListKicauLength(l);
+}
+// I.S. l terdefinisi
+// F.S. mengembalikan true jika idKicau ada di list kicauan
 
 int ListKicauMaxId(ListDinKicau l) {
     int max = 0;
@@ -135,13 +141,13 @@ void ExpandListKicau(ListDinKicau* l, int num) {
 /* F.S. Ukuran list bertambah sebanyak num */
 
 
-boolean isSuka(char* option) {
+boolean isSuka(Word option) {
     char* suka = "SUKA_KICAUAN";
     int i = 0;
 
-    if (lengthString(option) > 13) {
+    if (option.Length > 13) {
         for (i = 0; i < 12; i++) {
-            if (option[i] != suka[i]) {
+            if (option.TabWord[i] != suka[i]) {
                 return false;
             }
         }
@@ -154,13 +160,13 @@ boolean isSuka(char* option) {
 // I.S. option terdefinisi
 // F.S. mengembalikan true jika option adalah "SUKA_KICAUAN [IDKicau]"
 
-boolean isUbah(char* option) {
+boolean isUbah(Word option) {
     char* ubah = "UBAH_KICAUAN";
     int i = 0;
 
-    if (lengthString(option) > 13) {
+    if (option.Length > 13) {
         for (i = 0; i < 12; i++) {
-            if (option[i] != ubah[i]) {
+            if (option.TabWord[i] != ubah[i]) {
                 return false;
             }
         }
@@ -196,25 +202,25 @@ ListDinKicau SortedKicauan(ListDinKicau l) {
 // F.S. mengembalikan list kicauan yang sudah terurut berdasarkan waktu terbaru
 
 // Command Handler
-void HandleKicau(ListDinKicau* l, char* username, int* idKicauan) {
+void HandleKicau(ListDinKicau* l, Word username, int* idKicauan) {
     Kicauan k;
     DATETIME D;
     CreateKicauan(&k);
 
     printf("Masukan kicauan:\n");
-    char* kicau = perintah();
+    perintah(280, false);
     ADV();
 
-    while (isBlanks(kicau)) {
+    while (isBlanks(currentWord)) {
         printf("\n");
         printf("Kicauan tidak boleh hanya berisi spasi!\n\n");
         printf("Masukan kicauan:\n");
-        kicau = perintah();
+        perintah(280, false);
         ADV();
     }
 
     ID_KICAU(k) = *idKicauan;
-    TEXT_KICAU(k) = kicau;
+    TEXT_KICAU(k) = currentWord;
     LIKE_KICAU(k) = 0;
     AUTHOR_KICAU(k) = username;
     GetLocalDATETIME(&D);
@@ -253,7 +259,7 @@ void HandleSukaKicau(ListDinKicau* l, int idKicauan) {
     }
 }
 
-void HandleUbahKicau(ListDinKicau* l, char* username, int idKicauan) {
+void HandleUbahKicau(ListDinKicau* l, Word username, int idKicauan) {
     int i = 0;
     while (ID_KICAU(ELMT_KICAU(*l, i)) != idKicauan && i < ListKicauLength(*l)) {
         i++;
@@ -263,20 +269,23 @@ void HandleUbahKicau(ListDinKicau* l, char* username, int idKicauan) {
         printf("Tidak ditemukan kicauan dengan ID = %d\n\n", idKicauan);
     }
     else {
-        if (AUTHOR_KICAU(ELMT_KICAU(*l, i)) == username) {
+        if (isSame(AUTHOR_KICAU(ELMT_KICAU(*l, i)), username)) {
+            DATETIME D;
             printf("Masukan kicauan baru:\n");
-            char* kicau = perintah();
+            perintah(280, false);
             ADV();
 
-            while (isBlanks(kicau)) {
+            while (isBlanks(currentWord)) {
                 printf("\n");
                 printf("Kicauan tidak boleh hanya berisi spasi!\n\n");
                 printf("Masukan kicauan baru:\n");
-                kicau = perintah();
+                perintah(280, false);
                 ADV();
             }
 
-            TEXT_KICAU(ELMT_KICAU(*l, i)) = kicau;
+            TEXT_KICAU(ELMT_KICAU(*l, i)) = currentWord;
+            GetLocalDATETIME(&D);
+            DATETIME_KICAU(ELMT_KICAU(*l, i)) = D;
             printf("\n");
             printf("Selamat! kicauan telah diterbitkan!\n");
             printf("Detil kicauan:\n");
