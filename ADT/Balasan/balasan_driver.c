@@ -12,12 +12,11 @@
 #include "../Kicauan/kicauan.h"
 #include "../Kicauan/kicauan.c"
 
-
 int main() {
     boolean end = false;
 
-    ListDinListBalasan l;
-    CreateListListBalasan(&l, 10);
+    ListDinBalasan l;
+    createListBalasan(&l, 10);
 
     Word path;
     StringToWord("../../Konfigurasi/config-1/balasan.config", &path);
@@ -42,10 +41,9 @@ int main() {
             id_kicau = sliceWord(currentWord, 8, currentWord.Length);
 
             if (isIdKicauValid(l_kicau, WordToInt(id_kicau))) {
-                if (isIdKicauInBalasan(l, WordToInt(id_kicau))) {
+                if (getTreeFromIdKicau(l, -WordToInt(id_kicau)) != NULL) {
                     printf("\n");
-                    DisplayListListBalasan(l, WordToInt(id_kicau));
-                    printf("\n");
+                    printTreeWithoutRoot(getTreeFromIdKicau(l, -WordToInt(id_kicau)), 0);
                 }
                 else {
                     printf("Belum terdapat balasan apapun pada kicauan tersebut. Yuk balas kicauan tersebut!\n");
@@ -58,15 +56,13 @@ int main() {
         else if (isBalas(currentWord)) {
             split3Word(currentWord, &temp, &id_kicau, &id_balasan);
             if (isIdKicauValid(l_kicau, WordToInt(id_kicau))) {
-                if (isIdKicauInBalasan(l, WordToInt(id_kicau))) {
-                    DataBalasan b;
-                    ListDinBalasan li;
-                    CreateListBalasan(&li, 10);
+                Tree* t = getTreeFromIdKicau(l, -WordToInt(id_kicau));
+                if (t != NULL) {
+                    Tree* t2 = getTreeFromIdParent(t, WordToInt(id_balasan));
+                    if (t2 != NULL) {
+                        Balasan b;
+                        createBalasan(&b);
 
-                    TreeToListBalasan(&li, GetTreeFromIdKicau(l, WordToInt(id_kicau)));
-
-                    if (isIdBalasanInBalasan(li, WordToInt(id_balasan)) || WordToInt(id_balasan) == -1) {
-                        CreateBalasan(&b);
                         printf("Masukkan balasan:\n");
                         perintah(280, true);
                         ADV();
@@ -77,52 +73,46 @@ int main() {
                         DATETIME D;
                         GetLocalDATETIME(&D);
                         DATETIME_BALASAN(b) = D;
-                        ID_BALASAN(b) = ListBalasanMaxId(li) + 1;
-                        IDPARENT_BALASAN(b) = WordToInt(id_balasan);
+                        ID_BALASAN(b) = treeMaxId(t) + 1;
+                        ID_PARENT_BALASAN(b) = WordToInt(id_balasan);
 
                         printf("Selamat! balasan telah diterbitkan!\n");
                         printf("Detil balasan:\n");
-                        DisplayBalasan(b, 0);
+                        printBalasan(b, 0);
 
-                        InsertLastBalasan(&li, b);
-                        ROOT_LIST_BALASAN(ELMT_LIST_BALASAN(l, GetIdxListBalasan(l, WordToInt(id_kicau)))) = ListBalasanToTree(li);
+                        addChild(t2, b);
                     }
                     else {
                         printf("Wah, tidak terdapat balasan yang ingin Anda balas!\n");
                     }
                 }
                 else {
-                    ListDinBalasan li;
-                    CreateListBalasan(&li, 10);
+                    if (WordToInt(id_balasan) == -1) {
+                        Balasan b;
+                        createBalasan(&b);
 
-                    DataBalasan b;
-                    CreateBalasan(&b);
-                    printf("Masukkan balasan:\n");
-                    perintah(280, true);
-                    ADV();
+                        printf("Masukkan balasan:\n");
+                        perintah(280, true);
+                        ADV();
+                        TEXT_BALASAN(b) = currentWord;
+                        Word username;
+                        StringToWord("admin", &username);
+                        AUTHOR_BALASAN(b) = username;
+                        DATETIME D;
+                        GetLocalDATETIME(&D);
+                        DATETIME_BALASAN(b) = D;
+                        ID_BALASAN(b) = 1;
+                        ID_PARENT_BALASAN(b) = -1;
 
-                    TEXT_BALASAN(b) = currentWord;
-                    Word username;
-                    StringToWord("admin", &username);
-                    AUTHOR_BALASAN(b) = username;
-                    DATETIME D;
-                    GetLocalDATETIME(&D);
-                    DATETIME_BALASAN(b) = D;
-                    ID_BALASAN(b) = 1;
-                    IDPARENT_BALASAN(b) = -1;
+                        printf("Selamat! balasan telah diterbitkan!\n");
+                        printf("Detil balasan:\n");
+                        printBalasan(b, 0);
 
-                    printf("Selamat! balasan telah diterbitkan!\n");
-                    printf("Detil balasan:\n");
-                    DisplayBalasan(b, 0);
-
-                    InsertLastBalasan(&li, b);
-
-                    ElTypeListBalasan lb;
-                    ID_KICAU_LIST_BALASAN(lb) = WordToInt(id_kicau);
-
-                    ROOT_LIST_BALASAN(lb) = ListBalasanToTree(li);
-
-                    InsertLastListBalasan(&l, lb);
+                        addChild(getTreeFromIdKicau(l, WordToInt(id_balasan)), b);
+                    }
+                    else {
+                        printf("Wah, tidak terdapat balasan yang ingin Anda balas!\n");
+                    }
                 }
             }
             else {
@@ -131,30 +121,25 @@ int main() {
         }
         else if (isHapusBalasan(currentWord)) {
             split3Word(currentWord, &temp, &id_kicau, &id_balasan);
-            if (isIdKicauInBalasan(l, WordToInt(id_kicau))) {
-                ListDinBalasan li;
-                CreateListBalasan(&li, 10);
 
-                TreeToListBalasan(&li, GetTreeFromIdKicau(l, WordToInt(id_kicau)));
-
-                if (isIdBalasanInBalasan(li, WordToInt(id_balasan))) {
-                    while (isIdParentExist(li, WordToInt(id_balasan))) {
-                        DeleteBalasanAt(&li, GetIdxBalasanFromParentId(li, WordToInt(id_balasan)));
-                    }
-                    DeleteBalasanAt(&li, GetIdxBalasan(li, WordToInt(id_balasan)));
+            Tree* t = getTreeFromIdKicau(l, -WordToInt(id_kicau));
+            if (t != NULL) {
+                Tree* t2 = getTreeFromIdParent(t, WordToInt(id_balasan));
+                if (t2 != NULL) {
+                    removeNode(getParentFromChild(t, t2), t2);
                     printf("Balasan berhasil dihapus\n");
                 }
                 else {
                     printf("Balasan tidak ditemukan\n");
                 }
 
-                ROOT_LIST_BALASAN(ELMT_LIST_BALASAN(l, GetIdxListBalasan(l, WordToInt(id_kicau)))) = ListBalasanToTree(li);
+                if (isTreeEmpty(t)) {
+                    deleteBalasanAt(&l, getIdxFromIdKicau(l, WordToInt(id_kicau)));
+                }
             }
             else {
                 printf("Tidak terdapat balasan pada kicauan dengan id tersebut!\n");
             }
         }
     }
-
-    return 0;
 }

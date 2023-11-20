@@ -13,32 +13,33 @@
 #include "../Datetime/datetime.h"
 #include "../Time/time.h"
 
-/* Definisi elemen dan address */
+
 typedef struct {
-   int id;
-   int idParent;
-   Word text;
-   Word author;
-   DATETIME datetime;
-} DataBalasan;
+    int idBalasan;
+    int idParent;
+    Word text;
+    Word author;
+    DATETIME date;
+} Balasan;
 
-
-/* ********* AKSES (Selektor) ********* */
-#define ID_BALASAN(b) (b).id
-#define IDPARENT_BALASAN(b) (b).idParent
+#define ID_BALASAN(b) (b).idBalasan
+#define ID_PARENT_BALASAN(b) (b).idParent
 #define TEXT_BALASAN(b) (b).text
 #define AUTHOR_BALASAN(b) (b).author
-#define DATETIME_BALASAN(b) (b).datetime
+#define DATETIME_BALASAN(b) (b).date
 
-typedef struct TreeNode {
-   DataBalasan* dataBalasan;
-   struct TreeNode* firstChild;
-   struct TreeNode* nextSibling;
-} TreeNode;
+struct node {
+    Balasan data;
+    struct node* next;
+    struct node* child;
+};
 
-#define DATA_BALASAN(t) (t)->dataBalasan
-#define FIRST_CHILD(t) (t)->firstChild
-#define NEXT_SIBLING(t) (t)->nextSibling
+typedef struct node Tree;
+
+#define BALASAN(n) (n)->data
+#define NEXT_NODE(n) (n)->next
+#define CHILD_NODE(n) (n)->child
+
 
 /*  Kamus Umum */
 #define IDX_MIN_BALASAN 0
@@ -46,11 +47,11 @@ typedef struct TreeNode {
 #define IDX_UNDEF_BALASAN -1
 /* Indeks tak terdefinisi*/
 
-typedef DataBalasan ElTypeBalasan; /* type elemen list */
+typedef Tree* ElTypeBalasan; /* type elemen list */
 typedef struct {
-   ElTypeBalasan* buffer; /* memori tempat penyimpan elemen (container) */
-   int nEff;       /* >=0, banyaknya elemen efektif */
-   int capacity;   /* ukuran elemen */
+    ElTypeBalasan* buffer; /* memori tempat penyimpan elemen (container) */
+    int nEff;       /* >=0, banyaknya elemen efektif */
+    int capacity;   /* ukuran elemen */
 } ListDinBalasan;
 
 /* ********** SELEKTOR ********** */
@@ -59,134 +60,49 @@ typedef struct {
 #define ELMT_BALASAN(l, i) (l).buffer[i]
 #define CAPACITY_BALASAN(l) (l).capacity
 
-typedef struct {
-   int idKicau;
-   struct TreeNode* root;
-} ElTypeListBalasan;
-
-#define ID_KICAU_LIST_BALASAN(l) (l).idKicau
-#define ROOT_LIST_BALASAN(l) (l).root
-
-typedef struct {
-   ElTypeListBalasan* bufferBalasan; /* memori tempat penyimpan elemen (container) */
-   int nEffBalasan;       /* >=0, banyaknya elemen efektif */
-   int capacityBalasan;   /* ukuran elemen */
-} ListDinListBalasan;
-
-#define NEFF_LIST_BALASAN(l) (l).nEffBalasan
-#define BUFFER_LIST_BALASAN(l) (l).bufferBalasan
-#define ELMT_LIST_BALASAN(l, i) (l).bufferBalasan[i]
-#define CAPACITY_LIST_BALASAN(l) (l).capacityBalasan
 
 
-/* *** Kreator *** */
-void CreateBalasan(DataBalasan* b);
-/* I.S. sembarang */
-/* F.S. Sebuah b kosong dan datetime now*/
+void createBalasan(Balasan* b);
 
-void CreateListBalasan(ListDinBalasan* l, int capacity);
-/* I.S. sembarang */
-/* F.S. Terbentuk ListDinBalasan kosong dengan kapasitas capacity */
+void createListBalasan(ListDinBalasan* l, int capacity);
 
-void CreateListListBalasan(ListDinListBalasan* l, int capacity);
-/* I.S. sembarang */
-/* F.S. Terbentuk ListDinListBalasan kosong dengan kapasitas capacity */
+int listBalasanLength(ListDinBalasan l);
 
-void CreateElTypeListBalasan(ElTypeListBalasan* l, int idKicau, struct TreeNode* root);
-/* I.S. sembarang */
-/* F.S. Terbentuk ElTypeListBalasan dengan idKicau dan root */
+void insertLastBalasan(ListDinBalasan* l, ElTypeBalasan val);
 
-   /* ********** SELEKTOR (TAMBAHAN) ********** */
-   /* *** Banyaknya elemen *** */
-int ListBalasanLength(ListDinBalasan l);
-/* Mengirimkan banyaknya elemen efektif list */
-/* Mengirimkan nol jika list l kosong */
-/* *** Daya tampung container *** */
+void expandListBalasan(ListDinBalasan* l, int num);
 
-int ListListBalasanLength(ListDinListBalasan l);
-/* Mengirimkan banyaknya elemen efektif list */
-/* Mengirimkan nol jika list l kosong */
-/* *** Daya tampung container *** */
+void deleteBalasanAt(ListDinBalasan* l, int idx);
 
-int ListBalasanMaxId(ListDinBalasan l);
-/* Mengirimkan nilai id terbesar dari list l */
+int getIdxFromIdKicau(ListDinBalasan l, int idKicau);
+
+Tree* getTreeFromIdKicau(ListDinBalasan l, int idKicau);
 
 
-/* ********** MENAMBAH DAN MENGHAPUS ELEMEN DI AKHIR ********** */
-/* *** Menambahkan elemen terakhir *** */
-void InsertLastBalasan(ListDinBalasan* l, ElTypeBalasan val);
-/* Proses: Menambahkan val sebagai elemen terakhir list */
-/* I.S. List l boleh kosong, tetapi tidak penuh */
-/* F.S. val adalah elemen terakhir l yang baru */
+Tree* newRoot(Kicauan k);
 
-void InsertLastListBalasan(ListDinListBalasan* l, ElTypeListBalasan val);
-/* Proses: Menambahkan val sebagai elemen terakhir list */
-/* I.S. List l boleh kosong, tetapi tidak penuh */
-/* F.S. val adalah elemen terakhir l yang baru */
+Tree* newNode(Balasan data);
 
-boolean isIdKicauInBalasan(ListDinListBalasan l, int idKicau);
-// I.S. l terdefinisi
-// F.S. mengembalikan true jika idKicau ada di list balasan
+boolean isTreeEmpty(Tree* n);
 
-boolean isIdBalasanInBalasan(ListDinBalasan l, int idBalasan);
+Tree* addSibling(Tree* n, Balasan data);
 
-/* ********* MENGUBAH UKURAN ARRAY ********* */
-void ExpandListBalasan(ListDinBalasan* l, int num);
-/* Proses : Menambahkan capacity l sebanyak num */
-/* I.S. List sudah terdefinisi */
-/* F.S. Ukuran list bertambah sebanyak num */
+Tree* addChild(Tree* n, Balasan data);
 
-void ExpandListListBalasan(ListDinListBalasan* l, int num);
-/* Proses : Menambahkan capacity l sebanyak num */
-/* I.S. List sudah terdefinisi */
-/* F.S. Ukuran list bertambah sebanyak num */
+Tree* getParentFromChild(Tree* root, Tree* child);
 
-boolean isIdParentExist(ListDinBalasan l, int idParent);
+Tree* getTreeFromIdParent(Tree* root, int idParent);
 
-void DeleteBalasanAt(ListDinBalasan* l, int idx);
+int treeMaxId(Tree* root);
 
-int GetIdxBalasan(ListDinBalasan l, int idBalasan);
+void removeNode(Tree* n, Tree* newN);
 
-int GetIdxBalasanFromParentId(ListDinBalasan l, int idParent);
+void printBalasan(Balasan b, int depth);
 
-int GetIdxListBalasan(ListDinListBalasan l, int idKicau);
+void printTreeWithoutRoot(Tree* n, int depth);
 
-struct TreeNode* CreateTreeNode(DataBalasan* b);
-/* I.S. sembarang */
-/* F.S. Sebuah TreeNode kosong dengan data b */
 
-void AddChildBalasan(struct TreeNode* parent, struct TreeNode* child);
-/* I.S. sembarang */
-/* F.S. Sebuah TreeNode kosong dengan data b */
-
-TreeNode* SearchTreeNode(struct TreeNode* root, int id);
-
-TreeNode* DeleteTreeNode(struct TreeNode* root, int idParent);
-
-TreeNode* GetTreeFromIdKicau(ListDinListBalasan l, int idKicau);
-
-/* *** Display Balasan *** */
-void DisplayBalasan(DataBalasan b, int depth);
-/* Proses : Menuliskan isi DataBalasan dengan traversal. Informasi balasan
-   ditulis satu persatu dan diakhiri dengan newline */
-
-void DisplayListBalasan(ListDinBalasan l);
-
-void DisplayListListBalasan(ListDinListBalasan l, int idKicau);
-
-void DisplayTreeBalasan(struct TreeNode* root, int depth);
-
-// void CreateListKicauan(ListDinKicau* l, int capacity);
-// /* I.S. sembarang */
-// /* F.S. Terbentuk ListDinKicau kosong dengan kapasitas capacity */
-
-void TreeToListBalasan(ListDinBalasan* l, struct TreeNode* root);
-
-TreeNode* ListBalasanToTree(ListDinBalasan l);
-
-void LoadBalasan(ListDinListBalasan* li, Word path);
-/* I.S. sembarang */
-/* F.S. Sebuah b yang diload dari balasan.config*/
+void LoadBalasan(ListDinBalasan* l, Word path);
 
 
 boolean isBalas(Word option);
@@ -200,5 +116,6 @@ boolean isBalasan(Word option);
 boolean isHapusBalasan(Word option);
 // I.S. option terdefinisi
 // F.S. mengembalikan true jika option adalah "HAPUS_BALASAN [IDKicau] [IDBalasan]"
+
 
 #endif
