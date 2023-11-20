@@ -3,15 +3,16 @@
 #include <stdlib.h>
 #include <time.h>
 #include "../Perintah/perintah.c"
+#include "../Kicauan/kicauan.h"
 
 StackDraf dbDrafUser[20];
 
 void CreateEmpty(StackDraf *S) {
-    IDXTOP(*S) = Nil;
+    IDXTOP(*S) = -1;
 }
 
 boolean IsEmpty(StackDraf S) {
-    return IDXTOP(S) == Nil;
+    return IDXTOP(S) == -1;
 }
 
 boolean IsFull(StackDraf S) {
@@ -19,16 +20,8 @@ boolean IsFull(StackDraf S) {
 }
 
 void Push(StackDraf *S, Draf X) {
-    if (IsEmpty(*S))
-    {
-        IDXTOP(*S) = 0;
-        LASTDRAF(*S) = X;
-    }
-    else
-    {
-        IDXTOP(*S)++;
-        LASTDRAF(*S) = X;
-    }
+    IDXTOP(*S)++;
+    LASTDRAF(*S) = X;
 }
 
 void Pop(StackDraf *S, Draf *X) {
@@ -36,66 +29,95 @@ void Pop(StackDraf *S, Draf *X) {
     IDXTOP(*S) -= 1;
 }
 
+void InitStackDraf(int User) {
+    StackDraf SD;
+    
+    CreateEmpty(&SD);
+    dbDrafUser[User] = SD;
+}
+
 void CreateDraf(int User) {
     Draf D;
     StackDraf SD;
+    char* input;
 
-    CreateEmpty(&SD);
-
-    // SD = dbDrafUser[User];
+    SD = dbDrafUser[User];
 
     printf("Masukkan draf:\n");
     TEXT(D) = perintah();
-
-    time_t t = time(NULL);
-    struct tm date = *localtime(&t);
-    CreateDatetime(&DATETIME(D), date);
+    ADV();
+    GetLocalDATETIME(&DATETIME(D));
 
     Push(&SD, D);
-    DisplayDatetime(DATETIME(D));
+    dbDrafUser[User] = SD;
 
-    printf("Apakah anda ingin menghapus, menyimpan, atau menerbitkan draf ini?\n");
+    printf("\nApakah anda ingin menghapus, menyimpan, atau menerbitkan draf ini?\n");
+    input = perintah();
+    ADV();
+
+    if (isValid(input, "TERBIT")) {
+        PublishDraf(D);
+        printf("\nSelamat telah terbit!\n");
+    } else if (isValid(input, "HAPUS")) {
+        DeleteDraf(User);
+        printf("\nDihapus\n");
+    } else if (isValid(input, "SIMPAN")) {
+        printf("\nDraf telah berhasil disimpan!\n");
+    } else {
+        printf("\nMasukkan input yang valid!\n");
+    }
 }
 
 void DisplayDraf(int User) {
     StackDraf SD;
-    SD = GETSTACK(User);
-    printf("Ini draf terakhir anda:\n");
-    printf("| "); DisplayDatetime(DATETIME(LASTDRAF(SD)));
-    //printf("\n| "); printf(TEXT(LASTDRAF(User)));
+    char* input;
 
-    printf("Apakah anda ingin mengubah, menghapus, atau menerbitkan draf ini? (KEMBALI jika ingin kembali)\n");
-    STARTWORD;
+    SD = dbDrafUser[User];
+    if (IsEmpty(SD)) {
+        printf("Yah, anda belum memiliki draf apapun! Buat dulu ya :D\n");
+    } else {
+        Draf D = LASTDRAF(SD);
+
+        printf("Ini draf terakhir anda:");
+        printf("\n| "); printf("ID = %d", IDXTOP(SD)+1);
+        printf("\n| "); TulisDATETIME(DATETIME(D));
+        printf("\n| "); printf(TEXT(D));
+
+        printf("\n\nApakah anda ingin mengubah, menghapus, atau menerbitkan draf ini? (KEMBALI jika ingin kembali)\n");
+        input = perintah();
+        ADV();
+
+        if (isValid(input, "TERBIT")) {
+            PublishDraf(D);
+            printf("\nSelamat telah terbit!\n");
+        } else if (isValid(input, "HAPUS")) {
+            DeleteDraf(User);
+            printf("\nDraf telah berhasil dihapus!\n");
+        } else if (isValid(input, "UBAH")) {
+            EditDraf(User);
+        } else {
+            printf("\nMasukkan input yang valid!\n");
+        }
+    }
 }
 void DeleteDraf(int User) {
     Draf D;
     StackDraf SD;
 
-    SD = GETSTACK(User);
+    SD = dbDrafUser[User];
     Pop(&SD, &D);
 
-    GETSTACK(User) = SD;
-
-    printf("Draf telah berhasil dihapus!\n");
+    dbDrafUser[User] = SD;
 }
+
 void EditDraf(int User) {
     DeleteDraf(User);
-    Draf D;
-    StackDraf SD;
-
-    SD = GETSTACK(User);
-    printf("Masukkan draf yang baru:\n");
-
-    TEXT(D) = "isiDraf";
-    time_t t = time(NULL);
-    struct tm date = *localtime(&t);
-    CreateDatetime(&DATETIME(D), date);
-
-    Push(&SD, D);
-
-    printf("Apakah anda ingin menghapus, menyimpan, atau menerbitkan draf ini?\n");
-    STARTWORD;
+    CreateDraf(User);
 }
-void PublishDraf(int User) {
-    //tunggu fungsi publish kicauan
+void PublishDraf(Draf D) {
+    Kicauan kicau;
+    CreateKicauan(&kicau);
+    TEXT_KICAU(kicau) = TEXT(D);
+
+    InsertLastKicau()
 }

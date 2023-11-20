@@ -2,9 +2,8 @@
 #define STACKDRAF_H
 
 #include "draf.h"
-#include "../../boolean.h"
+#include "../boolean.h"
 
-#define Nil -1
 #define MaxEl 100
 
 typedef int address;
@@ -16,15 +15,16 @@ typedef struct {
 
 extern StackDraf dbDrafUser[20];
 
-#define GETSTACK(USER) dbDrafUser[(USER)]
 #define IDXTOP(SD) (SD).IDXTOP
 #define LASTDRAF(SD) (SD).T[IDXTOP(SD)]
 
+void InitStackDraf(int User);
 void CreateDraf(int User);
 void DisplayDraf(int User);
 void HapusDraf(int User);
+void EditDraf(int User);
 void DeleteDraf(int User);
-void PublishDraf(int User);
+void PublishDraf(Draf D);
 
 void CreateEmpty(StackDraf* S);
 boolean IsEmpty(StackDraf S);
