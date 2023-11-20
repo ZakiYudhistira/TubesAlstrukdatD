@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include "pertemanan.h"
 #include "../Pengguna/pengguna.h"
+#include "../Perintah/perintah.h"
 
 void perintahDisplayDaftarTeman(Matrix_pertemanan m, id_user id, databaseprofil array);
 /*Menampilkan daftar pertemanan suatu user dengan id tertentu*/
