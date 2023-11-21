@@ -13,7 +13,7 @@
 
 typedef int id_user;
 typedef struct {
-    int permintaan_teman[380][3];
+    int permintaan_teman[190][3];
     int length;
 } Matrix_Permintaan;
 typedef struct {
@@ -24,7 +24,6 @@ typedef struct {
 
 #define rowEffT(p) (p).rowEff
 #define colEffT(p) (p).colEff
-#define name(p,id) (p)[id]
 
 boolean isFull(Matrix_pertemanan m);
 /*Mengeluarkan true jika matriks pertemanan sudah penuh*/
@@ -60,7 +59,7 @@ void hapusBaris(Matrix_Permintaan *array, id_user id, id_user id_hapus);
 /*I.S. matriks_permintaan tidak kosong*/
 /*F.S  dihapus satu baris dari matriks pertemanan*/
 
-void writetoConfig(Matrix_Permintaan m, Matrix_Permintaan pm);
+void writetoConfigPertemanan(Matrix_Permintaan m, Matrix_Permintaan pm);
 /*Menuliskan konfigurasi pertemanan kedalam suatu file config*/
 
 void loadMatrixTeman(Matrix_pertemanan *m, char* folder);

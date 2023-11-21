@@ -99,11 +99,61 @@ void hapusBaris(Matrix_Permintaan *array, id_user id, id_user id_hapus)
 
 /*===============================================Save dan load config pertemanan===============================================*/
 
-void loadMatrixTemanandPermintaanTeman(Matrix_pertemanan *m, Matrix_Permintaan *pm, char* folder)
+void loadMatrixTemanandPermintaanTeman(Matrix_pertemanan *m, Matrix_Permintaan *pm, Word path)
 /*I.S. sembarang*/
 /*F.S. matriks pertemanan terisi berdasarkan file config*/
 {
-    
+    FILE* file = fopen(path.TabWord, "r");
+    char line[300];
+
+    if(file == NULL){
+        printf("File tidak ditemukan\n");
+        exit(EXIT_FAILURE);
+    }
+
+    fgets(line, 300, file);
+    StringToWord(line, &currentWord);
+    int banyak_pengguna = WordToInt(removeNewline(currentWord));
+    rowEffT(*m) = banyak_pengguna;
+    colEffT(*m) = banyak_pengguna;
+
+    int i;
+    for(i = 2 ; i < banyak_pengguna*12 ; i++){
+        fgets(line, 300, file);
+    }
+    StringToWord(line, &currentWord);
+    currentWord = removeNewline(currentWord);
+
+    for(i = 0 ; i < banyak_pengguna ; i++){
+        int j;
+        int count = 0;
+        for(j = 0 ; j < currentWord.Length ; j++){
+            if(currentWord.TabWord[j] != ' ' ){
+                (*m).buffer[i][count] = currentWord.TabWord[j] - '0';
+                count++;
+            }
+        }
+        fgets(line, 300, file);
+        StringToWord(line, &currentWord);
+        currentWord = removeNewline(currentWord);
+    }
+
+    int banyak_permintaan = WordToInt(currentWord);
+    pm->length = banyak_permintaan;
+    for(i = 0 ; i < banyak_permintaan ; i++){
+        int count = 0;
+        fgets(line, 300, file);
+        StringToWord(line, &currentWord);
+        currentWord = removeNewline(currentWord);
+        int j;
+        for(j = 0 ; j < currentWord.Length ; j++){
+            if(currentWord.TabWord[j] != ' ' ){
+                pm->permintaan_teman[i][count] = currentWord.TabWord[j] - '0';
+                count++;
+            }
+        }
+    }
+    fclose(file);
 }
 
 void loadQueuePertemanan(Queue_Teman *q, Matrix_Permintaan array, id_user id)
@@ -117,7 +167,7 @@ void loadQueuePertemanan(Queue_Teman *q, Matrix_Permintaan array, id_user id)
     }
 }
 
-void writetoConfig(Matrix_Permintaan m, Matrix_Permintaan pm)
+void writetoConfigPertemanan(Matrix_Permintaan m, Matrix_Permintaan pm)
 {
     
 }
