@@ -10,6 +10,7 @@
 void CreateEmpty(StackDraf *S, Word namaAuthor) {
     IDXTOP(*S) = -1;
     AUTHORDRAF(*S) = namaAuthor;
+    
 }
 boolean IsEmpty(StackDraf S) {
     return IDXTOP(S) == -1;
@@ -56,7 +57,9 @@ void InitStackDraf(Word User, listStackDraf *lsd) {
 /* Primitive Function List of Stack */
 int getIdxUser(listStackDraf lsd, Word User) {
     for (int i = 0; i < lsd.nEff; i++) {
-        if (isSame(lsd.list->Author_Draf, User)) {
+        printWord(lsd.list[i].Author_Draf);
+        printWord(User);
+        if (isSame(lsd.list[i].Author_Draf, User)) {
             return i;
         }
     }
@@ -114,7 +117,7 @@ void DisplayDraf(Word User, listStackDraf lsd, ListDinKicau *l, databaseprofil d
 
     int idxUser = getIdxUser(lsd, User);
 
-    SD = lsd.list[idxUser];
+    SD = GET_LIST(lsd, idxUser);
 
     if (IsEmpty(SD)) {
         printf("Yah, anda belum memiliki draf apapun! Buat dulu ya :D\n");
@@ -137,7 +140,7 @@ void DisplayDraf(Word User, listStackDraf lsd, ListDinKicau *l, databaseprofil d
             DeleteDraf(User, &lsd);
             printf("\nDraf telah berhasil dihapus!\n");
         } else if (isValid(input, "UBAH")) {
-            EditDraf(User, &lsd);
+            EditDraf(User, &lsd, l, db);
         } else if (isValid(input, "KEMBALI")) {
             /* do nothing */
         } else {
@@ -159,9 +162,9 @@ void DeleteDraf(Word User, listStackDraf *lsd) {
     lsd->list[idxUser] = SD;
 }
 // Untuk input == 'UBAH'
-void EditDraf(Word User, listStackDraf *lsd) {
+void EditDraf(Word User, listStackDraf *lsd, ListDinKicau *l, databaseprofil db) {
     DeleteDraf(User, lsd);
-    CreateDraf(User, lsd);
+    CreateDraf(User, lsd, l, db);
 }
 // Untuk input == 'TERBIT'
 void PublishDraf(Word User, listStackDraf *lsd, ListDinKicau *l, databaseprofil db) {
@@ -204,6 +207,7 @@ void LoadDraf(listStackDraf *lsd, Word path) {
         fgets(line, 300, file);
         StringToWord(line, &currentWord);
         splitWordBackward(currentWord, &namaUser, &banyakDraf);
+
         banyakDrafInt = WordToInt(removeNewline(banyakDraf));
         
         CreateEmpty(&SD, namaUser);
@@ -213,11 +217,11 @@ void LoadDraf(listStackDraf *lsd, Word path) {
 
             fgets(line, 300, file);
             StringToWord(line, &currentWord);
-            D.text = removeNewline(currentWord);
+            TEXT(D) = removeNewline(currentWord);
 
             fgets(line, 300, file);
             StringToWord(line, &currentWord);
-            D.datetime = WordToTime(removeNewline(currentWord));
+            DATETIME(D) = WordToTime(removeNewline(currentWord));
 
             Push(&SD, D);
         }

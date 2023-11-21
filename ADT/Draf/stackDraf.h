@@ -44,13 +44,13 @@ void insertLastListStack(listStackDraf *lsd, StackDraf SD);
 
 /* Primitive Function Draf */
 // Untuk input == 'BUAT_DRAF'
-void CreateDraf(Word User, listStackDraf *lsd);
+void CreateDraf(Word User, listStackDraf *lsd, ListDinKicau *l, databaseprofil db);
 // Untuk input == 'LIHAT_DRAF'
-void DisplayDraf(Word User, listStackDraf lsd);
+void DisplayDraf(Word User, listStackDraf lsd, ListDinKicau *l, databaseprofil db);
 // Untuk input == 'HAPUS'
 void DeleteDraf(Word User, listStackDraf *lsd);
 // Untuk input == 'UBAH'
-void EditDraf(Word User, listStackDraf *lsd);
+void EditDraf(Word User, listStackDraf *lsd, ListDinKicau *l, databaseprofil db);
 // Untuk input == 'TERBIT'
 void PublishDraf(Word User, listStackDraf *lsd, ListDinKicau *l, databaseprofil db);
 

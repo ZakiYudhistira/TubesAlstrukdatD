@@ -275,10 +275,13 @@ void splitWordBackward(Word w, Word* w1, Word* w2) {
     w1->Length = i;
 
     i++;
+
+    j = 0;
     w2->Length = w.Length - i;
     while (i < w.Length) {
-        w1->TabWord[i] = w.TabWord[i];
+        w2->TabWord[j] = w.TabWord[i];
         i++;
+        j++;
     }
 }
 
