@@ -224,3 +224,25 @@ DATETIME DATETIMEPrevNDetik(DATETIME D, int N) {
     return DetikToDATETIME(total);
 }
 /* Mengirim salinan D dengan detik dikurang N */
+
+/* *** Kelompok Operator Aritmetika terhadap DATETIME *** */
+long int DATETIMEDurasi(DATETIME DAw, DATETIME DAkh) {
+    return (long int)(DATETIMEToDetik(DAkh) - DATETIMEToDetik(DAw));
+}
+/* Mengirim DAkh-DAw dlm Detik, dengan kalkulasi */
+/* Prekondisi: DAkh > DAw */
+
+Word TimeToWord(DATETIME D) {
+    Word W;
+    sprintf(W.TabWord, "%02d/%02d/%04d %02d:%02d:%02d", Day(D), Month(D), Year(D), Hour(Time(D)), Minute(Time(D)), Second(Time(D)));
+    W.Length = lengthString(W.TabWord);
+    return W;
+}
+
+DATETIME WordToTime(Word W) {
+    DATETIME D;
+    int DD, MM, YYYY, hh, mm, ss;
+    sscanf(W.TabWord, "%02d/%02d/%04d %02d:%02d:%02d", &DD, &MM, &YYYY, &hh, &mm, &ss);
+    CreateDATETIME(&D, DD, MM, YYYY, hh, mm, ss);
+    return D;
+}
