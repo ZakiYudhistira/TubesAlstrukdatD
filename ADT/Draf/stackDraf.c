@@ -71,7 +71,7 @@ void insertLastListStack(listStackDraf *lsd, StackDraf SD) {
 
 /* Primitive Function Draf */
 // Untuk input == 'BUAT_DRAF'
-void CreateDraf(Word User, listStackDraf *lsd) {
+void CreateDraf(Word User, listStackDraf *lsd, ListDinKicau *l, databaseprofil db) {
     Draf D;
     StackDraf SD;
 
@@ -96,7 +96,7 @@ void CreateDraf(Word User, listStackDraf *lsd) {
     ADV();
 
     if (isValid(input, "TERBIT")) {
-        // PublishDraf(D);
+        PublishDraf(User, lsd, l, db);
         printf("\nSelamat! Draf kicauan telah diterbitkan!\n");
     } else if (isValid(input, "HAPUS")) {
         DeleteDraf(User, lsd);
@@ -108,7 +108,7 @@ void CreateDraf(Word User, listStackDraf *lsd) {
     }
 }
 // Untuk input == 'LIHAT_DRAF'
-void DisplayDraf(Word User, listStackDraf lsd) {
+void DisplayDraf(Word User, listStackDraf lsd, ListDinKicau *l, databaseprofil db) {
     StackDraf SD;
     Word input;
 
@@ -131,7 +131,7 @@ void DisplayDraf(Word User, listStackDraf lsd) {
         ADV();
 
         if (isValid(input, "TERBIT")) {
-            // PublishDraf(D);
+            PublishDraf(User, &lsd, l, db);
             printf("\nSelamat! Draf kicauan telah diterbitkan!\n");
         } else if (isValid(input, "HAPUS")) {
             DeleteDraf(User, &lsd);
@@ -170,7 +170,7 @@ void PublishDraf(Word User, listStackDraf *lsd, ListDinKicau *l, databaseprofil 
 
     int idxUser = getIdxUser(*lsd, User);
 
-    SD = lsd->list[idxUser];
+    SD = GET_LIST(*lsd, idxUser);
 
     Pop(&SD, &D);
 
