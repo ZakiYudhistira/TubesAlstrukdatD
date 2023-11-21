@@ -3,8 +3,7 @@
 #include "utas.h"
 #include "../Perintah/perintah.h"
 
-Utas dbUtasUser[20];
-int lastID = 0;
+ListDinUtas dbUtasUser;
 
 Address newNode(ElType val) {
     Address p = (Address)malloc(sizeof(Node));
@@ -21,7 +20,6 @@ void CreateEmptyUtas(Utas* U, int IDKicau) {
     FIRST(*U) = NULL;
 
     printf("Utas berhasil dibuat!\n");
-    dbUtasUser[lastID] = *U;
 
     boolean lanjut = true;
 
@@ -30,19 +28,23 @@ void CreateEmptyUtas(Utas* U, int IDKicau) {
 
         char* text;
         text = perintah();
-        printf("A");
-        LENGTH(*U) += 1;
+
+        int len = LENGTH(*U);
+        len += 1;
         
-        insertAtUtas(U, text, LENGTH(*U));
+        insertAtUtas(U, text, len);
 
         printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK)\n");
+        text = perintah();
 
-        if (true) {
+        if (isValid(text, "NO")) {
             lanjut = false;
         } else {
             printf("hehe");
         }
     }
+
+    InsertLastListUtas(*U);
 
     printf("Utas selesai!\n");
 }
@@ -53,7 +55,8 @@ void insertFirstUtas(Utas *U, ElType val) {
     if (LENGTH(*U) == 0) {
         FIRST(*U) = p;    
     } else {
-        NEXT(p) = NEXT(FIRST(*U));
+        Address f = FIRST(*U);
+        NEXT(p) = NEXT(f);
         FIRST(*U) = p;
     }
 }
@@ -99,4 +102,25 @@ void deleteAtUtas(Utas *U, ElType *val, int idx) {
     }
 }
 
-// void displayUtas(Utas U);
+void displayUtas(int idx) {
+    Utas U = dbUtasUser.buffer[idx];
+    Address p = FIRST(U);
+
+    for (int i = 0; i < LENGTH(U); i++) {
+        printf("%s\n", INFO(p));
+        p = NEXT(p);
+    }
+}
+
+void ExpandListUtas(int num) {
+    BUFFER_UTAS(dbUtasUser) = realloc(BUFFER_UTAS(dbUtasUser), (CAPACITY_UTAS(dbUtasUser) + num) * sizeof(Utas));
+    CAPACITY_UTAS(dbUtasUser) += num;
+}
+
+void InsertLastListUtas(Utas val) {
+    if (dbUtasUser.nEff == dbUtasUser.capacity) {
+        ExpandListUtas(10);
+    }
+    dbUtasUser.buffer[NEFF_UTAS(dbUtasUser)] = val;
+    dbUtasUser.nEff += 1;
+}

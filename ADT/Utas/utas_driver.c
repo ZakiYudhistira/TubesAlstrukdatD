@@ -5,5 +5,6 @@
 int main() {
     Utas U;
     CreateEmptyUtas(&U, 1);
+    displayUtas(0);
     return 0;
 }

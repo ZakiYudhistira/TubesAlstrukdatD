@@ -97,6 +97,8 @@ void DisplayDraf(int User) {
             printf("\nDraf telah berhasil dihapus!\n");
         } else if (isValid(input, "UBAH")) {
             EditDraf(User);
+        } else if (isValid(input, "KEMBALI")) {
+            /* do nothing */
         } else {
             printf("\nMasukkan input yang valid!\n");
         }

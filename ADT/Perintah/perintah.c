@@ -44,6 +44,8 @@ char* perintah() {
         result[i] = currentWord.TabWord[i];
     }
 
+    ADV();
+
     return result;
 }
 
