@@ -1,6 +1,15 @@
 #include "pertemanan.h"
 #include "../boolean.h"
 #include "ADTRequirements/queuelinked.h"
+// #include "../Pengguna/pengguna.h"
+#include "../Matrix/matrix.h"
+// #include "../Pengguna/pengguna.c"
+#include "pertemanan.c"
+#include "ADTRequirements/queuelinked.c"
+#include "../Matrix/matrix.c"
+#include "../Mesin Karakter/charmachine.c"
+#include "../Mesin Karakter/charmachine.h"
+#include "../Perintah/perintah.c"
 #include <stdio.h>
 #define endif printf("\n")
 
@@ -15,38 +24,31 @@ void displayMP(Matrix_Permintaan array){
 }
 
 int main(){
-    char nama[4][20] = {"Joko","Santoso","Budi","Sugemi"};
-    // int array[19][3] = {{1,2,2},{0,2,5},{0,3,8}};
-    Matrix_pertemanan ini;
-    Matrix_Permintaan dua = {
-        {{1,2,2},{0,2,5},{0,3,8}},
-        3
+    // databaseprofil array;
+    // Pengguna Pengguna1;
+    // Pengguna Pengguna2;
+    // Pengguna Pengguna3;
+    // createDatabase(&array);
+    // CreatePengguna(&Pengguna1);
+    // CreatePengguna(&Pengguna2);
+    // CreatePengguna(&Pengguna3);
+    Matrix_Permintaan b;
+    Matrix_pertemanan a;
+    Word path = {
+        "../../Konfigurasi/config-1/pengguna.config",
+        300
     };
-    createMatrixTeman(&ini);
-    addPengguna(&ini);
-    addPengguna(&ini);
-    addPengguna(&ini);
-    addPengguna(&ini);
-    tulisMatriksPertemanan(ini);
-    endif;
-    tambahTeman(&ini, 1,2);
-    tambahTeman(&ini, 1,3);
-    tambahTeman(&ini, 1,0);
-    tulisMatriksPertemanan(ini);
-    endif;
-    daftarTeman(ini,1,nama);
-    endif;
-    daftarTeman(ini,2,nama);
-    Queue_Teman queue_0;
-    CreateQueueQT(&queue_0);
-    loadQueuePertemanan(&queue_0, dua, 0);
-    DisplayQueueQT(queue_0, nama);
-    displayMP(dua);
-    endif;
-    hapusBaris(&dua,0,3);
-    displayMP(dua);
-    endif;
-    loadQueuePertemanan(&queue_0, dua, 0);
-    DisplayQueueQT(queue_0, nama);
-    endif;
+
+
+    // perintah(300, true);
+    // ADV();
+    // printWord(currentWord);
+    // endif;
+    // perintah(300, true);
+    // ADV();
+    // printWord(currentWord);
+    createMatrixTeman(&a);
+    loadMatrixTemanandPermintaanTeman(&a, &b, path);
+    tulisMatriksPertemanan(a);
+    displayMP(b);
 }
