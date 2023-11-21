@@ -18,7 +18,7 @@ void CreatePengguna(Pengguna* p) {
     BIO(*p) = empty;
     HP(*p) = empty;
     WETON(*p) = empty;
-    JENIS(*p) = empty;
+    JENIS(*p) = 0;
     createMatrix(5, 10, &PROFIL(*p));
     for (i = 0; i < 5; i++) {
         for (int j = 0; j < 10; j = j + 2) {
@@ -149,9 +149,9 @@ void displayPengguna(Pengguna p) {
     }
     printf("\n");
     printf("Jenis: ");
-    for (int i = 0; i < JENIS(p).Length; i++) {
-        printf("%c", JENIS(p).TabWord[i]);
-    }
+    // for (int i = 0; i < JENIS(p).Length; i++) {
+        printf("%d", JENIS(p));
+    // }
     printf("\n");
     printf("Profil: \n");
     displayMatrixChar(PROFIL(p));
@@ -276,7 +276,7 @@ void ubahProfil(databaseprofil *l, int id) {
     }
 }
 
-boolean isChangeValid(Word kata) {
-    int beda = 0;
-    for (int i = 0; i < )
-}
+// boolean isChangeValid(Word kata) {
+//     int beda = 0;
+//     for (int i = 0; i < )
+// }

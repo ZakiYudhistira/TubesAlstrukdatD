@@ -5,7 +5,7 @@
 
 typedef struct {
     DATETIME datetime;
-    char* text;
+    Word text;
 } Draf;
 
 #define DATETIME(D) (D).datetime

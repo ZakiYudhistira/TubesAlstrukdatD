@@ -2,12 +2,7 @@
 #include <stdio.h>
 
 int main() {
-    InitStackDraf(0);
-    DisplayDraf(0);
-    CreateDraf(0);
-    DisplayDraf(0);
-    CreateDraf(0);
-    DisplayDraf(0);
-    DisplayDraf(0);
+    listStackDraf lsd;
+    lsd.nEff = 0;
     return 0;
 }
