@@ -13,25 +13,102 @@ int main() {
     createDatabase(&data);
     selesai = false;
     int id = -1;
+    // LoadPengguna(&data,)
     while(selesai == false) {
-        char* command = perintah();
-        if (isValid(command,"DAFTAR")) {
+        perintah(300,true);
+        if (isValid(currentWord,"DAFTAR")) {
+            ADV();
             Pengguna p;
-            ReadPengguna(&p,&data);
-            ADV();
+            if (listLength(&data) == 20) {
+                printf("Jumlah pengguna sudah penuh\n");
+            }
+            else {
+                ReadPengguna(&p,&data);
+            }
         }
 
-        else if (isValid(command,"MASUK")) {
+        else if (isValid(currentWord,"MASUK")) {
+            ADV();
             id = login(&data);
-            ADV();
         }
 
-        else if (isValid(command,"KELUAR")) {
-            id = -1;
+        else if (isValid(currentWord,"KELUAR")) {
             ADV();
+            if (id != -1) {
+                id = -1;
+                printf("Terima kasih telah menggunakan layanan BurBir\n");
+            }
+            else {
+                printf("Masuk terlebih dahulu\n");
+            }
+        }
+        
+        else if (isValid(currentWord,"ATUR_JENIS_AKUN")) {
+            ADV();
+            if (id != -1) {
+                if(jenis(data,id) == 0) {
+                    printf("Anda saat ini akun Publik, ingin menjadi akun Privat?\n");
+                    printf("Ketik Y untuk mengganti, ketik N untuk tidak\n");
+                    STARTWORD();
+                    ADV();
+                    if (isValid(currentWord,"Y")) {
+                        jenis(data,id) = 1;
+                        printf("Akun telah diubah menjadi akun Privat\n");
+                    }
+                }
+                else {
+                    printf("Anda saat ini akun Privat, ingin menjadi akun Publik?\n");
+                    printf("Ketik Y untuk mengganti, ketik N untuk tidak\n");
+                    STARTWORD();
+                    ADV();
+                    if (isValid(currentWord,"Y")) {
+                        jenis(data,id) = 0;
+                        printf("Akun telah diubah menjadi akun Publik\n");
+                    }
+                }
+            }
+            else {
+                printf("Masuk terlebih dahulu\n");
+            }
         }
 
-        else if (isChangeProfile(command)
+        else if (isValid(currentWord,"GANTI_PROFIL")) {
+            ADV();
+            if (id != -1) {
+                ubahProfil(&data,id);
+            }
+            else {
+                printf("Masuk terlebih dahulu\n");
+            }
+        }
+
+        else if(isValid(currentWord,"TUTUP_PROGRAM")) {
+            ADV();
+            selesai = true;
+        }
+
+        else if(isCheck(currentWord)) {
+            ADV();
+            Word user = getUser(currentWord);
+            printWord(user);
+            printf("\n");
+            int idprofil = getId(&data,user);
+            cekProfil(idprofil,&data);
+        }
+
+        else if(isValid(currentWord,"GANTI_FOTO_PROFIL")) {
+            ADV();
+            if (id != -1) {
+                ubahfotoprofil(&data,id);
+            }
+            else {
+                printf("Masuk terlebih dahulu\n");
+            }
+        }
+
+        else {
+            ADV();
+        }
     }
     
     

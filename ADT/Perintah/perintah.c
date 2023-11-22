@@ -260,6 +260,31 @@ void splitWord(Word w, Word* w1, Word* w2) {
     w2->Length = j;
 }
 
+void splitWordBackward(Word w, Word* w1, Word* w2) {
+    int i = w.Length - 1;
+    while (w.TabWord[i] != ' ') {
+        // w1->TabWord[i] = w.TabWord[i];
+        i--;
+    }
+
+    int j = 0;
+    while (j < i) {
+        w1->TabWord[j] = w.TabWord[j];
+        j++;
+    }
+    w1->Length = i;
+
+    i++;
+
+    j = 0;
+    w2->Length = w.Length - i;
+    while (i < w.Length) {
+        w2->TabWord[j] = w.TabWord[i];
+        i++;
+        j++;
+    }
+}
+
 void split3Word(Word w, Word* w1, Word* w2, Word* w3) {
     int i = 0;
     while (w.TabWord[i] != ' ') {
@@ -284,3 +309,4 @@ void split3Word(Word w, Word* w1, Word* w2, Word* w3) {
     }
     w3->Length = j;
 }
+

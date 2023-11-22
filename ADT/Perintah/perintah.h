@@ -44,6 +44,8 @@ boolean isSame(Word w1, Word w2);
 
 void splitWord(Word w, Word* w1, Word* w2);
 
+void splitWordBackward(Word w, Word* w1, Word* w2);
+
 void split3Word(Word w, Word* w1, Word* w2, Word* w3);
 
 #endif

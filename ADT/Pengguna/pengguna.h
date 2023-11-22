@@ -37,6 +37,7 @@ typedef struct {
 #define hp(l,i) (l).contents[i].hp
 #define weton(l,i) (l).contents[i].weton
 #define jenis(l,i) (l).contents[i].jenis
+#define profil(l,i) (l).contents[i].profil
 #define NAMA(p) (p).nama
 #define PASSWORD(p) (p).password
 #define BIO(p) (p).bio
@@ -92,4 +93,16 @@ Word inputpass();
 int getId(databaseprofil *l, Word username);
 
 boolean isChangeValid(Word kata);
+
+void CopyWordPengguna();
+
+void STARTWORDPengguna();
+
+boolean isCheck(Word s);
+
+Word getUser(Word kata);
+
+void ubahfotoprofil(databaseprofil *l, int id);
+
+void LoadPengguna(databaseprofil* l, Word path);
 #endif
