@@ -479,10 +479,10 @@ void LoadPengguna(databaseprofil* l, Word path) {
     FILE* file = fopen(path.TabWord, "r");
     char line[300];
 
-    if (file == NULL) {
-        printf("File tidak ditemukan\n");
-        exit(EXIT_FAILURE);
-    }
+    // if (file == NULL) {
+    //     printf("File tidak ditemukan\n");
+    //     exit(EXIT_FAILURE);
+    // }
 
     fgets(line, 300, file);
     StringToWord(line, &currentWord);

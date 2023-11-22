@@ -1,3 +1,4 @@
+#include "perintah.h"
 #include "perintah.c"
 #include "../Mesin Karakter/charmachine.c"
 #include <stdio.h>
