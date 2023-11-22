@@ -135,9 +135,10 @@ boolean isValid(Word s, char* valid) {
     return check;
 }
 
-const char* concatString(char* s1, char* s2) {
+char* concatString(char* s1, char* s2) {
     static char s3[300];
-    int i = 0, j = 0;
+    int i = 0;
+    int j = 0;
     while (s1[i] != '\0') {
         s3[i] = s1[i];
         i++;
@@ -147,7 +148,7 @@ const char* concatString(char* s1, char* s2) {
         i++;
         j++;
     }
-
+    s3[i] = '\0';
     return s3;
 }
 
@@ -227,6 +228,17 @@ int WordToInt(Word w) {
     }
 
     return result;
+}
+
+char* WordToString(Word w) {
+    static char s[300];
+    int i = 0;
+    while (i < w.Length) {
+        s[i] = w.TabWord[i];
+        i++;
+    }
+    s[i] = '\0';
+    return s;
 }
 
 boolean isSame(Word w1, Word w2) {
