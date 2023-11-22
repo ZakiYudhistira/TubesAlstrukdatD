@@ -39,6 +39,7 @@ void InverseStackDraf(StackDraf* SD);
 void InitStackDraf(Word User, listStackDraf *lsd);
 
 /* Primitive Function List of Stack */
+void initListStackDraf(listStackDraf *lsd);
 int getIdxUser(listStackDraf lsd, Word User);
 void insertLastListStack(listStackDraf *lsd, StackDraf SD);
 
