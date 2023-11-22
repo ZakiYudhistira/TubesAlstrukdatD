@@ -1,14 +1,16 @@
+#include "perintah.h"
 #include "perintah.c"
+#include "../Mesin Karakter/charmachine.c"
 #include <stdio.h>
 
 int main() {
-    perintah(20, true);//true buat PERINTAH dari user ke fitur jadi ada ">>"
+    perintah(3, true);//true kalo misal buat perintah ke fitur biar ada ">>"
 
     if (isValid(currentWord, "hai")) {
         printWord(currentWord);
     }
-    else if (isBlanks(currentWord)) {
-        printf("Valid\n");
+    else if(isBlanks(currentWord)){
+        printf("valid\n");
     }
 
     return 0;

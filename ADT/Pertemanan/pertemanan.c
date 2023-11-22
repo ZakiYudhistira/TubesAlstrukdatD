@@ -40,6 +40,10 @@ void createMatrixTeman(Matrix_pertemanan *m)
     }
 }
 
+void createMatrixPermintaan(Matrix_Permintaan *m){
+    (*m).length = 0;
+}
+
 void addPengguna(Matrix_pertemanan *m)
 /*I.S. matrix pertemanan terdefinisi, bisa kosong bisa penuh*/
 /*F.S. rowEff dan colEff bertambah 1, menandakan dibuatkannya 1 akun baru*/
@@ -118,7 +122,7 @@ void loadMatrixTemanandPermintaanTeman(Matrix_pertemanan *m, Matrix_Permintaan *
     colEffT(*m) = banyak_pengguna;
 
     int i;
-    for(i = 2 ; i < banyak_pengguna*12 ; i++){
+    for(i = 0 ; i <= banyak_pengguna*11 ; i++){
         fgets(line, 300, file);
     }
     StringToWord(line, &currentWord);
@@ -161,8 +165,8 @@ void loadQueuePertemanan(Queue_Teman *q, Matrix_Permintaan array, id_user id)
     CreateQueueQT(q);
     int i;
     for(i = 0 ; i < array.length ; i++){
-        if(array.permintaan_teman[i][0] == id){
-            enqueueQT(q, array.permintaan_teman[i][1], array.permintaan_teman[i][2]); 
+        if(array.permintaan_teman[i][1] == id){
+            enqueueQT(q, array.permintaan_teman[i][0], array.permintaan_teman[i][2]); 
         }
     }
 }
