@@ -84,22 +84,22 @@ Word inputWeton() {
     ADV();
     Word hari;
     hari.Length = 0;
-    if(currentWord.TabWord[0] == 'p'|| currentWord.TabWord[0] == 'P') {
+    if (currentWord.TabWord[0] == 'p' || currentWord.TabWord[0] == 'P') {
         hari.Length += 1;
         hari.TabWord[0] = 'P';
-        if(currentWord.TabWord[1] == 'A' || currentWord.TabWord[1] == 'a') {
+        if (currentWord.TabWord[1] == 'A' || currentWord.TabWord[1] == 'a') {
             hari.Length += 1;
             hari.TabWord[1] = 'a';
-            if(currentWord.TabWord[2] == 'H' || currentWord.TabWord[2] == 'h') {
+            if (currentWord.TabWord[2] == 'H' || currentWord.TabWord[2] == 'h') {
                 hari.Length += 1;
                 hari.TabWord[2] = 'h';
-                if(currentWord.TabWord[3] == 'I' || currentWord.TabWord[3] == 'i') {
+                if (currentWord.TabWord[3] == 'I' || currentWord.TabWord[3] == 'i') {
                     hari.Length += 1;
                     hari.TabWord[3] = 'i';
-                    if(currentWord.TabWord[4] == 'N' || currentWord.TabWord[4] == 'n') {
+                    if (currentWord.TabWord[4] == 'N' || currentWord.TabWord[4] == 'n') {
                         hari.Length += 1;
                         hari.TabWord[4] = 'n';
-                        if(currentWord.TabWord[5] == 'G' || currentWord.TabWord[5] == 'g') {
+                        if (currentWord.TabWord[5] == 'G' || currentWord.TabWord[5] == 'g') {
                             hari.Length += 1;
                             hari.TabWord[5] = 'g';
                             if (currentWord.Length == 6) {
@@ -110,10 +110,10 @@ Word inputWeton() {
                 }
             }
         }
-        else if(currentWord.TabWord[1] == 'O' || currentWord.TabWord[1] == 'o') {
+        else if (currentWord.TabWord[1] == 'O' || currentWord.TabWord[1] == 'o') {
             hari.Length += 1;
             hari.TabWord[1] = 'o';
-            if(currentWord.TabWord[2] == 'N' || currentWord.TabWord[2] == 'n') {
+            if (currentWord.TabWord[2] == 'N' || currentWord.TabWord[2] == 'n') {
                 hari.Length += 1;
                 hari.TabWord[2] = 'n';
                 if (currentWord.Length == 3) {
@@ -122,22 +122,22 @@ Word inputWeton() {
             }
         }
     }
-    if(currentWord.TabWord[0] == 'K'|| currentWord.TabWord[0] == 'k') {
+    if (currentWord.TabWord[0] == 'K' || currentWord.TabWord[0] == 'k') {
         hari.Length += 1;
         hari.TabWord[0] = 'K';
-        if(currentWord.TabWord[1] == 'L' || currentWord.TabWord[1] == 'l') {
+        if (currentWord.TabWord[1] == 'L' || currentWord.TabWord[1] == 'l') {
             hari.Length += 1;
             hari.TabWord[1] = 'l';
-            if(currentWord.TabWord[2] == 'I' || currentWord.TabWord[2] == 'i') {
+            if (currentWord.TabWord[2] == 'I' || currentWord.TabWord[2] == 'i') {
                 hari.Length += 1;
                 hari.TabWord[2] = 'i';
-                if(currentWord.TabWord[3] == 'W' || currentWord.TabWord[3] == 'w') {
+                if (currentWord.TabWord[3] == 'W' || currentWord.TabWord[3] == 'w') {
                     hari.Length += 1;
                     hari.TabWord[3] = 'w';
-                    if(currentWord.TabWord[4] == 'O' || currentWord.TabWord[4] == 'o') {
+                    if (currentWord.TabWord[4] == 'O' || currentWord.TabWord[4] == 'o') {
                         hari.Length += 1;
                         hari.TabWord[4] = 'o';
-                        if(currentWord.TabWord[5] == 'N' || currentWord.TabWord[5] == 'n') {
+                        if (currentWord.TabWord[5] == 'N' || currentWord.TabWord[5] == 'n') {
                             hari.Length += 1;
                             hari.TabWord[5] = 'n';
                             if (currentWord.Length == 6) {
@@ -149,16 +149,16 @@ Word inputWeton() {
             }
         }
     }
-    if(currentWord.TabWord[0] == 'L'|| currentWord.TabWord[0] == 'l') {
+    if (currentWord.TabWord[0] == 'L' || currentWord.TabWord[0] == 'l') {
         hari.Length += 1;
         hari.TabWord[0] = 'L';
-        if(currentWord.TabWord[1] == 'E' || currentWord.TabWord[1] == 'e') {
+        if (currentWord.TabWord[1] == 'E' || currentWord.TabWord[1] == 'e') {
             hari.Length += 1;
             hari.TabWord[1] = 'e';
-            if(currentWord.TabWord[2] == 'G' || currentWord.TabWord[2] == 'g') {
+            if (currentWord.TabWord[2] == 'G' || currentWord.TabWord[2] == 'g') {
                 hari.Length += 1;
                 hari.TabWord[2] = 'g';
-                if(currentWord.TabWord[3] == 'I' || currentWord.TabWord[3] == 'i') {
+                if (currentWord.TabWord[3] == 'I' || currentWord.TabWord[3] == 'i') {
                     hari.Length += 1;
                     hari.TabWord[3] = 'i';
                     if (currentWord.Length == 4) {
@@ -168,16 +168,16 @@ Word inputWeton() {
             }
         }
     }
-    if(currentWord.TabWord[0] == 'W'|| currentWord.TabWord[0] == 'w') {
+    if (currentWord.TabWord[0] == 'W' || currentWord.TabWord[0] == 'w') {
         hari.Length += 1;
         hari.TabWord[0] = 'W';
-        if(currentWord.TabWord[1] == 'A' || currentWord.TabWord[1] == 'a') {
+        if (currentWord.TabWord[1] == 'A' || currentWord.TabWord[1] == 'a') {
             hari.Length += 1;
             hari.TabWord[1] = 'a';
-            if(currentWord.TabWord[2] == 'G' || currentWord.TabWord[2] == 'g') {
+            if (currentWord.TabWord[2] == 'G' || currentWord.TabWord[2] == 'g') {
                 hari.Length += 1;
                 hari.TabWord[2] = 'g';
-                if(currentWord.TabWord[3] == 'E' || currentWord.TabWord[3] == 'e') {
+                if (currentWord.TabWord[3] == 'E' || currentWord.TabWord[3] == 'e') {
                     hari.Length += 1;
                     hari.TabWord[3] = 'e';
                     if (currentWord.Length == 4) {
@@ -206,7 +206,7 @@ boolean inputHP(Word nomor) {
     return true;
 }
 
-void ReadPengguna(Pengguna *p, databaseprofil *l) {
+void ReadPengguna(Pengguna* p, databaseprofil* l) {
     CreatePengguna(p);
     boolean namavalid = false;
     while (namavalid == false)
@@ -215,13 +215,14 @@ void ReadPengguna(Pengguna *p, databaseprofil *l) {
         Word kata = inputusername();
         int sama = 0;
         for (int i = 0; i < listLength(l); i++) {
-            Word name = nama(*l,i);
+            Word name = nama(*l, i);
             if (isWordEqual(name, kata)) {
                 sama += 1;
             }
         }
         if (sama > 0) {
             printf("Username telah digunakan, silahkan masukkan yang lain\n");
+            return;
         }
         else {
             NAMA(*p) = kata;
@@ -232,7 +233,7 @@ void ReadPengguna(Pengguna *p, databaseprofil *l) {
     Word password = inputpass();
     PASSWORD(*p) = password;
     JENIS(*p) = 0;
-    insertLast(l,*p);
+    insertLast(l, *p);
 }
 /* I.S. sembarang */
 /* F.S. Sebuah p terbentuk dengan isi masing-masing berupa Word yang diakuisisi
@@ -268,14 +269,14 @@ void displayPengguna(Pengguna p) {
 boolean isWordEqual(Word uname1, Word uname2) {
     int count = 0;
     if (uname1.Length != uname2.Length) {
-       return false;
-       printf("%d\n",uname1.Length);
-       printf("%d\n",uname2.Length);
+        return false;
+        printf("%d\n", uname1.Length);
+        printf("%d\n", uname2.Length);
     }
     else {
         for (int i = 0; i < uname1.Length; i++) {
             if (uname1.TabWord[i] == uname2.TabWord[i]) {
-            count += 1;
+                count += 1;
             }
         }
         if (count == uname1.Length) {
@@ -287,15 +288,15 @@ boolean isWordEqual(Word uname1, Word uname2) {
     }
 }
 
-void insertLast(databaseprofil *l, Pengguna val) {
+void insertLast(databaseprofil* l, Pengguna val) {
     l->contents[listLength(l)] = val;
 }
 
-int listLength(databaseprofil *l) {
+int listLength(databaseprofil* l) {
     boolean ketemu = false;
     int length = 0;
     while (length < CAPACITY && ketemu == false) {
-        if (nama(*l,length).Length == 0) {
+        if (nama(*l, length).Length == 0) {
             ketemu = true;
         }
         else {
@@ -305,11 +306,11 @@ int listLength(databaseprofil *l) {
     return length;
 }
 
-void listLengthvoid(databaseprofil *l, int *val) {
+void listLengthvoid(databaseprofil* l, int* val) {
     boolean ketemu = false;
     int length = 0;
     while (length < CAPACITY && ketemu == false) {
-        if (nama(*l,length).TabWord[0] == ' ') {
+        if (nama(*l, length).TabWord[0] == ' ') {
             ketemu = true;
         }
         else {
@@ -319,27 +320,27 @@ void listLengthvoid(databaseprofil *l, int *val) {
     *val = length;
 }
 
-void createDatabase(databaseprofil *l) {
+void createDatabase(databaseprofil* l) {
     int i;
     for (i = 0; i < CAPACITY; i++) {
-        nama(*l,i).Length = 0;
+        nama(*l, i).Length = 0;
     }
 }
 
-int login(databaseprofil *data) {
+int login(databaseprofil* data) {
     Word uname;
     printf("Silahkan masukkan username: ");
     STARTWORDPengguna();
     ADV();
     for (int i = 0; i < listLength(data); i++) {
-        if(isWordEqual(currentWord, nama(*data,i))) {
+        if (isWordEqual(currentWord, nama(*data, i))) {
             boolean passwordbetul = false;
             while (passwordbetul == false) {
                 printf("Silahkan masukkan password: ");
                 // printf("\n");
                 STARTWORDPengguna();
                 ADV();
-                if(isWordEqual(currentWord, password(*data,i))) {
+                if (isWordEqual(currentWord, password(*data, i))) {
                     printf("Selamat datang\n");
                     return i;
                 }
@@ -353,8 +354,8 @@ int login(databaseprofil *data) {
 }
 
 
-void cekProfil (int idx, databaseprofil *data) {
-    if(idx == -1) {
+void cekProfil(int idx, databaseprofil* data) {
+    if (idx == -1) {
         printf("Username tidak ditemukan\n");
     }
     else {
@@ -362,16 +363,16 @@ void cekProfil (int idx, databaseprofil *data) {
     }
 }
 
-int getId(databaseprofil *l, Word username) {
+int getId(databaseprofil* l, Word username) {
     for (int i = 0; i < listLength(l); i++) {
-        if (isWordEqual(nama(*l,i),username)) {
+        if (isWordEqual(nama(*l, i), username)) {
             return i;
         }
     }
     return -1;
 }
 
-void ubahProfil(databaseprofil *l, int id) {
+void ubahProfil(databaseprofil* l, int id) {
     Word kata;
     printf("Masukkan bio: ");
     kata.Length = 0;
@@ -383,14 +384,14 @@ void ubahProfil(databaseprofil *l, int id) {
     kata.Length = 0;
     kata = inputWeton();
     if (kata.Length > 0) {
-        weton(*l,id) = kata;
+        weton(*l, id) = kata;
     }
     printf("Masukkan No HP: ");
     STARTWORD();
     ADV();
     boolean isValid = inputHP(currentWord);
     if (isValid == true) {
-        hp(*l,id) = currentWord;
+        hp(*l, id) = currentWord;
     }
     else {
         printf("No hp salah\n");
@@ -461,15 +462,15 @@ Word getUser(Word kata) {
     return username;
 }
 
-void ubahfotoprofil(databaseprofil *l, int id) {
+void ubahfotoprofil(databaseprofil* l, int id) {
     STARTWORDPengguna();
     ADV();
-    int idx = 0; 
+    int idx = 0;
     for (int i = 0; i < 5; i++) {
-        for(int j = 0; j < 5; j++) {
-            profil(*l,id).mem[i][j].warna = currentWord.TabWord[idx];
+        for (int j = 0; j < 5; j++) {
+            profil(*l, id).mem[i][j].warna = currentWord.TabWord[idx];
             idx += 2;
-            profil(*l,id).mem[i][j].simbol = currentWord.TabWord[idx];
+            profil(*l, id).mem[i][j].simbol = currentWord.TabWord[idx];
             idx += 2;
         }
     }
@@ -479,10 +480,10 @@ void LoadPengguna(databaseprofil* l, Word path) {
     FILE* file = fopen(path.TabWord, "r");
     char line[300];
 
-    // if (file == NULL) {
-    //     printf("File tidak ditemukan\n");
-    //     exit(EXIT_FAILURE);
-    // }
+    if (file == NULL) {
+        printf("File tidak ditemukan\n");
+        exit(EXIT_FAILURE);
+    }
 
     fgets(line, 300, file);
     StringToWord(line, &currentWord);
@@ -493,7 +494,7 @@ void LoadPengguna(databaseprofil* l, Word path) {
 
         fgets(line, 300, file);
         StringToWord(line, &currentWord);
-        NAMA(user) = removeNewline(currentWord); 
+        NAMA(user) = removeNewline(currentWord);
 
         fgets(line, 300, file);
         StringToWord(line, &currentWord);
@@ -517,7 +518,7 @@ void LoadPengguna(databaseprofil* l, Word path) {
         fgets(line, 300, file);
         fgets(line, 300, file);
 
-        insertLast(l,user);
+        insertLast(l, user);
     }
 
     fclose(file);
