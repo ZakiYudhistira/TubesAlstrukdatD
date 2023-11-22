@@ -3,9 +3,33 @@
 #include "ADT/Perintah/perintah.c"
 #include <dirent.h>
 
+<<<<<<< Updated upstream
 boolean cekFolder(Word word) {
     DIR *directory;
     struct dirent *entry;
+=======
+int main() {
+    // Inisialisasi BurBir
+    databaseprofil dp;
+    Matrix_pertemanan mt;
+    Matrix_Permintaan mp;
+    ListDinKicau lk;
+    ListDinBalasan lb;
+    const char *asciiArt ={
+        " /$$$$$$$                      /$$       /$$          \n"
+        "| $$__  $$                    | $$      |__/          \n"
+        "| $$  \\ $$ /$$   /$$  /$$$$$$ | $$$$$$$  /$$  /$$$$$$ \n"
+        "| $$$$$$$ | $$  | $$ /$$__  $$| $$__  $$| $$ /$$__  $$\n"
+        "| $$__  $$| $$  | $$| $$  \\__/| $$  \\ $$| $$| $$  \\__/\n"
+        "| $$  \\ $$| $$  | $$| $$      | $$  | $$| $$| $$      \n"
+        "| $$$$$$$/|  $$$$$$/| $$      | $$$$$$$/| $$| $$      \n"
+        "|_______/  \\______/ |__/      |_______/ |__/|__/      \n"
+        "                                                      \n"
+    };
+    printf("%s", asciiArt);
+
+
+>>>>>>> Stashed changes
 
     directory = opendir("Konfigurasi/"); // Ganti dengan path menuju folder konfigurasi Anda
 
