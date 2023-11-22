@@ -1,7 +1,6 @@
-#include "../Mesin Karakter/charmachine.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "wordmachine.h"
+#include "perintah.h"
 
 boolean EndWord;
 Word currentWord;
@@ -321,4 +320,3 @@ void split3Word(Word w, Word* w1, Word* w2, Word* w3) {
     }
     w3->Length = j;
 }
-

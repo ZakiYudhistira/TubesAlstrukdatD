@@ -26,6 +26,33 @@
 #include "ADT/Draf/stackDraf.c"
 #include "ADT/Time/time.h"
 #include "ADT/Time/time.c"
+#include <sys/stat.h>
+
+Word isDirectoryExists(){
+    Word path;
+    printf("Silahkan masukan folder konfigurasi untuk dimuat: ");
+    perintah(300, false);
+    ADV();
+    printf("\n");
+    path = currentWord;
+    StringToWord(concatString("./Konfigurasi/", WordToString(path)), &path);
+
+    struct stat stats;
+    stat(path.TabWord, &stats);
+
+    // Check for file existence
+    while(!(S_ISDIR(stats.st_mode))){
+        printf("Silahkan masukan folder konfigurasi untuk dimuat: ");
+        perintah(300, false);
+        ADV();
+        printf("\n");
+        path = currentWord;
+        StringToWord(concatString("./Konfigurasi/", WordToString(path)), &path);
+        stat(path.TabWord, &stats);
+    }
+
+    return path;
+}
 
 int main() {
     // Inisialisasi BurBir
@@ -34,15 +61,39 @@ int main() {
     Matrix_Permintaan mp;
     ListDinKicau lk;
     ListDinBalasan lb;
+     const char *asciiArt ={
+        " /$$$$$$$                      /$$       /$$          \n"
+        "| $$__  $$                    | $$      |__/          \n"
+        "| $$  \\ $$ /$$   /$$  /$$$$$$ | $$$$$$$  /$$  /$$$$$$ \n"
+        "| $$$$$$$ | $$  | $$ /$$__  $$| $$__  $$| $$ /$$__  $$\n"
+        "| $$__  $$| $$  | $$| $$  \\__/| $$  \\ $$| $$| $$  \\__/\n"
+        "| $$  \\ $$| $$  | $$| $$      | $$  | $$| $$| $$      \n"
+        "| $$$$$$$/|  $$$$$$/| $$      | $$$$$$$/| $$| $$      \n"
+        "|_______/  \\______/ |__/      |_______/ |__/|__/      \n"
+        "                                                      \n"
+    };
+    printf("%s", asciiArt);
 
+    printf("Selamat datang di BurBir.\nAplikasi untuk studi kualitatif mengenai perilaku manusia dengan menggunakan metode\n(pengambilan data berupa) Focused Group Discussion kedua di zamannya.\n\n");
     // Fungsi load config
     Word path, pathPengguna, pathKicauan, pathBalasan;
-    printf("Silahkan masukan folder konfigurasi untuk dimuat: ");
-    perintah(300, false);
-    ADV();
-    printf("\n");
-    path = currentWord;
-    StringToWord(concatString("./Konfigurasi/", WordToString(path)), &path);
+    // printf("Silahkan masukan folder konfigurasi untuk dimuat: ");
+    // perintah(300, false);
+    // ADV();
+    // printf("\n");
+    // path = currentWord;
+    // StringToWord(concatString("./Konfigurasi/", WordToString(path)), &path);
+    // while(isDirectoryExists(path) == 0){
+    //     printf("File tidak ditemukan\n");
+    //     printf("Silahkan masukan folder konfigurasi untuk dimuat: ");
+    //     perintah(300, false);
+    //     ADV();
+    //     printf("\n");
+    //     path = currentWord;
+    //     StringToWord(concatString("./Konfigurasi/", WordToString(path)), &path);
+    // }
+
+    path = isDirectoryExists(); /* Pengecekan direktori pake function ini yang ngereturn variable path*/
     StringToWord(concatString(WordToString(path), "/pengguna.config"), &pathPengguna);
     LoadPengguna(&dp, pathPengguna);
     loadMatrixTemanandPermintaanTeman(&mt, &mp, pathPengguna);
