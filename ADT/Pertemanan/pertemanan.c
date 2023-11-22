@@ -40,6 +40,10 @@ void createMatrixTeman(Matrix_pertemanan *m)
     }
 }
 
+void createMatrixPermintaan(Matrix_Permintaan *m){
+    (*m).length = 0;
+}
+
 void addPengguna(Matrix_pertemanan *m)
 /*I.S. matrix pertemanan terdefinisi, bisa kosong bisa penuh*/
 /*F.S. rowEff dan colEff bertambah 1, menandakan dibuatkannya 1 akun baru*/
