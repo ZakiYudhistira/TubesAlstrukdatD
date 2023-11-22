@@ -5,23 +5,50 @@
 #define PERINTAH_H
 
 #include "../boolean.h"
+#include "../Mesin Kata/wordmachine.h"
+#include "../Mesin Karakter/charmachine.h"
 
-void simpanword();
 
-char* perintah();
+
+void IgnoreBlanks();
+
+void STARTWORD();
+
+void ADVWORD();
+
+void CopyWord();
+
+//bedanya dengan copyword pada persyaratan looping, jadi boleh ada BLANK atau SPASI//
+void simpanword(int max);
+
+void perintah(int max, boolean user);
+
+void printWord(Word word);
 
 int lengthString(char* s);
 
-boolean isValid(char* s, char* valid);
+boolean isValid(Word s, char* valid);
 
 const char* concatString(char* s1, char* s2);
 
 void CopyString(char* st1, char* st2);
 
-char* removeNewline(char* s);
+Word removeNewline(Word s);
 
-boolean isBlanks(char* s);
+boolean isBlanks(Word s);
 
-char* sliceString(char* str, int start, int end);
+Word sliceWord(Word str, int start, int end);
+
+void StringToWord(char* str, Word* w);
+
+int WordToInt(Word w);
+
+boolean isSame(Word w1, Word w2);
+
+void splitWord(Word w, Word* w1, Word* w2);
+
+void splitWordBackward(Word w, Word* w1, Word* w2);
+
+void split3Word(Word w, Word* w1, Word* w2, Word* w3);
 
 #endif
