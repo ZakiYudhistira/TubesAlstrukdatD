@@ -26,7 +26,7 @@ int lengthString(char* s);
 
 boolean isValid(Word s, char* valid);
 
-const char* concatString(char* s1, char* s2);
+char* concatString(char* s1, char* s2);
 
 void CopyString(char* st1, char* st2);
 
@@ -39,6 +39,8 @@ Word sliceWord(Word str, int start, int end);
 void StringToWord(char* str, Word* w);
 
 int WordToInt(Word w);
+
+char* WordToString(Word w);
 
 boolean isSame(Word w1, Word w2);
 
