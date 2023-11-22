@@ -4,9 +4,10 @@
 #define PENGGUNA_H
 
 
-#include "../../boolean.h"
+#include "../boolean.h"
 #include "../Mesin Kata/wordmachine.h"
 #include "../Matrix/matrix.h"
+#include "../Pertemanan/pertemanan.h"
 
 #define CAPACITY 20 /* Kapasitas penyimpanan */
 #define IDX_MIN 0 /* Indeks minimum list */
@@ -18,7 +19,7 @@ typedef struct {
    Word bio;
    Word hp;
    Word weton;
-   Word jenis;
+   int jenis;
    Matrix profil;
 } Pengguna;
 
@@ -36,6 +37,7 @@ typedef struct {
 #define hp(l,i) (l).contents[i].hp
 #define weton(l,i) (l).contents[i].weton
 #define jenis(l,i) (l).contents[i].jenis
+#define profil(l,i) (l).contents[i].profil
 #define NAMA(p) (p).nama
 #define PASSWORD(p) (p).password
 #define BIO(p) (p).bio
@@ -76,7 +78,7 @@ int login(databaseprofil *data);
 void cekProfil (int idx, databaseprofil *data);
 // Pengguna cek profil
 
-void ubahProfil(databaseprofil *data);
+void ubahProfil(databaseprofil *data, int id);
 // Mengubah profil
 
 boolean inputHP(Word nomor);
@@ -87,6 +89,20 @@ Word inputusername();
 
 Word inputbio();
 /* Inpur Bio */
-
+Word inputpass();
 int getId(databaseprofil *l, Word username);
+
+boolean isChangeValid(Word kata);
+
+void CopyWordPengguna();
+
+void STARTWORDPengguna();
+
+boolean isCheck(Word s);
+
+Word getUser(Word kata);
+
+void ubahfotoprofil(databaseprofil *l, int id);
+
+void LoadPengguna(databaseprofil* l, Word path);
 #endif

@@ -1,8 +1,35 @@
 #include "pertemanan.h"
 #include "../boolean.h"
 #include "ADTRequirements/queuelinked.h"
+#include "../Pengguna/pengguna.h"
+#include "../Matrix/matrix.h"
+#include "../Pengguna/pengguna.c"
+#include "pertemanan.c"
+#include "perintahPertemanan.c"
+#include "ADTRequirements/queuelinked.c"
+#include "../Matrix/matrix.c"
+#include "../Mesin Karakter/charmachine.c"
+#include "../Mesin Karakter/charmachine.h"
+#include "../Perintah/perintah.c"
 #include <stdio.h>
-#define endif printf("\n")
+
+// void loadPengguna(databaseprofil *profil ,Word path){
+//     FILE* file = fopen(path.TabWord, "r");
+//     char line[300];
+
+//     if(file == NULL){
+//         printf("File tidak ditemukan\n");
+//         exit(EXIT_FAILURE);
+//     }
+
+//     fgets(line, 300, file);
+//     StringToWord(line, &currentWord);
+//     int banyak_pengguna = WordToInt(removeNewline(currentWord));
+
+//     Pengguna temp;
+//     CreatePengguna(&temp);
+
+// }
 
 void displayMP(Matrix_Permintaan array){
     int i,j;
@@ -14,39 +41,52 @@ void displayMP(Matrix_Permintaan array){
     }
 }
 
+Word path = {
+    "../../Konfigurasi/config-1/pengguna.config",
+    300
+};
+
 int main(){
-    char nama[4][20] = {"Joko","Santoso","Budi","Sugemi"};
-    // int array[19][3] = {{1,2,2},{0,2,5},{0,3,8}};
-    Matrix_pertemanan ini;
-    Matrix_Permintaan dua = {
-        {{1,2,2},{0,2,5},{0,3,8}},
-        3
-    };
-    createMatrixTeman(&ini);
-    addPengguna(&ini);
-    addPengguna(&ini);
-    addPengguna(&ini);
-    addPengguna(&ini);
-    tulisMatriksPertemanan(ini);
+    Matrix_Permintaan b;
+    Matrix_pertemanan a;
+    loadMatrixTemanandPermintaanTeman(&a, &b, path);
+    databaseprofil array;
+    Pengguna Pengguna1;
+    Pengguna Pengguna2;
+    Pengguna Pengguna3;
+    CreatePengguna(&Pengguna1);
+    CreatePengguna(&Pengguna2);
+    CreatePengguna(&Pengguna3);
+    Queue_Teman queue;
+    CreateQueueQT(&queue);
+    loadQueuePertemanan(&queue, b, 1);
+    Word nama1;
+    StringToWord("joko sembung", &nama1);
+    Word nama2;
+    StringToWord("Nianda", &nama2);
+    Word nama3;
+    StringToWord("Banaman", &nama3);
+    createDatabase(&array);
+
+    Pengguna1.nama = nama1;
+    Pengguna2.nama = nama2;
+    Pengguna3.nama = nama3;
+    array.contents[0] = Pengguna1;
+    array.contents[1] = Pengguna2;
+    array.contents[2] = Pengguna3;
+    perintahDisplayPermintaanPertemanan(queue, &array);
+    perintahSetujuiPertemanan(&a, &queue, 1, array, &b);
+    displayMP(b);
     endif;
-    tambahTeman(&ini, 1,2);
-    tambahTeman(&ini, 1,3);
-    tambahTeman(&ini, 1,0);
-    tulisMatriksPertemanan(ini);
+    tulisMatriksPertemanan(a);
     endif;
-    daftarTeman(ini,1,nama);
-    endif;
-    daftarTeman(ini,2,nama);
-    Queue_Teman queue_0;
-    CreateQueueQT(&queue_0);
-    loadQueuePertemanan(&queue_0, dua, 0);
-    DisplayQueueQT(queue_0, nama);
-    displayMP(dua);
-    endif;
-    hapusBaris(&dua,0,3);
-    displayMP(dua);
-    endif;
-    loadQueuePertemanan(&queue_0, dua, 0);
-    DisplayQueueQT(queue_0, nama);
-    endif;
+    perintahSetujuiPertemanan(&a, &queue, 1, array, &b);
+    tulisMatriksPertemanan(a);
+    displayMP(b);
+    perintahHapusTeman(&a, 1, &array);
+    tulisMatriksPertemanan(a);
+    // perintahHapusTeman(&a, 1, &array);
+    // tulisMatriksPertemanan(a);
+    perintahTambahTeman(&b, 1, &array, queue, a);
+    displayMP(b);
 }

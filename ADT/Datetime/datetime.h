@@ -5,14 +5,16 @@
 
 #include "../boolean.h"
 #include "../Time/time.h"
+#include "../Perintah/wordmachine.h"
+#include "../Perintah/perintah.h"
 
 /* *** Definisi TYPE DATETIME <DD/MM/YY HH:MM:SS> *** */
 typedef struct
 {
-    int DD;   /* integer [1..31] */
-    int MM;   /* integer [1..12] */
-    int YYYY; /* integer [1900..2030] */
-    TIME T;
+   int DD;   /* integer [1..31] */
+   int MM;   /* integer [1..12] */
+   int YYYY; /* integer [1900..2030] */
+   TIME T;
 } DATETIME;
 
 /* *** Notasi Akses: selektor DATETIME *** */
@@ -91,5 +93,12 @@ DATETIME DATETIMEPrevNDetik(DATETIME D, int N);
 long int DATETIMEDurasi(DATETIME DAw, DATETIME DAkh);
 /* Mengirim DAkh-DAw dlm Detik, dengan kalkulasi */
 /* Prekondisi: DAkh > DAw */
+
+/* *** Operasi Lain *** */
+Word TimeToWord(DATETIME D);
+/* Mengubah DATETIME menjadi Word dengan format "DD-MM-YYYY HH:MM:SS" */
+
+DATETIME WordToTime(Word W);
+/* Mengubah Word dengan format "DD-MM-YYYY HH:MM:SS" menjadi DATETIME */
 
 #endif
