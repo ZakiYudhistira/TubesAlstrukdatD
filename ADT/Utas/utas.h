@@ -18,7 +18,7 @@ typedef struct node {
 #define NEXT(p) (p)->next
 #define DATE(p) (p)->date
 
-Address newNode(Word val, DATETIME date);
+Address newNode_Utas(Word val, DATETIME date);
 
 typedef struct utas {
     int idKicauan;
@@ -28,9 +28,9 @@ typedef struct utas {
 
 
 #define IDX_UNDEF_UTAS (-1)
-#define FIRST(U) (U).First
-#define LENGTH(U) (U).length
-#define IDKicau(U) (U).idKicauan
+#define FIRST_UTAS(U) (U).First
+#define LENGTH_UTAS(U) (U).length
+#define IDKICAU_UTAS(U) (U).idKicauan
 
 typedef struct listdinutas{
    Utas* buffer; /* memori tempat penyimpan elemen (container) */
@@ -39,25 +39,35 @@ typedef struct listdinutas{
 } ListDinUtas;
 
 /* ********** SELEKTOR ********** */
-#define NEFF_UTAS(l) (l).nEff
-#define BUFFER_UTAS(l) (l).buffer
-#define ELMT_UTAS(l, i) (l).buffer[i]
-#define CAPACITY_UTAS(l) (l).capacity
+#define NEFF_LISTUTAS(l) (l).nEff
+#define BUFFER_LISTUTAS(l) (l).buffer
+#define ELMT_LISTUTAS(l, i) (l).buffer[i]
+#define CAPACITY_LISTUTAS(l) (l).capacity
 
-void CreateEmptyUtas(Utas* U, int IDKicau, ListDinUtas *dbUtasUser, ListDinKicau* l);
-void insertFirstUtas(Utas *U, Word val, DATETIME D);
-void insertAtUtas(Utas *U, Word val, DATETIME D, int idx);
-void insertLastUtas(Utas *U, Word val, DATETIME D);
-void deleteFirstUtas(Utas *U, Word *val);
-void deleteAtUtas(Utas *U, Word *val, int idx);
-void deleteLastUtas(Utas *U, Word *val);
+// Untuk input == "UTAS [IDKicau]"
+void createEmptyUtas(Word User, Utas* U, int IDKicau, ListDinUtas *dbUtasUser, ListDinKicau* l);
+// Untuk input == "CETAK_UTAS [IDUtas]"
+void displayUtas(Word User, int IDUtas, ListDinUtas *dbUtasUser, ListDinKicau* l);
+// Untuk input == "SAMBUNG_UTAS [IDUtas] [index]"
+void sambungUtas(Word User, int IDUtas, int index, ListDinUtas *dbUtasUser);
+// Untuk input == "HAPUS_UTAS [IDUtas] [index]"
+void deleteUtas(Word User, int IDUtas, int index, ListDinUtas *dbUtasUser);
 
+/* Primitive Function Utas */
+void insertFirstUtas(Utas *U, DATETIME D);
+void insertAtUtas(Utas *U, DATETIME D, int idx);
+void insertLastUtas(Utas *U, DATETIME D);
+void deleteFirstUtas(Utas *U);
+void deleteAtUtas(Utas *U, int idx);
+void deleteLastUtas(Utas *U);
+
+/* Primitive Function ListDin Utas*/
 void initListDinUtas(ListDinUtas *dbUtasUser);
-void InsertLastListUtas(Utas *val, ListDinUtas *dbUtasUser);
-void ExpandListUtas(int num, ListDinUtas *dbUtasUser);
+void insertLastListUtas(Utas *val, ListDinUtas *dbUtasUser);
+void expandListUtas(int num, ListDinUtas *dbUtasUser);
 
-void displayUtas(int idx, ListDinUtas *dbUtasUser, ListDinKicau* l);
 
-void LoadUtas(ListDinUtas *dbUtasUser, Word path);
+void loadUtas(ListDinUtas *dbUtasUser, Word path);
+void simpanUtas(ListDinUtas dbUtasUser, Word path);
 
 #endif

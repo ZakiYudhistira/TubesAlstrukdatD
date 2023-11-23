@@ -28,7 +28,7 @@ int main() {
     perintah(50, 0);
     input = currentWord;
     ADV();
-    DisplayDraf(input, lsd, &l, db);
+    DisplayDraf(input, lsd, &l);
 
     printf("Masukkan path file: ");
     perintah(50, 0);

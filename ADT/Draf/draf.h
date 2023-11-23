@@ -8,7 +8,7 @@ typedef struct {
     Word text;
 } Draf;
 
-#define DATETIME(D) (D).datetime
-#define TEXT(D) (D).text
+#define DATETIME_DRAF(D) (D).datetime
+#define TEXT_DRAF(D) (D).text
 
 #endif
