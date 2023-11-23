@@ -2,6 +2,8 @@
 #include "../Perintah/wordmachine.h"
 #include "../Mesin Karakter/charmachine.h"
 #include "../Perintah/perintah.h"
+#include "../Pertemanan/pertemanan.h"
+#include "../Pengguna/pengguna.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -234,10 +236,12 @@ void HandleKicau(ListDinKicau* l, Word username, int* idKicauan) {
     *idKicauan++;
 }
 
-void HandleKicauan(ListDinKicau l) {
+void HandleKicauan(ListDinKicau l, Word username, Matrix_pertemanan m, databaseprofil p) {
     for (int i = 0; i < ListKicauLength(l); i++) {
-        DisplayKicauan(ELMT_KICAU(l, i));
-        printf("\n");
+        if (isTeman(m, getId(&p, username), getId(&p, AUTHOR_KICAU(ELMT_KICAU(l, i))))) {
+            DisplayKicauan(ELMT_KICAU(l, i));
+            printf("\n");
+        }
     }
 }
 

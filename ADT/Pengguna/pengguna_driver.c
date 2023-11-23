@@ -7,6 +7,7 @@
 int main() {
     Word author;
     databaseprofil data;
+    Matrix_pertemanan teman;
     int length;
     boolean selesai;
     int index;
@@ -93,6 +94,11 @@ int main() {
             printWord(user);
             printf("\n");
             int idprofil = getId(&data,user);
+            if (jenis(data,idprofil) == 1) {
+                if (isTeman(teman,id,idprofil)) {
+                    cekProfil(idprofil,&data);
+                }
+            }
             cekProfil(idprofil,&data);
         }
 

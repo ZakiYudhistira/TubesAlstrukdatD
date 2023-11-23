@@ -94,12 +94,14 @@ void perintahTambahTeman(Matrix_Permintaan *pm, id_user id, databaseprofil *arra
         } else {
             boolean isSent = false;
             int i;
-            if(isTeman(m, id, id_tambah)){
+            if(isTeman(m, id, id_tambah) && id != id_tambah){
                 printWord(nama(*array, id_tambah));
-                printf(" sudah merupakan teman Anda\n");
+                printf(" sudah merupakan teman Anda.\n");
+            } else if (id == id_tambah){
+                printf("Anda sudah berteman dengan diri sendiri.\n");
             } else {
                 for(i = 0 ; i < (*pm).length ; i++){
-                    if((*pm).permintaan_teman[i][0] == id_tambah && (*pm).permintaan_teman[i][1] == id){
+                    if((*pm).permintaan_teman[i][1] == id_tambah && (*pm).permintaan_teman[i][0] == id){
                         isSent = true;
                         break;
                     }
@@ -111,9 +113,9 @@ void perintahTambahTeman(Matrix_Permintaan *pm, id_user id, databaseprofil *arra
                     (*pm).length++;
                     printf("Permintaan terkirim.\n");
                 } else {
-                    printf("Anda sudah mengirimkan permintaan pertemanan kepada . Silakan tunggu hingga permintaan Anda disetujui.\n");
+                    printf("Anda sudah mengirimkan permintaan pertemanan kepada ");
                     printWord(nama(*array, id_tambah));
-                    printf(". Silakan tunggu hingga permintaan Anda disetujui.\n");
+                    printf(" Silakan tunggu hingga permintaan Anda disetujui.\n");
                 }
             }
         }  
@@ -168,11 +170,21 @@ void perintahSetujuiPertemanan(Matrix_pertemanan *m, Queue_Teman *q, id_user id,
             printWord(nama(array,id2));
             printf(" telah disetujui. Selamat ! Anda telah berteman dengan ");
             printWord(nama(array,id2));
+            int i;
+            for(i = 0 ; i < (*mp).length ; i++){
+                if((*mp).permintaan_teman[i][0] == id2){
+                    (*mp).permintaan_teman[i][2]++;
+                }
+                if((*mp).permintaan_teman[i][0] == id){
+                    (*mp).permintaan_teman[i][2]++;
+                }
+            }
             endif;
             endif;
         } else {
             printf("Permintaan pertemanan dari ");
             printWord(nama(array,id2));
+            hapusBaris(mp, id, id2);
             printf(" telah ditolak.");
             endif;
             endif;

@@ -26,6 +26,8 @@
 #include "ADT/Draf/stackDraf.c"
 #include "ADT/Time/time.h"
 #include "ADT/Time/time.c"
+#include "ADT/Utas/utas.h"
+#include "ADT/Utas/utas.c"
 #include <sys/stat.h>
 
 Word isDirectoryExists() {
@@ -39,9 +41,9 @@ Word isDirectoryExists() {
 
     struct stat stats;
     stat(path.TabWord, &stats);
-
     // Check for file existence
     while (!(S_ISDIR(stats.st_mode))) {
+        printf("Folder tidak ditemukan, mohon masukkan folder yang valid.\n\n");
         printf("Silahkan masukan folder konfigurasi untuk dimuat: ");
         perintah(300, false);
         ADV();
@@ -65,6 +67,8 @@ int main() {
     CreateListKicauan(&list_kicau, 10);
     ListDinBalasan list_balasan;
     createListBalasan(&list_balasan, 10);
+    ListDinUtas list_utas;
+    initListDinUtas(&list_utas);
 
     // Data Pengguna
     int idPengguna = -1;
@@ -97,6 +101,9 @@ int main() {
     LoadKicauan(&list_kicau, pathKicauan);
     StringToWord(concatString(WordToString(path), "/balasan.config"), &pathBalasan);
     LoadBalasan(&list_balasan, pathBalasan);
+    StringToWord(concatString(WordToString(path), "/utas.config"), &pathBalasan);
+    LoadUtas(&list_utas, pathBalasan);
+
 
     // Data Setelah Load
     int idKicau = ListKicauMaxId(list_kicau) + 1;
@@ -132,13 +139,16 @@ int main() {
             }
             else {
                 idPengguna = login(&list_database);
-                isLoggedIn = true;
+                if (idPengguna != -1) {
+                    isLoggedIn = true;
+                }
             }
         }
 
         else if (isValid(currentWord, "KELUAR")) {
             if (isLoggedIn) {
                 idPengguna = -1;
+                isLoggedIn = false;
                 printf("Terima kasih telah menggunakan layanan BurBir\n");
             }
             else {
@@ -192,10 +202,18 @@ int main() {
 
         else if (isCheck(currentWord)) {
             Word user = getUser(currentWord);
-            printWord(user);
-            printf("\n");
             int idprofil = getId(&list_database, user);
-            cekProfil(idprofil, &list_database);
+            if (jenis(list_database,idprofil) == 1) {
+                if (isTeman(matriks_pertemanan,idPengguna,idprofil)) {
+                    cekProfil(idprofil,&list_database);
+                }
+                else {
+                    printf("Ikuti user ini agar mendapat profil mengenai dirinya\n");
+                }
+            }
+            else {
+                cekProfil(idprofil, &list_database);
+            }
         }
 
         else if (isValid(currentWord, "UBAH_FOTO_PROFIL")) {
@@ -233,6 +251,7 @@ int main() {
                 CreateQueueQT(&q);
                 loadQueuePertemanan(&q, matriks_permintaan, idPengguna);
                 perintahTambahTeman(&matriks_permintaan, idPengguna, &list_database, q, matriks_pertemanan);
+                freeQueueQT(&q);
             }
             else {
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
@@ -245,6 +264,7 @@ int main() {
                 CreateQueueQT(&q);
                 loadQueuePertemanan(&q, matriks_permintaan, idPengguna);
                 perintahDisplayPermintaanPertemanan(q, &list_database);
+                freeQueueQT(&q);
             }
             else {
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
@@ -257,6 +277,7 @@ int main() {
                 CreateQueueQT(&q);
                 loadQueuePertemanan(&q, matriks_permintaan, idPengguna);
                 perintahSetujuiPertemanan(&matriks_pertemanan, &q, idPengguna, list_database, &matriks_permintaan);
+                freeQueueQT(&q);
             }
             else {
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
@@ -275,7 +296,7 @@ int main() {
 
         else if (isValid(currentWord, "KICAUAN")) {
             if (isLoggedIn) {
-                HandleKicauan(SortedKicauan(list_kicau));
+                HandleKicauan(SortedKicauan(list_kicau), nama(list_database, idPengguna), matriks_pertemanan, list_database);
             }
             else {
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
@@ -413,6 +434,10 @@ int main() {
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
 
             }
+        }
+
+        else {
+            printf("Perintah tidak dikenali, mohon masukkan perintah yang valid.\n");
         }
     }
 

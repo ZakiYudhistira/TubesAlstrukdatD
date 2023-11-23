@@ -7,8 +7,8 @@
 #include "../Datetime/datetime.h"
 
 /* Definisi Node : */
-typedef struct node* Address;
-typedef struct node {
+typedef struct nodeUtas* Address;
+typedef struct nodeUtas {
     Word info;
     Address next;
     DATETIME date;

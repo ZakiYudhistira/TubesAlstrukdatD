@@ -6,7 +6,7 @@
 
 Address newNode_Utas(Word val, DATETIME date) {
     Address p = (Address)malloc(sizeof(Node));
-    if (p!=NULL){
+    if (p != NULL) {
         INFO(p) = val;
         DATE(p) = date;
         NEXT(p) = NULL;
@@ -149,7 +149,7 @@ void insertFirstUtas(Utas *U, Word val, DATETIME D) {
 
     LENGTH_UTAS(*U)++;
 }
-void insertAtUtas(Utas *U, Word val, DATETIME D, int idx) {
+void insertAtUtas(Utas* U, Word val, DATETIME D, int idx) {
     if (idx == 0) {
         insertFirstUtas(U, val, D);
     } else {
@@ -241,7 +241,7 @@ void loadUtas(ListDinUtas *dbUtasUser, Word path) {
         LENGTH_UTAS(U) = 0;
 
         for (int j = 0; j < banyak_utas; j++) {
-            
+
             fgets(line, 300, file);
             StringToWord(line, &currentWord);
             Word text = removeNewline(currentWord);
