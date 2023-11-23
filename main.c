@@ -432,7 +432,7 @@ int main() {
 
         else if (isValid(currentWord, "MUAT")) {
             if (isLoggedIn) {
-                printf("Logic\n");
+                printf("Anda harus keluar terlebih dahulu untuk melakukan pemuatan.\n");
             }
             else {
                 printf("Masukkan nama folder yang hendak dimuat.\n");
