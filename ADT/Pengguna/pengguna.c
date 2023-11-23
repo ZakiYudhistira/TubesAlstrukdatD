@@ -196,7 +196,7 @@ boolean inputHP(Word nomor) {
     boolean valid = true;
     for (int i = 0; i < nomor.Length; i++) {
         int angka = (int)(nomor.TabWord[i]);
-        if (48 <= angka <= 57) {
+        if ((48 <= angka) && (angka <= 57)) {
             valid = true;
         }
         else {
@@ -341,7 +341,9 @@ int login(databaseprofil* data) {
                 STARTWORDPengguna();
                 ADV();
                 if (isWordEqual(currentWord, password(*data, i))) {
-                    printf("Selamat datang\n");
+                    printf("Selamat datang, ");
+                    printWord(nama(*data,i));
+                    printf("\n");
                     return i;
                 }
                 else {
@@ -351,6 +353,7 @@ int login(databaseprofil* data) {
         }
     }
     printf("Maaf, username yang anda masukan tidak ada\n");
+    return -1;
 }
 
 
@@ -373,12 +376,19 @@ int getId(databaseprofil* l, Word username) {
 }
 
 void ubahProfil(databaseprofil* l, int id) {
+    Word biobefore;
+    Word hpbefore;
     Word kata;
     printf("Masukkan bio: ");
     kata.Length = 0;
+    currentWord.Length = 0;
     kata = inputbio();
+    biobefore = bio(*l,id);
     if (kata.Length > 0) {
         bio(*l, id) = kata;
+    }
+    else {
+        bio(*l,id) = biobefore;
     }
     printf("Masukkan weton: ");
     kata.Length = 0;
@@ -387,11 +397,17 @@ void ubahProfil(databaseprofil* l, int id) {
         weton(*l, id) = kata;
     }
     printf("Masukkan No HP: ");
+    hpbefore = hp(*l,id);
     STARTWORD();
     ADV();
     boolean isValid = inputHP(currentWord);
     if (isValid == true) {
-        hp(*l, id) = currentWord;
+        if(currentWord.Length > 0) {
+            hp(*l, id) = currentWord;
+        }
+        else {
+            hp(*l, id) = hpbefore;
+        }
     }
     else {
         printf("No hp salah\n");
@@ -506,18 +522,68 @@ void LoadPengguna(databaseprofil* l, Word path) {
 
         fgets(line, 300, file);
         StringToWord(line, &currentWord);
+        HP(user) = removeNewline(currentWord);
+
+        fgets(line, 300, file);
+        StringToWord(line, &currentWord);
         WETON(user) = removeNewline(currentWord);
 
         fgets(line, 300, file);
         StringToWord(line, &currentWord);
-        HP(user) = removeNewline(currentWord);
-
+        Word status;
+        status = removeNewline(currentWord);
+        if (isValid(status,"Privat")) {
+            JENIS(user) = 1;
+        }
+        else {
+            JENIS(user) = 0;
+        }
+        int idx = 0;
         fgets(line, 300, file);
+        StringToWord(line,&currentWord);
+        for(int i = 0; i < 5; i++) {
+            PROFIL(user).mem[0][i].warna = currentWord.TabWord[idx];
+            idx += 2;
+            PROFIL(user).mem[0][i].simbol = currentWord.TabWord[idx];
+            idx += 2;
+        }
+        idx = 0;
         fgets(line, 300, file);
+        StringToWord(line,&currentWord);
+        for(int i = 0; i < 5; i++) {
+            PROFIL(user).mem[1][i].warna = currentWord.TabWord[idx];
+            idx += 2;
+            PROFIL(user).mem[1][i].simbol = currentWord.TabWord[idx];
+            idx += 2;
+        }
+        idx = 0;
         fgets(line, 300, file);
+        StringToWord(line,&currentWord);
+        for(int i = 0; i < 5; i++) {
+            PROFIL(user).mem[2][i].warna = currentWord.TabWord[idx];
+            idx += 2;
+            PROFIL(user).mem[2][i].simbol = currentWord.TabWord[idx];
+            idx += 2;
+        }
+        idx = 0;
         fgets(line, 300, file);
+        StringToWord(line,&currentWord);
+        for(int i = 0; i < 5; i++) {
+            PROFIL(user).mem[3][i].warna = currentWord.TabWord[idx];
+            idx += 2;
+            PROFIL(user).mem[3][i].simbol = currentWord.TabWord[idx];
+            idx += 2;
+        }
+        idx = 0;
         fgets(line, 300, file);
-        fgets(line, 300, file);
+        StringToWord(line,&currentWord);
+        for(int i = 0; i < 5; i++) {
+            PROFIL(user).mem[4][i].warna = currentWord.TabWord[idx];
+            idx += 2;
+            PROFIL(user).mem[4][i].simbol = currentWord.TabWord[idx];
+            idx += 2;
+        }
+        idx = 0;
 
         insertLast(l, user);
     }
