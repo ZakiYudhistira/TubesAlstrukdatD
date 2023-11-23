@@ -432,11 +432,43 @@ int main() {
 
         else if (isValid(currentWord, "MUAT")) {
             if (isLoggedIn) {
-                printf("Logic\n");
+                printf("Anda harus keluar terlebih dahulu untuk melakukan pemuatan.\n");
             }
             else {
-                printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
+                printf("Masukkan nama folder yang hendak dimuat.\n");
+                perintah(300, false);
+                ADV();
 
+                StringToWord(concatString("./Konfigurasi/", WordToString(currentWord)), &path);
+
+                struct stat stats;
+                stat(path.TabWord, &stats);
+                // Check for file existence
+                if (!(S_ISDIR(stats.st_mode))) {
+                    printf("Tidak ada folder yang dimaksud!\n");
+                }
+                else {
+                    printf("Anda akan melakukan pemuatan dari ");
+                    printWord(currentWord);
+                    printf(".\n\n");
+
+                    printf("Mohon tunggu...\n");
+                    printf("1...\n");
+                    printf("2...\n");
+                    printf("3...\n\n");
+
+                    StringToWord(concatString(WordToString(path), "/pengguna.config"), &pathPengguna);
+                    LoadPengguna(&list_database, pathPengguna);
+                    loadMatrixTemanandPermintaanTeman(&matriks_pertemanan, &matriks_permintaan, pathPengguna);
+                    StringToWord(concatString(WordToString(path), "/kicauan.config"), &pathKicauan);
+                    LoadKicauan(&list_kicau, pathKicauan);
+                    StringToWord(concatString(WordToString(path), "/balasan.config"), &pathBalasan);
+                    LoadBalasan(&list_balasan, pathBalasan);
+                    StringToWord(concatString(WordToString(path), "/utas.config"), &pathBalasan);
+                    LoadUtas(&list_utas, pathBalasan);
+
+                    printf("Pemuatan selesai!\n");
+                }
             }
         }
 
