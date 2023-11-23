@@ -291,3 +291,67 @@ int getIDUtas(int IDKicau, ListDinUtas dbUtasUser) {
 
     return -1;
 }
+boolean isUtas(Word option) {
+    char* suka = "UTAS";
+    int i = 0;
+
+    if (option.Length > 5) {
+        for (i = 0; i < 4; i++) {
+            if (option.TabWord[i] != suka[i]) {
+                return false;
+            }
+        }
+    }
+    else {
+        return false;
+    }
+    return true;
+}
+boolean isSambungUtas(Word option) {
+    char* suka = "SAMBUNG_UTAS";
+    int i = 0;
+
+    if (option.Length > 13) {
+        for (i = 0; i < 12; i++) {
+            if (option.TabWord[i] != suka[i]) {
+                return false;
+            }
+        }
+    }
+    else {
+        return false;
+    }
+    return true;
+}
+boolean isHapusUtas(Word option) {
+    char* suka = "HAPUS_UTAS";
+    int i = 0;
+
+    if (option.Length > 11) {
+        for (i = 0; i < 10; i++) {
+            if (option.TabWord[i] != suka[i]) {
+                return false;
+            }
+        }
+    }
+    else {
+        return false;
+    }
+    return true;
+}
+boolean isCetakUtas(Word option) {
+    char* suka = "CETAK_UTAS";
+    int i = 0;
+
+    if (option.Length > 11) {
+        for (i = 0; i < 10; i++) {
+            if (option.TabWord[i] != suka[i]) {
+                return false;
+            }
+        }
+    }
+    else {
+        return false;
+    }
+    return true;
+}

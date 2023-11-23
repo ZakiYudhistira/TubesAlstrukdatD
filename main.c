@@ -72,10 +72,12 @@ int main() {
     createListBalasan(&list_balasan, 10);
     ListDinUtas list_utas;
     initListDinUtas(&list_utas);
+    listStackDraf list_draf;
+    initListStackDraf(&list_draf);
 
     // Data Pengguna
     int idPengguna = -1;
-    Word temp, idKicauan, idBalasan;
+    Word temp, idKicauan, idBalasan, idUtas, idxUtas;
 
     printf("\n");
     const char* asciiArt = {
@@ -94,7 +96,7 @@ int main() {
     printf("Selamat datang di BurBir.\nAplikasi untuk studi kualitatif mengenai perilaku manusia dengan menggunakan metode\n(pengambilan data berupa) Focused Group Discussion kedua di zamannya.\n\n");
 
     // Fungsi load config
-    Word path, pathPengguna, pathKicauan, pathBalasan;
+    Word path, pathPengguna, pathKicauan, pathBalasan, pathUtas, pathDraf;
 
     path = isDirectoryExists(); /* Pengecekan direktori pake function ini yang ngereturn variable path*/
     StringToWord(concatString(WordToString(path), "/pengguna.config"), &pathPengguna);
@@ -104,8 +106,10 @@ int main() {
     LoadKicauan(&list_kicau, pathKicauan);
     StringToWord(concatString(WordToString(path), "/balasan.config"), &pathBalasan);
     LoadBalasan(&list_balasan, pathBalasan);
-    StringToWord(concatString(WordToString(path), "/utas.config"), &pathBalasan);
-    LoadUtas(&list_utas, pathBalasan);
+    StringToWord(concatString(WordToString(path), "/utas.config"), &pathUtas);
+    LoadUtas(&list_utas, pathUtas);
+    StringToWord(concatString(WordToString(path), "/draf.config"), &pathDraf);
+    LoadDraf(&list_draf, pathDraf);
 
 
     // Data Setelah Load
@@ -363,61 +367,60 @@ int main() {
         // Perintah ADT Draf
         else if (isValid(currentWord, "BUAT_DRAF")) {
             if (isLoggedIn) {
-                printf("Logic\n");
+                CreateDraf(nama(list_database, idPengguna), &list_draf, &list_kicau);
             }
             else {
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
-
             }
         }
 
         else if (isValid(currentWord, "LIHAT_DRAF")) {
             if (isLoggedIn) {
-                printf("Logic\n");
+                DisplayDraf(nama(list_database, idPengguna), list_draf, &list_kicau);
             }
             else {
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
-
             }
         }
 
-        else if (isValid(currentWord, "LIHAT_DRAF")) {
+        // Perintah ADT Utas
+        else if (isUtas(currentWord)) {
             if (isLoggedIn) {
-                printf("Logic\n");
+                idKicauan = sliceWord(currentWord, 5, currentWord.Length);
+                createEmptyUtas(nama(list_database, idPengguna), WordToInt(idKicauan), &list_utas, &list_kicau);
             }
             else {
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
-
             }
         }
 
-        else if (isValid(currentWord, "LIHAT_DRAF")) {
+        else if (isSambungUtas(currentWord)) {
             if (isLoggedIn) {
-                printf("Logic\n");
+                split3Word(currentWord, &temp, &idUtas, &idxUtas);
+                sambungUtas(nama(list_database, idPengguna), WordToInt(idUtas), WordToInt(idxUtas), &list_utas);
             }
             else {
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
-
             }
         }
 
-        else if (isValid(currentWord, "LIHAT_DRAF")) {
+        else if (isHapusUtas(currentWord)) {
             if (isLoggedIn) {
-                printf("Logic\n");
+                split3Word(currentWord, &temp, &idUtas, &idxUtas);
+                deleteUtas(nama(list_database, idPengguna), WordToInt(idUtas), WordToInt(idxUtas), &list_utas);
             }
             else {
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
-
             }
         }
 
-        else if (isValid(currentWord, "LIHAT_DRAF")) {
+        else if (isCetakUtas(currentWord)) {
             if (isLoggedIn) {
-                printf("Logic\n");
+                idUtas = sliceWord(currentWord, 11, currentWord.Length);
+                displayUtas(nama(list_database, idPengguna), WordToInt(idUtas), &list_utas, &list_kicau, list_database, matriks_pertemanan);
             }
             else {
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
-
             }
         }
 
