@@ -192,3 +192,61 @@ void writeBalasanConfig(ListDinBalasan l, Word path) {
     }
     fclose(file);
 }
+
+void writeDrafConfig(listStackDraf lsd, Word path) {
+    StackDraf SD;
+    Draf D;
+
+    char* path_config = WordToString(path);
+    FILE* file = fopen(concatString(path_config, "/draf.config"), "w+");
+
+    int banyak_userDraf = NEFF_LISTSTACK(lsd);
+    fprintf(file, "%s\n", intToString(banyak_userDraf));
+
+    for (int i = 0; i < banyak_userDraf; i++) {
+        SD = GET_LISTSTACK(lsd, i);
+
+        int banyak_draf = LengthStackDraf(SD);
+        fprintf(file, "%s %s\n", WordToString(AUTHOR_SD(SD)), intToString(banyak_draf));
+
+        for (int j = 0; j < banyak_draf; j++) {
+            D = LASTDRAF_SD(SD);
+
+            fprintf(file, "%s\n", WordToString(TEXT_DRAF(D)));
+            fprintf(file, "%s\n", WordToString(TimeToWord(DATETIME_DRAF(D))));
+
+            PopStackDraf(&SD, &D);
+        }
+    }
+    fclose(file);
+}
+
+void writeUtasConfig(ListDinUtas dbUtasUser, Word path) {
+    Utas U;
+    Address p;
+
+    char* path_config = WordToString(path);
+    FILE* file = fopen(concatString(path_config, "/draf.config"), "w+");
+
+    int banyak_utas = NEFF_LISTUTAS(dbUtasUser);
+    fprintf(file, "%s\n", intToString(banyak_utas));
+
+    for (int i = 0; i < banyak_utas; i++) {
+        U = ELMT_LISTUTAS(dbUtasUser, i);
+
+        int banyak_sambungDraf = LENGTH_UTAS(U);
+        fprintf(file, "%s\n", intToString(IDKICAU_UTAS(U)));
+        fprintf(file, "%s\n", intToString(banyak_sambungDraf));
+
+        for (int j = 0; j < banyak_sambungDraf; j++) {
+            p = FIRST_UTAS(U);
+
+            fprintf(file, "%s\n", WordToString(INFO(p)));
+            fprintf(file, "%s\n", WordToString(AUTHOR_UTAS(U)));
+            fprintf(file, "%s\n", WordToString(TimeToWord(DATE(p))));
+
+            p = NEXT(p);
+        }
+    }
+    fclose(file);
+}

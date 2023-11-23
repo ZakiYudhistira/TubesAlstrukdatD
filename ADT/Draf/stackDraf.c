@@ -16,6 +16,17 @@ boolean IsEmptyStackDraf(StackDraf SD) {
 boolean IsFullStackDraf(StackDraf SD) {
     return IDXTOP_SD(SD) == MaxEl_Draf - 1;
 }
+int LengthStackDraf(StackDraf SD) {
+    Draf X;
+    int i = 0;
+
+    while (!IsEmptyStackDraf(SD)) {
+        PopStackDraf(&SD, &X);
+        i++;
+    }
+
+    return i;
+}
 void PushStackDraf(StackDraf *SD, Draf X) {
     IDXTOP_SD(*SD)++;
     LASTDRAF_SD(*SD) = X;
@@ -63,6 +74,13 @@ void insertLastListStack(listStackDraf *lsd, StackDraf SD) {
     int neff = NEFF_LIST(*lsd);
     GET_LISTSTACK(*lsd, neff) = SD;
     NEFF_LISTSTACK(*lsd) += 1;
+}
+void deleteAtListStack(listStackDraf *lsd, int idx) {
+    for (int i = idx; i < NEFF_LISTSTACK(*lsd) - 1; i++) {
+        GET_LISTSTACK(*lsd, i) = GET_LISTSTACK(*lsd, i+1);
+    }
+
+    NEFF_LISTSTACK(*lsd)--;
 }
 
 /* Primitive Function Draf */
@@ -160,7 +178,12 @@ void DeleteDraf(Word User, listStackDraf *lsd) {
 
     PopStackDraf(&SD, &D);
 
-    GET_LISTSTACK(*lsd, idxUser) = SD;
+    if (IsEmptyStackDraf(SD)) {
+        deleteAtListStack(lsd, idxUser);
+    } else {
+        GET_LISTSTACK(*lsd, idxUser) = SD;
+    }
+
 }
 // Untuk input == 'UBAH'
 void EditDraf(Word User, listStackDraf *lsd, ListDinKicau *l) {

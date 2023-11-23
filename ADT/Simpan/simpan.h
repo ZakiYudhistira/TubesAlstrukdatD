@@ -11,6 +11,8 @@
 #include "../boolean.h"
 #include "../Kicauan/kicauan.h"
 #include "../Balasan/balasan.h"
+#include "../Draf/stackDraf.h"
+#include "../Utas/utas.h"
 
 
 typedef Balasan ElTypeLDBalasan; /* type elemen list */
@@ -46,5 +48,9 @@ void writePertemananConfig(Matrix_pertemanan matrix_teman, Matrix_Permintaan mat
 void writeKicauanConfig(ListDinKicau k, Word path);
 
 void writeBalasanConfig(ListDinBalasan l, Word path);
+
+void writeDrafConfig(listStackDraf lsd, Word path);
+
+void writeUtasConfig(ListDinUtas dbUtasUser, Word path);
 
 #endif

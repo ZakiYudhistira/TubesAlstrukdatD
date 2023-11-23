@@ -5,6 +5,7 @@
 #include "../Perintah/wordmachine.h"
 #include "../Kicauan/kicauan.h"
 #include "../Datetime/datetime.h"
+#include "../Pengguna/pengguna.h"
 
 /* Definisi Node : */
 typedef struct nodeUtas* Address;
@@ -49,7 +50,7 @@ typedef struct listdinutas{
 // Untuk input == "UTAS [IDKicau]"
 void createEmptyUtas(Word User, int IDKicau, ListDinUtas *dbUtasUser, ListDinKicau* l);
 // Untuk input == "CETAK_UTAS [IDUtas]"
-void displayUtas(Word User, int IDUtas, ListDinUtas *dbUtasUser, ListDinKicau* l, Matrix_pertemanan m);
+void displayUtas(Word User, int IDUtas, ListDinUtas *dbUtasUser, ListDinKicau* l, databaseprofil db, Matrix_pertemanan m);
 // Untuk input == "SAMBUNG_UTAS [IDUtas] [index]"
 void sambungUtas(Word User, int IDUtas, int index, ListDinUtas *dbUtasUser);
 // Untuk input == "HAPUS_UTAS [IDUtas] [index]"
@@ -68,8 +69,8 @@ void initListDinUtas(ListDinUtas *dbUtasUser);
 void insertLastListUtas(Utas *val, ListDinUtas *dbUtasUser);
 void expandListUtas(int num, ListDinUtas *dbUtasUser);
 
-
 void loadUtas(ListDinUtas *dbUtasUser, Word path);
-void simpanUtas(ListDinUtas dbUtasUser, Word path);
 
+// Fungsi Bantuan
+int getIDUtas(int IDKicau, ListDinUtas dbUtasUser);
 #endif
