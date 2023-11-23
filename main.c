@@ -164,7 +164,6 @@ int main() {
         // Perintah Bagian Profil
         else if (isValid(currentWord, "ATUR_JENIS_AKUN")) {
             if (isLoggedIn) {
-                printf("%d\n", jenis(list_database, idPengguna));
                 if (jenis(list_database, idPengguna) == 0) {
                     printf("Anda saat ini akun Publik, ingin menjadi akun Privat?\n");
                     printf("Ketik Y untuk mengganti, ketik N untuk tidak\n");
@@ -203,16 +202,21 @@ int main() {
         else if (isCheck(currentWord)) {
             Word user = getUser(currentWord);
             int idprofil = getId(&list_database, user);
-            if (jenis(list_database,idprofil) == 1) {
-                if (isTeman(matriks_pertemanan,idPengguna,idprofil)) {
-                    cekProfil(idprofil,&list_database);
+            if (isLoggedIn) {
+                if (jenis(list_database,idprofil) == 1) {
+                    if (isTeman(matriks_pertemanan,idPengguna,idprofil)) {
+                        cekProfil(idprofil,&list_database);
+                    }
+                    else {
+                        printf("Ikuti user ini agar mendapat profil mengenai dirinya\n");
+                    }
                 }
                 else {
-                    printf("Ikuti user ini agar mendapat profil mengenai dirinya\n");
+                    cekProfil(idprofil, &list_database);
                 }
             }
             else {
-                cekProfil(idprofil, &list_database);
+                printf("Masuk terlebih dahulu\n");
             }
         }
 

@@ -84,112 +84,123 @@ Word inputWeton() {
     ADV();
     Word hari;
     hari.Length = 0;
-    if (currentWord.TabWord[0] == 'p' || currentWord.TabWord[0] == 'P') {
-        hari.Length += 1;
-        hari.TabWord[0] = 'P';
-        if (currentWord.TabWord[1] == 'A' || currentWord.TabWord[1] == 'a') {
-            hari.Length += 1;
-            hari.TabWord[1] = 'a';
-            if (currentWord.TabWord[2] == 'H' || currentWord.TabWord[2] == 'h') {
+    boolean valid = false;
+    while (valid == false) {
+        if (currentWord.Length > 0) {
+            if (currentWord.TabWord[0] == 'p' || currentWord.TabWord[0] == 'P') {
                 hari.Length += 1;
-                hari.TabWord[2] = 'h';
-                if (currentWord.TabWord[3] == 'I' || currentWord.TabWord[3] == 'i') {
+                hari.TabWord[0] = 'P';
+                if (currentWord.TabWord[1] == 'A' || currentWord.TabWord[1] == 'a') {
                     hari.Length += 1;
-                    hari.TabWord[3] = 'i';
-                    if (currentWord.TabWord[4] == 'N' || currentWord.TabWord[4] == 'n') {
+                    hari.TabWord[1] = 'a';
+                    if (currentWord.TabWord[2] == 'H' || currentWord.TabWord[2] == 'h') {
                         hari.Length += 1;
-                        hari.TabWord[4] = 'n';
-                        if (currentWord.TabWord[5] == 'G' || currentWord.TabWord[5] == 'g') {
+                        hari.TabWord[2] = 'h';
+                        if (currentWord.TabWord[3] == 'I' || currentWord.TabWord[3] == 'i') {
                             hari.Length += 1;
-                            hari.TabWord[5] = 'g';
-                            if (currentWord.Length == 6) {
+                            hari.TabWord[3] = 'i';
+                            if (currentWord.TabWord[4] == 'N' || currentWord.TabWord[4] == 'n') {
+                                hari.Length += 1;
+                                hari.TabWord[4] = 'n';
+                                if (currentWord.TabWord[5] == 'G' || currentWord.TabWord[5] == 'g') {
+                                    hari.Length += 1;
+                                    hari.TabWord[5] = 'g';
+                                    if (currentWord.Length == 6) {
+                                        return hari;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else if (currentWord.TabWord[1] == 'O' || currentWord.TabWord[1] == 'o') {
+                    hari.Length += 1;
+                    hari.TabWord[1] = 'o';
+                    if (currentWord.TabWord[2] == 'N' || currentWord.TabWord[2] == 'n') {
+                        hari.Length += 1;
+                        hari.TabWord[2] = 'n';
+                        if (currentWord.Length == 3) {
+                            return hari;
+                        }
+                    }
+                }
+            }
+            if (currentWord.TabWord[0] == 'K' || currentWord.TabWord[0] == 'k') {
+                hari.Length += 1;
+                hari.TabWord[0] = 'K';
+                if (currentWord.TabWord[1] == 'L' || currentWord.TabWord[1] == 'l') {
+                    hari.Length += 1;
+                    hari.TabWord[1] = 'l';
+                    if (currentWord.TabWord[2] == 'I' || currentWord.TabWord[2] == 'i') {
+                        hari.Length += 1;
+                        hari.TabWord[2] = 'i';
+                        if (currentWord.TabWord[3] == 'W' || currentWord.TabWord[3] == 'w') {
+                            hari.Length += 1;
+                            hari.TabWord[3] = 'w';
+                            if (currentWord.TabWord[4] == 'O' || currentWord.TabWord[4] == 'o') {
+                                hari.Length += 1;
+                                hari.TabWord[4] = 'o';
+                                if (currentWord.TabWord[5] == 'N' || currentWord.TabWord[5] == 'n') {
+                                    hari.Length += 1;
+                                    hari.TabWord[5] = 'n';
+                                    if (currentWord.Length == 6) {
+                                        return hari;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (currentWord.TabWord[0] == 'L' || currentWord.TabWord[0] == 'l') {
+                hari.Length += 1;
+                hari.TabWord[0] = 'L';
+                if (currentWord.TabWord[1] == 'E' || currentWord.TabWord[1] == 'e') {
+                    hari.Length += 1;
+                    hari.TabWord[1] = 'e';
+                    if (currentWord.TabWord[2] == 'G' || currentWord.TabWord[2] == 'g') {
+                        hari.Length += 1;
+                        hari.TabWord[2] = 'g';
+                        if (currentWord.TabWord[3] == 'I' || currentWord.TabWord[3] == 'i') {
+                            hari.Length += 1;
+                            hari.TabWord[3] = 'i';
+                            if (currentWord.Length == 4) {
                                 return hari;
                             }
                         }
                     }
                 }
             }
-        }
-        else if (currentWord.TabWord[1] == 'O' || currentWord.TabWord[1] == 'o') {
-            hari.Length += 1;
-            hari.TabWord[1] = 'o';
-            if (currentWord.TabWord[2] == 'N' || currentWord.TabWord[2] == 'n') {
+            if (currentWord.TabWord[0] == 'W' || currentWord.TabWord[0] == 'w') {
                 hari.Length += 1;
-                hari.TabWord[2] = 'n';
-                if (currentWord.Length == 3) {
-                    return hari;
-                }
-            }
-        }
-    }
-    if (currentWord.TabWord[0] == 'K' || currentWord.TabWord[0] == 'k') {
-        hari.Length += 1;
-        hari.TabWord[0] = 'K';
-        if (currentWord.TabWord[1] == 'L' || currentWord.TabWord[1] == 'l') {
-            hari.Length += 1;
-            hari.TabWord[1] = 'l';
-            if (currentWord.TabWord[2] == 'I' || currentWord.TabWord[2] == 'i') {
-                hari.Length += 1;
-                hari.TabWord[2] = 'i';
-                if (currentWord.TabWord[3] == 'W' || currentWord.TabWord[3] == 'w') {
+                hari.TabWord[0] = 'W';
+                if (currentWord.TabWord[1] == 'A' || currentWord.TabWord[1] == 'a') {
                     hari.Length += 1;
-                    hari.TabWord[3] = 'w';
-                    if (currentWord.TabWord[4] == 'O' || currentWord.TabWord[4] == 'o') {
+                    hari.TabWord[1] = 'a';
+                    if (currentWord.TabWord[2] == 'G' || currentWord.TabWord[2] == 'g') {
                         hari.Length += 1;
-                        hari.TabWord[4] = 'o';
-                        if (currentWord.TabWord[5] == 'N' || currentWord.TabWord[5] == 'n') {
+                        hari.TabWord[2] = 'g';
+                        if (currentWord.TabWord[3] == 'E' || currentWord.TabWord[3] == 'e') {
                             hari.Length += 1;
-                            hari.TabWord[5] = 'n';
-                            if (currentWord.Length == 6) {
+                            hari.TabWord[3] = 'e';
+                            if (currentWord.Length == 4) {
                                 return hari;
                             }
                         }
                     }
                 }
             }
+            printf("Hari yang anda masukkan salah, masukkan kembali\n");
+            hari.Length = 0;
+            printf("Masukkan weton: ");
+            currentWord.Length = 0;
+            STARTWORDPengguna();
+            ADV();
+        }
+        else {
+            return hari;
         }
     }
-    if (currentWord.TabWord[0] == 'L' || currentWord.TabWord[0] == 'l') {
-        hari.Length += 1;
-        hari.TabWord[0] = 'L';
-        if (currentWord.TabWord[1] == 'E' || currentWord.TabWord[1] == 'e') {
-            hari.Length += 1;
-            hari.TabWord[1] = 'e';
-            if (currentWord.TabWord[2] == 'G' || currentWord.TabWord[2] == 'g') {
-                hari.Length += 1;
-                hari.TabWord[2] = 'g';
-                if (currentWord.TabWord[3] == 'I' || currentWord.TabWord[3] == 'i') {
-                    hari.Length += 1;
-                    hari.TabWord[3] = 'i';
-                    if (currentWord.Length == 4) {
-                        return hari;
-                    }
-                }
-            }
-        }
-    }
-    if (currentWord.TabWord[0] == 'W' || currentWord.TabWord[0] == 'w') {
-        hari.Length += 1;
-        hari.TabWord[0] = 'W';
-        if (currentWord.TabWord[1] == 'A' || currentWord.TabWord[1] == 'a') {
-            hari.Length += 1;
-            hari.TabWord[1] = 'a';
-            if (currentWord.TabWord[2] == 'G' || currentWord.TabWord[2] == 'g') {
-                hari.Length += 1;
-                hari.TabWord[2] = 'g';
-                if (currentWord.TabWord[3] == 'E' || currentWord.TabWord[3] == 'e') {
-                    hari.Length += 1;
-                    hari.TabWord[3] = 'e';
-                    if (currentWord.Length == 4) {
-                        return hari;
-                    }
-                }
-            }
-        }
-    }
-    printf("Hari yang anda masukkan salah\n");
-    hari.Length = 0;
-    return hari;
 }
 
 boolean inputHP(Word nomor) {
@@ -398,19 +409,33 @@ void ubahProfil(databaseprofil* l, int id) {
     }
     printf("Masukkan No HP: ");
     hpbefore = hp(*l,id);
-    STARTWORD();
+    STARTWORDPengguna();
     ADV();
     boolean isValid = inputHP(currentWord);
+    while (isValid == false) {
+        printf("No HP salah, masukkan no HP kembali\n");
+        printf("Masukkan No HP: ");
+        STARTWORDPengguna();
+        ADV();
+        isValid = inputHP(currentWord);
+    }
+    
     if (isValid == true) {
         if(currentWord.Length > 0) {
-            hp(*l, id) = currentWord;
+            if (currentWord.Length > 15) {
+                hp(*l,id).Length = 0;
+                for (int i = 0; i < 15; i++) {
+                    hp(*l,id).TabWord[i] = currentWord.TabWord[i];
+                    hp(*l,id).Length += 1;
+                }
+            }
+            else {
+                hp(*l,id) = currentWord;
+            }
         }
         else {
             hp(*l, id) = hpbefore;
         }
-    }
-    else {
-        printf("No hp salah\n");
     }
 }
 
