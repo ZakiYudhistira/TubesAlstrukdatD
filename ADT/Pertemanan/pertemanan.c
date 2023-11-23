@@ -2,7 +2,6 @@
 #include "../boolean.h"
 #include "ADTRequirements/queuelinked.h"
 #include "../Perintah/perintah.h"
-#include "../Pengguna/pengguna.h"
 
 #include <stdio.h>
 
