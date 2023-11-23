@@ -58,4 +58,12 @@ void dequeueQT(Queue_Teman *q, IDTeman *id, int *jumlah_teman);
 /* I.S. q tidak mungkin kosong */
 /* F.S. x = nilai elemen HEAD pd I.S., HEAD "mundur" */
 
+void freeQueueQT(Queue_Teman *q);
+/* Proses : Mengosongkan Queue secara keseluruhan , nilai queue dibuang*
+/* I.S. q bisa kosong */
+/* F.S. q kosong */
+
+void displayQueueQT(Queue_Teman);
+/* Mendisplay isi queue */
+
 #endif
