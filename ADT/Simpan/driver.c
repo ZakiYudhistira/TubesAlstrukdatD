@@ -28,12 +28,12 @@
 #include "ADT/Time/time.c"
 #include "ADT/Utas/utas.h"
 #include "ADT/Utas/utas.c"
-#include "ADT/Simpan/configPengguna.c"
+#include "simpan.c"
 #include <sys/stat.h>
 
-int main(){
+int main() {
     Word pathPengguna;
-    StringToWord("./Konfigurasi/config-1/pengguna.config", &pathPengguna); 
+    StringToWord("./Konfigurasi/config-1/pengguna.config", &pathPengguna);
     Word pathw;
     StringToWord("aaa.config", &pathw);
     Matrix_Permintaan mp;

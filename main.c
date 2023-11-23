@@ -24,6 +24,8 @@
 #include "ADT/Pertemanan/ADTRequirements/queuelinked.c"
 #include "ADT/Draf/stackDraf.h"
 #include "ADT/Draf/stackDraf.c"
+#include "ADT/Simpan/simpan.h"
+#include "ADT/Simpan/simpan.c"
 #include "ADT/Time/time.h"
 #include "ADT/Time/time.c"
 #include "ADT/Utas/utas.h"
@@ -421,12 +423,15 @@ int main() {
 
         // Perintah Simpan dan Muat
         else if (isValid(currentWord, "SIMPAN")) {
-            if (isLoggedIn) {
-                printf("Logic\n");
-            }
-            else {
-                printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
+            printf("Masukkan nama folder penyimpanan\n");
+            perintah(300, false);
+            ADV();
 
+            if (isValid(currentWord, "test")) {
+                StringToWord(concatString("./Konfigurasi/", WordToString(currentWord)), &path);
+                writePertemananConfig(matriks_pertemanan, matriks_permintaan, list_database, path);
+                writeKicauanConfig(list_kicau, path);
+                writeBalasanConfig(list_balasan, path);
             }
         }
 
