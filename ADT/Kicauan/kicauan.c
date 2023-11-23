@@ -245,7 +245,7 @@ void HandleKicauan(ListDinKicau l, Word username, Matrix_pertemanan m, databasep
     }
 }
 
-void HandleSukaKicau(ListDinKicau* l, int idKicauan) {
+void HandleSukaKicau(ListDinKicau* l, int idKicauan, Word username, Matrix_pertemanan m, databaseprofil p) {
     int i = 0;
     while (ID_KICAU(ELMT_KICAU(*l, i)) != idKicauan && i < ListKicauLength(*l)) {
         i++;
@@ -255,11 +255,16 @@ void HandleSukaKicau(ListDinKicau* l, int idKicauan) {
         printf("Tidak ditemukan kicauan dengan ID = %d\n\n", idKicauan);
     }
     else {
-        LIKE_KICAU(ELMT_KICAU(*l, i))++;
-        printf("Selamat! Kicauan telah disukai!\n");
-        printf("Detil kicauan:\n");
-        DisplayKicauan(ELMT_KICAU(*l, i));
-        printf("\n");
+        if (isTeman(m, getId(&p, username), getId(&p, AUTHOR_KICAU(ELMT_KICAU(*l, i)))) || jenis(p, getId(&p, AUTHOR_KICAU(ELMT_KICAU(*l, i)))) == 0) {
+            LIKE_KICAU(ELMT_KICAU(*l, i))++;
+            printf("Selamat! Kicauan telah disukai!\n");
+            printf("Detil kicauan:\n");
+            DisplayKicauan(ELMT_KICAU(*l, i));
+            printf("\n");
+        }
+        else {
+            printf("Wah, kicauan tersebut dibuat oleh akun privat! Ikuti akun itu dulu ya\n");
+        }
     }
 }
 

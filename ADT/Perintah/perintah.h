@@ -50,4 +50,6 @@ void splitWordBackward(Word w, Word* w1, Word* w2);
 
 void split3Word(Word w, Word* w1, Word* w2, Word* w3);
 
+char* intToString(int num);
+
 #endif

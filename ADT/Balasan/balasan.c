@@ -4,6 +4,8 @@
 #include "../Perintah/perintah.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "../Pertemanan/pertemanan.h"
+#include "../Pengguna/pengguna.h"
 
 void createBalasan(Balasan* b) {
     DATETIME D;
@@ -214,42 +216,60 @@ void removeNode(Tree* parent, Tree* target) {
     }
 }
 
-void printBalasan(Balasan b, int depth) {
+void printBalasan(Balasan b, int depth, Word username, Matrix_pertemanan m, databaseprofil p) {
     for (int i = 0; i < depth; i++) {
         printf("  ");
     }
     printf("| ID = %d\n", ID_BALASAN(b));
-    for (int i = 0; i < depth; i++) {
-        printf("  ");
+
+    if (isTeman(m, getId(&p, username), getId(&p, AUTHOR_BALASAN(b))) || jenis(p, getId(&p, AUTHOR_BALASAN(b))) == 0) {
+        for (int i = 0; i < depth; i++) {
+            printf("  ");
+        }
+        printf("| ");
+        printWord(AUTHOR_BALASAN(b));
+        printf("\n");
+        for (int i = 0; i < depth; i++) {
+            printf("  ");
+        }
+        printf("| ");
+        printWord(TimeToWord(DATETIME_BALASAN(b)));
+        printf("\n");
+        for (int i = 0; i < depth; i++) {
+            printf("  ");
+        }
+        printf("| ");
+        printWord(TEXT_BALASAN(b));
+
     }
-    printf("| ");
-    printWord(AUTHOR_BALASAN(b));
-    printf("\n");
-    for (int i = 0; i < depth; i++) {
-        printf("  ");
+    else {
+        for (int i = 0; i < depth; i++) {
+            printf("  ");
+        }
+        printf("| PRIVAT\n");
+        for (int i = 0; i < depth; i++) {
+            printf("  ");
+        }
+        printf("| PRIVAT\n");
+        for (int i = 0; i < depth; i++) {
+            printf("  ");
+        }
+        printf("| PRIVAT");
     }
-    printf("| ");
-    printWord(TimeToWord(DATETIME_BALASAN(b)));
-    printf("\n");
-    for (int i = 0; i < depth; i++) {
-        printf("  ");
-    }
-    printf("| ");
-    printWord(TEXT_BALASAN(b));
     printf("\n\n");
 }
 
-void printTreeWithoutRoot(Tree* n, int depth) {
+void printTreeWithoutRoot(Tree* n, int depth, Word username, Matrix_pertemanan m, databaseprofil p) {
     if (ID_BALASAN(BALASAN(n)) >= 0) {
-        printBalasan(BALASAN(n), depth);
+        printBalasan(BALASAN(n), depth, username, m, p);
     }
 
     if (CHILD_NODE(n) != NULL) {
-        printTreeWithoutRoot(CHILD_NODE(n), depth + 1);
+        printTreeWithoutRoot(CHILD_NODE(n), depth + 1, username, m, p);
     }
 
     if (NEXT_NODE(n) != NULL) {
-        printTreeWithoutRoot(NEXT_NODE(n), depth);
+        printTreeWithoutRoot(NEXT_NODE(n), depth, username, m, p);
     }
 }
 
@@ -377,3 +397,122 @@ boolean isHapusBalasan(Word option) {
 }
 // I.S. option terdefinisi
 // F.S. mengembalikan true jika option adalah "HAPUS_BALASAN [IDKicau] [IDBalasan]"
+
+
+void HandleBalas(Word idKicau, Word idBalas, ListDinKicau k, ListDinBalasan* b, Word username, Matrix_pertemanan m, databaseprofil p) {
+    if (isIdKicauValid(k, WordToInt(idKicau))) {
+        Tree* t = getTreeFromIdKicau(*b, -WordToInt(idKicau));
+        if (t != NULL) {
+            Tree* t2 = getTreeFromIdParent(t, WordToInt(idBalas));
+            if (t2 != NULL) {
+                if (isTeman(m, getId(&p, username), getId(&p, AUTHOR_BALASAN(BALASAN(t2)))) || jenis(p, getId(&p, AUTHOR_BALASAN(BALASAN(t2))))) {
+                    Balasan ba;
+                    createBalasan(&ba);
+
+                    printf("Masukkan balasan:\n");
+                    perintah(280, true);
+                    ADV();
+                    TEXT_BALASAN(ba) = currentWord;
+                    AUTHOR_BALASAN(ba) = username;
+                    DATETIME D;
+                    GetLocalDATETIME(&D);
+                    DATETIME_BALASAN(ba) = D;
+                    ID_BALASAN(ba) = treeMaxId(t) + 1;
+                    ID_PARENT_BALASAN(ba) = WordToInt(idBalas);
+
+                    printf("Selamat! balasan telah diterbitkan!\n");
+                    printf("Detil balasan:\n");
+                    printBalasan(ba, 0, username, m, p);
+
+                    addChild(t2, ba);
+                }
+                else {
+                    printf("Wah, akun tersebut merupakan akun privat dan anda belum berteman akun tersebut!\n");
+                }
+            }
+            else {
+                printf("Wah, tidak terdapat balasan yang ingin Anda balas!\n");
+            }
+        }
+        else {
+            if (WordToInt(idBalas) == -1) {
+                if (isTeman(m, getId(&p, username), getId(&p, AUTHOR_KICAU(ELMT_KICAU(k, WordToInt(idKicau) - 1)))) || jenis(p, getId(&p, AUTHOR_KICAU(ELMT_KICAU(k, WordToInt(idKicau) - 1))))) {
+                    Balasan ba;
+                    createBalasan(&ba);
+
+                    printf("Masukkan balasan:\n");
+                    perintah(280, true);
+                    ADV();
+                    TEXT_BALASAN(ba) = currentWord;
+                    AUTHOR_BALASAN(ba) = username;
+                    DATETIME D;
+                    GetLocalDATETIME(&D);
+                    DATETIME_BALASAN(ba) = D;
+                    ID_BALASAN(ba) = 1;
+                    ID_PARENT_BALASAN(ba) = -1;
+
+                    printf("Selamat! balasan telah diterbitkan!\n");
+                    printf("Detil balasan:\n");
+                    printBalasan(ba, 0, username, m, p);
+
+                    addChild(getTreeFromIdKicau(*b, WordToInt(idBalas)), ba);
+                }
+                else {
+                    printf("Wah, akun tersebut merupakan akun privat dan anda belum berteman akun tersebut!\n");
+                }
+            }
+            else {
+                printf("Wah, tidak terdapat balasan yang ingin Anda balas!\n");
+            }
+        }
+    }
+    else {
+        printf("Wah, tidak terdapat kicauan yang ingin Anda balas!\n");
+    }
+}
+
+void HandleBalasan(Word idKicau, ListDinKicau k, ListDinBalasan b, Word username, Matrix_pertemanan m, databaseprofil p) {
+    if (isTeman(m, getId(&p, username), getId(&p, AUTHOR_KICAU(ELMT_KICAU(k, WordToInt(idKicau) - 1)))) || jenis(p, getId(&p, AUTHOR_KICAU(ELMT_KICAU(k, WordToInt(idKicau) - 1))))) {
+        if (isIdKicauValid(k, WordToInt(idKicau))) {
+            if (getTreeFromIdKicau(b, -WordToInt(idKicau)) != NULL) {
+                printf("\n");
+                printTreeWithoutRoot(getTreeFromIdKicau(b, -WordToInt(idKicau)), 0, username, m, p);
+            }
+            else {
+                printf("Belum terdapat balasan apapun pada kicauan tersebut. Yuk balas kicauan tersebut!\n");
+            }
+        }
+        else {
+            printf("Tidak terdapat kicauan dengan id tersebut!\n");
+        }
+    }
+    else {
+        printf("Wah, kicauan tersebut dibuat oleh pengguna dengan akun privat!\n");
+    }
+}
+
+void HandleHapusBalasan(Word idKicau, Word idBalas, ListDinBalasan* b, Word username) {
+    Tree* t = getTreeFromIdKicau(*b, -WordToInt(idKicau));
+    if (t != NULL) {
+        Tree* t2 = getTreeFromIdParent(t, WordToInt(idBalas));
+        if (t2 != NULL) {
+            if (isSame(AUTHOR_BALASAN(BALASAN(t2)), username)) {
+                removeNode(getParentFromChild(t, t2), t2);
+                printf("Balasan berhasil dihapus\n");
+            }
+            else {
+                printf("Hei, ini balasan punya siapa? Jangan dihapus ya!\n");
+            }
+        }
+        else {
+            printf("Balasan tidak ditemukan\n");
+        }
+
+        if (isTreeEmpty(t)) {
+            deleteBalasanAt(b, getIdxFromIdKicau(*b, WordToInt(idKicau)));
+        }
+    }
+    else {
+        printf("Tidak terdapat balasan pada kicauan dengan id tersebut!\n");
+    }
+}
