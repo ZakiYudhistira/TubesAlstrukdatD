@@ -10,6 +10,8 @@
 #include <time.h>
 #include "../Datetime/datetime.h"
 #include "../Time/time.h"
+#include "../Pertemanan/pertemanan.h"
+#include "../Pengguna/pengguna.h"
 
 /* Definisi elemen dan address */
 typedef struct {
@@ -113,7 +115,7 @@ ListDinKicau SortedKicauan(ListDinKicau l);
 // Command Handler
 void HandleKicau(ListDinKicau* l, Word username, int* idKicauan);
 
-void HandleKicauan(ListDinKicau l);
+void HandleKicauan(ListDinKicau l, Word username, Matrix_pertemanan m, databaseprofil p);
 
 void HandleSukaKicau(ListDinKicau* l, int idKicauan);
 
