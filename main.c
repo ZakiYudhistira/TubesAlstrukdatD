@@ -63,6 +63,7 @@ int main() {
     Matrix_pertemanan matriks_pertemanan;
     createMatrixTeman(&matriks_pertemanan);
     Matrix_Permintaan matriks_permintaan;
+    createMatrixPermintaan(&matriks_permintaan);
     ListDinKicau list_kicau;
     CreateListKicauan(&list_kicau, 10);
     ListDinBalasan list_balasan;
@@ -72,7 +73,7 @@ int main() {
 
     // Data Pengguna
     int idPengguna = -1;
-    Word idKicauan;
+    Word temp, idKicauan, idBalasan;
 
     printf("\n");
     const char* asciiArt = {
@@ -203,9 +204,9 @@ int main() {
         else if (isCheck(currentWord)) {
             Word user = getUser(currentWord);
             int idprofil = getId(&list_database, user);
-            if (jenis(list_database,idprofil) == 1) {
-                if (isTeman(matriks_pertemanan,idPengguna,idprofil)) {
-                    cekProfil(idprofil,&list_database);
+            if (jenis(list_database, idprofil) == 1) {
+                if (isTeman(matriks_pertemanan, idPengguna, idprofil)) {
+                    cekProfil(idprofil, &list_database);
                 }
                 else {
                     printf("Ikuti user ini agar mendapat profil mengenai dirinya\n");
@@ -306,7 +307,7 @@ int main() {
         else if (isSuka(currentWord)) {
             idKicauan = sliceWord(currentWord, 13, currentWord.Length);
             if (isLoggedIn) {
-                HandleSukaKicau(&list_kicau, WordToInt(idKicauan));
+                HandleSukaKicau(&list_kicau, WordToInt(idKicauan), nama(list_database, idPengguna), matriks_pertemanan, list_database);
             }
             else {
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
@@ -326,7 +327,8 @@ int main() {
         // Perintah ADT Balasan
         else if (isBalasan(currentWord)) {
             if (isLoggedIn) {
-                printf("Logic\n");
+                idKicauan = sliceWord(currentWord, 8, currentWord.Length);
+                HandleBalasan(idKicauan, list_kicau, list_balasan, nama(list_database, idPengguna), matriks_pertemanan, list_database);
             }
             else {
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
@@ -336,7 +338,8 @@ int main() {
 
         else if (isBalas(currentWord)) {
             if (isLoggedIn) {
-                printf("Logic\n");
+                split3Word(currentWord, &temp, &idKicauan, &idBalasan);
+                HandleBalas(idKicauan, idBalasan, list_kicau, &list_balasan, nama(list_database, idPengguna), matriks_pertemanan, list_database);
             }
             else {
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
@@ -346,7 +349,8 @@ int main() {
 
         else if (isHapusBalasan(currentWord)) {
             if (isLoggedIn) {
-                printf("Logic\n");
+                split3Word(currentWord, &temp, &idKicauan, &idBalasan);
+                HandleHapusBalasan(idKicauan, idBalasan, &list_balasan, nama(list_database, idPengguna));
             }
             else {
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
