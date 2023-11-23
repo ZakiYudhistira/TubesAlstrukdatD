@@ -140,7 +140,6 @@ int main() {
             else {
                 idPengguna = login(&list_database);
                 if (idPengguna != -1) {
-                    printf("%d\n", idPengguna);
                     isLoggedIn = true;
                 }
             }
@@ -286,7 +285,7 @@ int main() {
 
         else if (isValid(currentWord, "KICAUAN")) {
             if (isLoggedIn) {
-                HandleKicauan(SortedKicauan(list_kicau));
+                HandleKicauan(SortedKicauan(list_kicau), nama(list_database, idPengguna), matriks_pertemanan, list_database);
             }
             else {
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
