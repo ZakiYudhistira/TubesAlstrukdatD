@@ -3,6 +3,8 @@
 #include "utas.h"
 #include "../Perintah/perintah.h"
 #include "../Kicauan/kicauan.h"
+#include "../Pengguna/pengguna.h"
+#include "../Pertemanan/pertemanan.h"
 
 Address newNode_Utas(Word val, DATETIME date) {
     Address p = (Address)malloc(sizeof(Node));
@@ -17,7 +19,12 @@ Address newNode_Utas(Word val, DATETIME date) {
 // Untuk input == "UTAS [IDKicau]"
 void createEmptyUtas(Word User, int IDKicau, ListDinUtas *dbUtasUser, ListDinKicau* l) {
     int IDUtas = getIDUtas(IDKicau, *dbUtasUser);
-    if (IDUtas != -1) {
+    
+    if (!isIdKicauValid(*l, IDKicau)) {
+        printf("Kicauan tidak ditemukan.\n");
+    } else if (!isSame(User, AUTHOR_KICAU(ELMT_KICAU(*l, IDKicau-1)))) {
+        printf("Kicauan ini bukan milik anda!\n");
+    } else if (IDUtas != -1) {
         printf("Kicauan telah memiliki utas dengan IDUtas %d!\n", IDUtas);
     } else {
         Utas U;
@@ -25,6 +32,7 @@ void createEmptyUtas(Word User, int IDKicau, ListDinUtas *dbUtasUser, ListDinKic
         LENGTH_UTAS(U) = 0;
         IDKICAU_UTAS(U) = IDKicau;
         FIRST_UTAS(U) = NULL;
+        AUTHOR_UTAS(U) = User;
 
         printf("Utas berhasil dibuat!\n");
 
@@ -62,33 +70,36 @@ void createEmptyUtas(Word User, int IDKicau, ListDinUtas *dbUtasUser, ListDinKic
     }
 }
 // Untuk input == "CETAK_UTAS [IDUtas]"
-void displayUtas(Word User, int IDUtas, ListDinUtas *dbUtasUser, ListDinKicau* l) {
+void displayUtas(Word User, int IDUtas, ListDinUtas *dbUtasUser, ListDinKicau* l, databaseprofil db, Matrix_pertemanan m) {
     if (IDUtas > NEFF_LISTUTAS(*dbUtasUser)) {
         printf("Utas tidak ditemukan\n");
     } else {
-        Utas U = BUFFER_LISTUTAS(*dbUtasUser)[IDUtas-1];
-        Address p = FIRST(U);
-        Kicauan k;
-        Word author;
+        Utas U = ELMT_LISTUTAS(*dbUtasUser, IDUtas-1);
 
-        int idKicauan = IDKicau(U);
-        int i = 0;
-        while (ID_KICAU(ELMT_KICAU(*l, i)) != idKicauan && i < ListKicauLength(*l)) {
-            i++;
+        int idCurrUser = getId(l, User);
+        int idAuthor = getId(l, AUTHOR_UTAS(U));
+
+        if (!isTeman(m, idCurrUser, idAuthor) && (jenis(db, idAuthor) == 1)) {
+            printf("Akun yang membuat utas ini adalah akun privat! Ikuti dahulu akun ini untuk melihat utasnya!\n");
+        } else {
+            Kicauan k;
+            Word author;
+
+            int idKicauan = IDKicau(U);
+
+            DisplayKicauan(ELMT_KICAU(*l, idKicauan - 1));
+
+            Address p = FIRST(U);
+            for (int i = 0; i < LENGTH(U); i++) {
+                printf("\n    | INDEX = %d", (i+1));
+                printf("\n    | "); printWord(AUTHOR_UTAS(U));
+                printf("\n    | "); TulisDATETIME(DATE(p));
+                printf("\n    | "); printWord(INFO(p));
+                printf("\n");
+                p = NEXT(p);
+            }
         }
 
-        k = (Kicauan) ELMT_KICAU(*l, i);
-        DisplayKicauan(ELMT_KICAU(*l, i));
-        author = AUTHOR_KICAU(k);
-
-        for (int i = 0; i < LENGTH(U); i++) {
-            printf("\n    | INDEX = %d", i+1);
-            printf("\n    | "); printWord(author);
-            printf("\n    | "); TulisDATETIME(DATE(p));
-            printf("\n    | "); printWord(INFO(p));
-            printf("\n");
-            p = NEXT(p);
-        }
     }
 }
 // Untuk input == "SAMBUNG_UTAS [IDUtas] [index]"
@@ -101,6 +112,8 @@ void sambungUtas(Word User, int IDUtas, int index, ListDinUtas *dbUtasUser) {
 
         if (index > LENGTH_UTAS(U)) {
             printf("Index terlalu tinggi!\n", index);
+        } else if (!isSame(User, AUTHOR_UTAS(U))) {
+            printf("Anda tidak bisa menghapus kicauan dalam utas ini!\n");
         } else {
             deleteAtUtas(&U, index);
             printf("Masukkan kicauan:\n");
@@ -129,6 +142,8 @@ void deleteUtas(Word User, int IDUtas, int index, ListDinUtas *dbUtasUser) {
 
         if (index > LENGTH_UTAS(U)) {
             printf("Kicauan sambungan dengan index %d tidak ditemukan pada utas!\n", index);
+        } else if (!isSame(User, AUTHOR_UTAS(U))) {
+            printf("Anda tidak bisa menghapus kicauan dalam utas ini!\n");
         } else {
             deleteAtUtas(&U, index);
         }

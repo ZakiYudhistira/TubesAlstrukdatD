@@ -41,7 +41,7 @@ int main() {
     perintah(50, 0);
     int inputangka = WordToInt(currentWord);
     ADV();
-    displayUtas(inputangka, &dbUtasUser, &l);
+    // displayUtas(inputangka, &dbUtasUser, &l);
 
     return 0;
 }

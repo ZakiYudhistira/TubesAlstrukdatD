@@ -9,7 +9,6 @@
 void CreateEmptyStackDraf(StackDraf *SD, Word namaAuthor) {
     IDXTOP_SD(*SD) = -1;
     AUTHOR_SD(*SD) = namaAuthor;
-    
 }
 boolean IsEmptyStackDraf(StackDraf SD) {
     return IDXTOP_SD(SD) == -1;
@@ -45,13 +44,6 @@ void InverseStackDraf(StackDraf* SD) {
         PushStackDraf(SD, D);
     }
 }
-void InitStackDraf(Word User, listStackDraf *lsd) {
-    StackDraf SD;
-    
-    CreateEmptyStackDraf(&SD, User);
-
-    insertLastListStack(lsd, SD);
-}
 
 /* Primitive Function List of Stack */
 void initListStackDraf(listStackDraf *lsd) {
@@ -60,7 +52,7 @@ void initListStackDraf(listStackDraf *lsd) {
 
 int getIdxUserListStackDraf(listStackDraf lsd, Word User) {
     for (int i = 0; i < lsd.nEff; i++) {
-        if (isSame(lsd.list[i].Author_Draf, User)) {
+        if (isSame(AUTHOR_SD(GET_LISTSTACK(lsd, i)), User)) {
             return i;
         }
     }
@@ -82,7 +74,11 @@ void CreateDraf(Word User, listStackDraf *lsd, ListDinKicau *l) {
     Word input;
     int idxUser = getIdxUserListStackDraf(*lsd, User);
 
-    SD = GET_LISTSTACK(*lsd, idxUser);
+    if (idxUser == -1) {
+        CreateEmptyStackDraf(&SD, User);
+    } else {
+        SD = GET_LISTSTACK(*lsd, idxUser);
+    }
 
     printf("Masukkan draf:\n");
     perintah(100, 0);
@@ -118,7 +114,11 @@ void DisplayDraf(Word User, listStackDraf lsd, ListDinKicau *l) {
 
     int idxUser = getIdxUserListStackDraf(lsd, User);
 
-    SD = GET_LISTSTACK(lsd, idxUser);
+    if (idxUser == -1) {
+        CreateEmptyStackDraf(&SD, User);
+    } else {
+        SD = GET_LISTSTACK(lsd, idxUser);
+    }
 
     if (IsEmptyStackDraf(SD)) {
         printf("Yah, anda belum memiliki draf apapun! Buat dulu ya :D\n");
@@ -232,7 +232,4 @@ void LoadDraf(listStackDraf *lsd, Word path) {
     }
 
     fclose(file);
-}
-void simpanDraf(listStackDraf lsd, Word path) {
-    
 }

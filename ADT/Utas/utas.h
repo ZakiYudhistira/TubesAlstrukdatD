@@ -24,12 +24,14 @@ typedef struct utas {
     int idKicauan;
     int length;
     Address First;
+    Word Author;
 } Utas;
 
 
 #define IDX_UNDEF_UTAS (-1)
 #define FIRST_UTAS(U) (U).First
 #define LENGTH_UTAS(U) (U).length
+#define AUTHOR_UTAS(U) (U).Author
 #define IDKICAU_UTAS(U) (U).idKicauan
 
 typedef struct listdinutas{
@@ -45,18 +47,18 @@ typedef struct listdinutas{
 #define CAPACITY_LISTUTAS(l) (l).capacity
 
 // Untuk input == "UTAS [IDKicau]"
-void createEmptyUtas(Word User, Utas* U, int IDKicau, ListDinUtas *dbUtasUser, ListDinKicau* l);
+void createEmptyUtas(Word User, int IDKicau, ListDinUtas *dbUtasUser, ListDinKicau* l);
 // Untuk input == "CETAK_UTAS [IDUtas]"
-void displayUtas(Word User, int IDUtas, ListDinUtas *dbUtasUser, ListDinKicau* l);
+void displayUtas(Word User, int IDUtas, ListDinUtas *dbUtasUser, ListDinKicau* l, Matrix_pertemanan m);
 // Untuk input == "SAMBUNG_UTAS [IDUtas] [index]"
 void sambungUtas(Word User, int IDUtas, int index, ListDinUtas *dbUtasUser);
 // Untuk input == "HAPUS_UTAS [IDUtas] [index]"
 void deleteUtas(Word User, int IDUtas, int index, ListDinUtas *dbUtasUser);
 
 /* Primitive Function Utas */
-void insertFirstUtas(Utas *U, DATETIME D);
-void insertAtUtas(Utas *U, DATETIME D, int idx);
-void insertLastUtas(Utas *U, DATETIME D);
+void insertFirstUtas(Utas *U, Word val, DATETIME D);
+void insertAtUtas(Utas *U, Word val, DATETIME D, int idx);
+void insertLastUtas(Utas *U, Word val, DATETIME D);
 void deleteFirstUtas(Utas *U);
 void deleteAtUtas(Utas *U, int idx);
 void deleteLastUtas(Utas *U);

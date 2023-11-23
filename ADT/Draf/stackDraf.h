@@ -55,6 +55,5 @@ void EditDraf(Word User, listStackDraf *lsd, ListDinKicau *l);
 void PublishDraf(Word User, listStackDraf *lsd, ListDinKicau *l);
 
 void LoadDraf(listStackDraf *lsd, Word path);
-void simpanDraf(listStackDraf lsd, Word path);
 
 #endif
