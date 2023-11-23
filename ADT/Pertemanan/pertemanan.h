@@ -59,9 +59,6 @@ void hapusBaris(Matrix_Permintaan *array, id_user id, id_user id_hapus);
 /*I.S. matriks_permintaan tidak kosong*/
 /*F.S  dihapus satu baris dari matriks pertemanan*/
 
-void writetoConfigPertemanan(Matrix_Permintaan m, Matrix_Permintaan pm);
-/*Menuliskan konfigurasi pertemanan kedalam suatu file config*/
-
 void loadMatrixTeman(Matrix_pertemanan *m, char* folder);
 /*I.S. sembarang*/
 /*F.S. matriks pertemanan terisi berdasarkan file config*/
