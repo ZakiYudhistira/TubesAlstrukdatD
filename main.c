@@ -136,7 +136,6 @@ int main() {
         else if (isValid(currentWord, "MASUK")) {
             if (isLoggedIn) {
                 printf("Wah Anda sudah masuk. Keluar dulu yuk!\n");
-                printf("%d\n",idPengguna);
             }
             else {
                 idPengguna = login(&list_database);
