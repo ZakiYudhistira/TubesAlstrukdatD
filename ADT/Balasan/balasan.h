@@ -12,6 +12,8 @@
 #include <time.h>
 #include "../Datetime/datetime.h"
 #include "../Time/time.h"
+#include "../Pertemanan/pertemanan.h"
+#include "../Pengguna/pengguna.h"
 
 
 typedef struct {
@@ -97,9 +99,9 @@ int treeMaxId(Tree* root);
 
 void removeNode(Tree* n, Tree* newN);
 
-void printBalasan(Balasan b, int depth);
+void printBalasan(Balasan b, int depth, Word username, Matrix_pertemanan m, databaseprofil p);
 
-void printTreeWithoutRoot(Tree* n, int depth);
+void printTreeWithoutRoot(Tree* n, int depth, Word username, Matrix_pertemanan m, databaseprofil p);
 
 
 void LoadBalasan(ListDinBalasan* l, Word path);
@@ -117,5 +119,11 @@ boolean isHapusBalasan(Word option);
 // I.S. option terdefinisi
 // F.S. mengembalikan true jika option adalah "HAPUS_BALASAN [IDKicau] [IDBalasan]"
 
+
+void HandleBalas(Word idKicau, Word idBalas, ListDinKicau k, ListDinBalasan* b, Word username, Matrix_pertemanan m, databaseprofil p);
+
+void HandleBalasan(Word idKicau, ListDinKicau k, ListDinBalasan b, Word username, Matrix_pertemanan m, databaseprofil p);
+
+void HandleHapusBalasan(Word idKicau, Word idBalas, ListDinBalasan* b, Word username);
 
 #endif

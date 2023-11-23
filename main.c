@@ -24,6 +24,8 @@
 #include "ADT/Pertemanan/ADTRequirements/queuelinked.c"
 #include "ADT/Draf/stackDraf.h"
 #include "ADT/Draf/stackDraf.c"
+#include "ADT/Simpan/simpan.h"
+#include "ADT/Simpan/simpan.c"
 #include "ADT/Time/time.h"
 #include "ADT/Time/time.c"
 #include "ADT/Utas/utas.h"
@@ -63,6 +65,7 @@ int main() {
     Matrix_pertemanan matriks_pertemanan;
     createMatrixTeman(&matriks_pertemanan);
     Matrix_Permintaan matriks_permintaan;
+    createMatrixPermintaan(&matriks_permintaan);
     ListDinKicau list_kicau;
     CreateListKicauan(&list_kicau, 10);
     ListDinBalasan list_balasan;
@@ -72,7 +75,7 @@ int main() {
 
     // Data Pengguna
     int idPengguna = -1;
-    Word idKicauan;
+    Word temp, idKicauan, idBalasan;
 
     printf("\n");
     const char* asciiArt = {
@@ -203,9 +206,9 @@ int main() {
         else if (isCheck(currentWord)) {
             Word user = getUser(currentWord);
             int idprofil = getId(&list_database, user);
-            if (jenis(list_database,idprofil) == 1) {
-                if (isTeman(matriks_pertemanan,idPengguna,idprofil)) {
-                    cekProfil(idprofil,&list_database);
+            if (jenis(list_database, idprofil) == 1) {
+                if (isTeman(matriks_pertemanan, idPengguna, idprofil)) {
+                    cekProfil(idprofil, &list_database);
                 }
                 else {
                     printf("Ikuti user ini agar mendapat profil mengenai dirinya\n");
@@ -306,7 +309,7 @@ int main() {
         else if (isSuka(currentWord)) {
             idKicauan = sliceWord(currentWord, 13, currentWord.Length);
             if (isLoggedIn) {
-                HandleSukaKicau(&list_kicau, WordToInt(idKicauan));
+                HandleSukaKicau(&list_kicau, WordToInt(idKicauan), nama(list_database, idPengguna), matriks_pertemanan, list_database);
             }
             else {
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
@@ -326,7 +329,8 @@ int main() {
         // Perintah ADT Balasan
         else if (isBalasan(currentWord)) {
             if (isLoggedIn) {
-                printf("Logic\n");
+                idKicauan = sliceWord(currentWord, 8, currentWord.Length);
+                HandleBalasan(idKicauan, list_kicau, list_balasan, nama(list_database, idPengguna), matriks_pertemanan, list_database);
             }
             else {
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
@@ -336,7 +340,8 @@ int main() {
 
         else if (isBalas(currentWord)) {
             if (isLoggedIn) {
-                printf("Logic\n");
+                split3Word(currentWord, &temp, &idKicauan, &idBalasan);
+                HandleBalas(idKicauan, idBalasan, list_kicau, &list_balasan, nama(list_database, idPengguna), matriks_pertemanan, list_database);
             }
             else {
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
@@ -346,7 +351,8 @@ int main() {
 
         else if (isHapusBalasan(currentWord)) {
             if (isLoggedIn) {
-                printf("Logic\n");
+                split3Word(currentWord, &temp, &idKicauan, &idBalasan);
+                HandleHapusBalasan(idKicauan, idBalasan, &list_balasan, nama(list_database, idPengguna));
             }
             else {
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
@@ -417,22 +423,57 @@ int main() {
 
         // Perintah Simpan dan Muat
         else if (isValid(currentWord, "SIMPAN")) {
-            if (isLoggedIn) {
-                printf("Logic\n");
-            }
-            else {
-                printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
+            printf("Masukkan nama folder penyimpanan\n");
+            perintah(300, false);
+            ADV();
 
+            if (isValid(currentWord, "test")) {
+                StringToWord(concatString("./Konfigurasi/", WordToString(currentWord)), &path);
+                writePertemananConfig(matriks_pertemanan, matriks_permintaan, list_database, path);
+                writeKicauanConfig(list_kicau, path);
+                writeBalasanConfig(list_balasan, path);
             }
         }
 
         else if (isValid(currentWord, "MUAT")) {
             if (isLoggedIn) {
-                printf("Logic\n");
+                printf("Anda harus keluar terlebih dahulu untuk melakukan pemuatan.\n");
             }
             else {
-                printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
+                printf("Masukkan nama folder yang hendak dimuat.\n");
+                perintah(300, false);
+                ADV();
 
+                StringToWord(concatString("./Konfigurasi/", WordToString(currentWord)), &path);
+
+                struct stat stats;
+                stat(path.TabWord, &stats);
+                // Check for file existence
+                if (!(S_ISDIR(stats.st_mode))) {
+                    printf("Tidak ada folder yang dimaksud!\n");
+                }
+                else {
+                    printf("Anda akan melakukan pemuatan dari ");
+                    printWord(currentWord);
+                    printf(".\n\n");
+
+                    printf("Mohon tunggu...\n");
+                    printf("1...\n");
+                    printf("2...\n");
+                    printf("3...\n\n");
+
+                    StringToWord(concatString(WordToString(path), "/pengguna.config"), &pathPengguna);
+                    LoadPengguna(&list_database, pathPengguna);
+                    loadMatrixTemanandPermintaanTeman(&matriks_pertemanan, &matriks_permintaan, pathPengguna);
+                    StringToWord(concatString(WordToString(path), "/kicauan.config"), &pathKicauan);
+                    LoadKicauan(&list_kicau, pathKicauan);
+                    StringToWord(concatString(WordToString(path), "/balasan.config"), &pathBalasan);
+                    LoadBalasan(&list_balasan, pathBalasan);
+                    StringToWord(concatString(WordToString(path), "/utas.config"), &pathBalasan);
+                    LoadUtas(&list_utas, pathBalasan);
+
+                    printf("Pemuatan selesai!\n");
+                }
             }
         }
 

@@ -169,8 +169,3 @@ void loadQueuePertemanan(Queue_Teman *q, Matrix_Permintaan array, id_user id)
         }
     }
 }
-
-void writetoConfigPertemanan(Matrix_Permintaan m, Matrix_Permintaan pm)
-{
-    
-}
