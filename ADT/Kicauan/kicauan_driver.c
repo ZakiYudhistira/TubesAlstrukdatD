@@ -34,20 +34,25 @@ int main() {
         if (isValid(currentWord, "KICAU")) {
             perintah(300, true);
             ADV();
-            HandleKicau(&l, currentWord, &id);
+            // HandleKicau(&l, currentWord, &id);
+            // HandleKicau nya diganti
         }
         else if (isValid(currentWord, "KICAUAN")) {
-            HandleKicauan(SortedKicauan(l));
+            // HandleKicauan(SortedKicauan(l));
+            // HandleKicauan nya diganti
+            printf("Test\n");
         }
         else if (isSuka(currentWord)) {
             id_kicau = sliceWord(currentWord, 13, currentWord.Length);
-            HandleSukaKicau(&l, WordToInt(id_kicau));
+            // HandleSukaKicau(&l, WordToInt(id_kicau));
+            // HandleSukaKicau nya diganti
         }
         else if (isUbah(currentWord)) {
             id_kicau = sliceWord(currentWord, 13, currentWord.Length);
             perintah(300, true);
             ADV();
-            HandleUbahKicau(&l, currentWord, WordToInt(id_kicau));
+            // HandleUbahKicau(&l, currentWord, WordToInt(id_kicau));
+            // HandleUbahKicau nya diganti
         }
         else {
             printf("Perintah tidak valid\n");

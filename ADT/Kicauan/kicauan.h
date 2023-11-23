@@ -117,7 +117,7 @@ void HandleKicau(ListDinKicau* l, Word username, int* idKicauan);
 
 void HandleKicauan(ListDinKicau l, Word username, Matrix_pertemanan m, databaseprofil p);
 
-void HandleSukaKicau(ListDinKicau* l, int idKicauan);
+void HandleSukaKicau(ListDinKicau* l, int idKicauan, Word username, Matrix_pertemanan m, databaseprofil p);
 
 void HandleUbahKicau(ListDinKicau* l, Word username, int idKicauan);
 
