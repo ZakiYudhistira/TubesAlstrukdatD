@@ -55,10 +55,12 @@ void InitStackDraf(Word User, listStackDraf *lsd) {
 }
 
 /* Primitive Function List of Stack */
+void initListStackDraf(listStackDraf *lsd) {
+    NEFF_LIST(*lsd) = 0;
+}
+
 int getIdxUser(listStackDraf lsd, Word User) {
     for (int i = 0; i < lsd.nEff; i++) {
-        printWord(lsd.list[i].Author_Draf);
-        printWord(User);
         if (isSame(lsd.list[i].Author_Draf, User)) {
             return i;
         }

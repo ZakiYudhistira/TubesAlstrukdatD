@@ -2,19 +2,23 @@
 #define utas_H
 
 #include "../boolean.h"
+#include "../Perintah/wordmachine.h"
+#include "../Kicauan/kicauan.h"
+#include "../Datetime/datetime.h"
 
 /* Definisi Node : */
-typedef char* ElType;
 typedef struct node* Address;
 typedef struct node {
-    ElType info;
+    Word info;
     Address next;
+    DATETIME date;
 } Node;
 
 #define INFO(p) (p)->info
 #define NEXT(p) (p)->next
+#define DATE(p) (p)->date
 
-Address newNode(ElType val);
+Address newNode(Word val, DATETIME date);
 
 typedef struct utas {
     int idKicauan;
@@ -23,7 +27,7 @@ typedef struct utas {
 } Utas;
 
 
-#define IDX_UNDEF (-1)
+#define IDX_UNDEF_UTAS (-1)
 #define FIRST(U) (U).First
 #define LENGTH(U) (U).length
 #define IDKicau(U) (U).idKicauan
@@ -34,23 +38,26 @@ typedef struct listdinutas{
    int capacity;   /* ukuran elemen */
 } ListDinUtas;
 
-extern ListDinUtas dbUtasUser;
-
 /* ********** SELEKTOR ********** */
 #define NEFF_UTAS(l) (l).nEff
 #define BUFFER_UTAS(l) (l).buffer
 #define ELMT_UTAS(l, i) (l).buffer[i]
 #define CAPACITY_UTAS(l) (l).capacity
 
-void CreateEmptyUtas(Utas* U, int IDKicau);
-void insertFirstUtas(Utas *U, ElType val);
-void insertAtUtas(Utas *U, ElType val, int idx);
-void deleteFirstUtas(Utas *U, ElType *val);
-void deleteAtUtas(Utas *U, ElType *val, int idx);
+void CreateEmptyUtas(Utas* U, int IDKicau, ListDinUtas *dbUtasUser, ListDinKicau* l);
+void insertFirstUtas(Utas *U, Word val, DATETIME D);
+void insertAtUtas(Utas *U, Word val, DATETIME D, int idx);
+void insertLastUtas(Utas *U, Word val, DATETIME D);
+void deleteFirstUtas(Utas *U, Word *val);
+void deleteAtUtas(Utas *U, Word *val, int idx);
+void deleteLastUtas(Utas *U, Word *val);
 
-void InsertLastListUtas(Utas val);
-void ExpandListUtas(int num);
+void initListDinUtas(ListDinUtas *dbUtasUser);
+void InsertLastListUtas(Utas *val, ListDinUtas *dbUtasUser);
+void ExpandListUtas(int num, ListDinUtas *dbUtasUser);
 
-void displayUtas(int idx);
+void displayUtas(int idx, ListDinUtas *dbUtasUser, ListDinKicau* l);
+
+void LoadUtas(ListDinUtas *dbUtasUser, Word path);
 
 #endif
