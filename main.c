@@ -41,9 +41,9 @@ Word isDirectoryExists() {
 
     struct stat stats;
     stat(path.TabWord, &stats);
-
     // Check for file existence
     while (!(S_ISDIR(stats.st_mode))) {
+        printf("Folder tidak ditemukan, mohon masukkan folder yang valid.\n\n");
         printf("Silahkan masukan folder konfigurasi untuk dimuat: ");
         perintah(300, false);
         ADV();
@@ -252,6 +252,7 @@ int main() {
                 CreateQueueQT(&q);
                 loadQueuePertemanan(&q, matriks_permintaan, idPengguna);
                 perintahTambahTeman(&matriks_permintaan, idPengguna, &list_database, q, matriks_pertemanan);
+                freeQueueQT(&q);
             }
             else {
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
@@ -264,6 +265,7 @@ int main() {
                 CreateQueueQT(&q);
                 loadQueuePertemanan(&q, matriks_permintaan, idPengguna);
                 perintahDisplayPermintaanPertemanan(q, &list_database);
+                freeQueueQT(&q);
             }
             else {
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
@@ -276,6 +278,7 @@ int main() {
                 CreateQueueQT(&q);
                 loadQueuePertemanan(&q, matriks_permintaan, idPengguna);
                 perintahSetujuiPertemanan(&matriks_pertemanan, &q, idPengguna, list_database, &matriks_permintaan);
+                freeQueueQT(&q);
             }
             else {
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
@@ -294,7 +297,7 @@ int main() {
 
         else if (isValid(currentWord, "KICAUAN")) {
             if (isLoggedIn) {
-                HandleKicauan(SortedKicauan(list_kicau));
+                HandleKicauan(SortedKicauan(list_kicau), nama(list_database, idPengguna), matriks_pertemanan, list_database);
             }
             else {
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
@@ -432,6 +435,10 @@ int main() {
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
 
             }
+        }
+
+        else {
+            printf("Perintah tidak dikenali, mohon masukkan perintah yang valid.\n");
         }
     }
 

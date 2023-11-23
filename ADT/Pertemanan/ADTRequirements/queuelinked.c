@@ -92,3 +92,24 @@ void dequeueQT(Queue_Teman *q, IDTeman *id, int *jumlah_teman)
     }
     (*q).length--;
 }
+
+void freeQueueQT(Queue_Teman *q){
+    if(!isEmptyQT(*q)){
+        Address_teman p = HEAD_TEMAN(*q);
+        while(!isEmptyQT(*q)){
+            IDTeman buang;
+            int jumlah_buang;
+            dequeueQT(q, &buang, &jumlah_buang);
+        }
+    }
+}
+
+void displayQueueQT(Queue_Teman q){
+    printf("Display Queue :\n");
+    Address_teman p = HEAD_TEMAN(q);
+    while(p != NULL){
+        printf("| ");
+        printf("%d %d\n",INFO_TEMAN(p), JUMLAH_TEMAN(p));
+        p = NEXT_TEMAN(p);
+    }
+}
