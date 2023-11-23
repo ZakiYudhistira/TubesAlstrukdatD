@@ -136,11 +136,11 @@ int main() {
         else if (isValid(currentWord, "MASUK")) {
             if (isLoggedIn) {
                 printf("Wah Anda sudah masuk. Keluar dulu yuk!\n");
+                printf("%d\n",idPengguna);
             }
             else {
                 idPengguna = login(&list_database);
                 if (idPengguna != -1) {
-                    printf("%d\n", idPengguna);
                     isLoggedIn = true;
                 }
             }
@@ -203,10 +203,18 @@ int main() {
 
         else if (isCheck(currentWord)) {
             Word user = getUser(currentWord);
-            printWord(user);
-            printf("\n");
             int idprofil = getId(&list_database, user);
-            cekProfil(idprofil, &list_database);
+            if (jenis(list_database,idprofil) == 1) {
+                if (isTeman(matriks_pertemanan,idPengguna,idprofil)) {
+                    cekProfil(idprofil,&list_database);
+                }
+                else {
+                    printf("Ikuti user ini agar mendapat profil mengenai dirinya\n");
+                }
+            }
+            else {
+                cekProfil(idprofil, &list_database);
+            }
         }
 
         else if (isValid(currentWord, "UBAH_FOTO_PROFIL")) {
