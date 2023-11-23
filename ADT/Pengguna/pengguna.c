@@ -517,6 +517,7 @@ void LoadPengguna(databaseprofil* l, Word path) {
         fgets(line, 300, file);
         fgets(line, 300, file);
         fgets(line, 300, file);
+        fgets(line, 300, file);
 
         insertLast(l, user);
     }

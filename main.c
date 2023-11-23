@@ -26,6 +26,8 @@
 #include "ADT/Draf/stackDraf.c"
 #include "ADT/Time/time.h"
 #include "ADT/Time/time.c"
+#include "ADT/Utas/utas.h"
+#include "ADT/Utas/utas.c"
 #include <sys/stat.h>
 
 Word isDirectoryExists() {
@@ -65,6 +67,8 @@ int main() {
     CreateListKicauan(&list_kicau, 10);
     ListDinBalasan list_balasan;
     createListBalasan(&list_balasan, 10);
+    ListDinUtas list_utas;
+    initListDinUtas(&list_utas);
 
     // Data Pengguna
     int idPengguna = -1;
@@ -97,6 +101,9 @@ int main() {
     LoadKicauan(&list_kicau, pathKicauan);
     StringToWord(concatString(WordToString(path), "/balasan.config"), &pathBalasan);
     LoadBalasan(&list_balasan, pathBalasan);
+    StringToWord(concatString(WordToString(path), "/utas.config"), &pathBalasan);
+    LoadUtas(&list_utas, pathBalasan);
+
 
     // Data Setelah Load
     int idKicau = ListKicauMaxId(list_kicau) + 1;
@@ -132,13 +139,17 @@ int main() {
             }
             else {
                 idPengguna = login(&list_database);
-                isLoggedIn = true;
+                if (idPengguna != -1) {
+                    printf("%d\n", idPengguna);
+                    isLoggedIn = true;
+                }
             }
         }
 
         else if (isValid(currentWord, "KELUAR")) {
             if (isLoggedIn) {
                 idPengguna = -1;
+                isLoggedIn = false;
                 printf("Terima kasih telah menggunakan layanan BurBir\n");
             }
             else {

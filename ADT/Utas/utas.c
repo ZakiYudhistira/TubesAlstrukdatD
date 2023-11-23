@@ -4,9 +4,9 @@
 #include "../Perintah/perintah.h"
 #include "../Kicauan/kicauan.h"
 
-Address newNode(Word val, DATETIME date) {
+Address newNodeUtas(Word val, DATETIME date) {
     Address p = (Address)malloc(sizeof(Node));
-    if (p!=NULL){
+    if (p != NULL) {
         INFO(p) = val;
         DATE(p) = date;
         NEXT(p) = NULL;
@@ -14,7 +14,7 @@ Address newNode(Word val, DATETIME date) {
     return p;
 }
 
-void CreateEmptyUtas(Utas* U, int IDKicau, ListDinUtas *dbUtasUser, ListDinKicau* l) {
+void CreateEmptyUtas(Utas* U, int IDKicau, ListDinUtas* dbUtasUser, ListDinKicau* l) {
     LENGTH(*U) = 0;
     IDKicau(*U) = IDKicau;
     FIRST(*U) = NULL;
@@ -37,14 +37,15 @@ void CreateEmptyUtas(Utas* U, int IDKicau, ListDinUtas *dbUtasUser, ListDinKicau
         LENGTH(*U) += 1;
 
         printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK)\n");
-        
+
         perintah(100, 0);
         ADV();
         text = currentWord;
 
         if (isValid(text, "NO")) {
             lanjut = false;
-        } else {
+        }
+        else {
             printf("GAS LANJUT\n");
         }
     }
@@ -56,12 +57,13 @@ void CreateEmptyUtas(Utas* U, int IDKicau, ListDinUtas *dbUtasUser, ListDinKicau
 
 
 
-void insertFirstUtas(Utas *U, Word val, DATETIME D) {
-    Address p = newNode(val, D);
+void insertFirstUtas(Utas* U, Word val, DATETIME D) {
+    Address p = newNodeUtas(val, D);
 
     if (LENGTH(*U) == 0) {
-        FIRST(*U) = p;    
-    } else {
+        FIRST(*U) = p;
+    }
+    else {
         Address f = FIRST(*U);
         NEXT(p) = NEXT(f);
         FIRST(*U) = p;
@@ -69,11 +71,12 @@ void insertFirstUtas(Utas *U, Word val, DATETIME D) {
 
     LENGTH(*U)++;
 }
-void insertAtUtas(Utas *U, Word val, DATETIME D, int idx) {
+void insertAtUtas(Utas* U, Word val, DATETIME D, int idx) {
     if (idx == 0) {
         insertFirstUtas(U, val, D);
-    } else {
-        Address new = newNode(val, D);
+    }
+    else {
+        Address new = newNodeUtas(val, D);
         Address p = FIRST(*U);
 
         for (int i = 2; i < idx; i++) {
@@ -87,11 +90,11 @@ void insertAtUtas(Utas *U, Word val, DATETIME D, int idx) {
     }
 }
 
-void insertLastUtas(Utas *U, Word val, DATETIME D) {
+void insertLastUtas(Utas* U, Word val, DATETIME D) {
     insertAtUtas(U, val, D, LENGTH(*U));
 }
 
-void deleteFirstUtas(Utas *U, Word *val) {
+void deleteFirstUtas(Utas* U, Word* val) {
     Address p = FIRST(*U);
     *val = INFO(p);
 
@@ -101,10 +104,11 @@ void deleteFirstUtas(Utas *U, Word *val) {
     LENGTH(*U)--;
 }
 
-void deleteAtUtas(Utas *U, Word *val, int idx) {
-    if (idx+1 == 1) {
+void deleteAtUtas(Utas* U, Word* val, int idx) {
+    if (idx + 1 == 1) {
         deleteFirstUtas(U, val);
-    } else {
+    }
+    else {
         Address p1 = FIRST(*U);
         Address p2 = NEXT(p1);
 
@@ -121,11 +125,11 @@ void deleteAtUtas(Utas *U, Word *val, int idx) {
     }
 }
 
-void deleteLastUtas(Utas *U, Word *val) {
+void deleteLastUtas(Utas* U, Word* val) {
     deleteAtUtas(U, val, LENGTH(*U));
 }
 
-void displayUtas(int idx, ListDinUtas *dbUtasUser, ListDinKicau* l) {
+void displayUtas(int idx, ListDinUtas* dbUtasUser, ListDinKicau* l) {
     Utas U = BUFFER_UTAS(*dbUtasUser)[idx];
     Address p = FIRST(U);
     Kicauan k;
@@ -137,12 +141,12 @@ void displayUtas(int idx, ListDinUtas *dbUtasUser, ListDinKicau* l) {
         i++;
     }
 
-    k = (Kicauan) ELMT_KICAU(*l, i);
+    k = (Kicauan)ELMT_KICAU(*l, i);
     DisplayKicauan(ELMT_KICAU(*l, i));
     author = AUTHOR_KICAU(k);
 
     for (int i = 0; i < LENGTH(U); i++) {
-        printf("    | INDEX = %d\n", i+1);
+        printf("    | INDEX = %d\n", i + 1);
         printf("    | "); printWord(author);
         printf("\n    | "); TulisDATETIME(DATE(p));
         printf("\n    | "); printWord(INFO(p));
@@ -151,16 +155,16 @@ void displayUtas(int idx, ListDinUtas *dbUtasUser, ListDinKicau* l) {
     }
 }
 
-void initListDinUtas(ListDinUtas *dbUtasUser) {
+void initListDinUtas(ListDinUtas* dbUtasUser) {
     NEFF_UTAS(*dbUtasUser) = 0;
 }
 
-void ExpandListUtas(int num, ListDinUtas *dbUtasUser) {
+void ExpandListUtas(int num, ListDinUtas* dbUtasUser) {
     BUFFER_UTAS(*dbUtasUser) = realloc(BUFFER_UTAS(*dbUtasUser), (CAPACITY_UTAS(*dbUtasUser) + num) * sizeof(Utas));
     CAPACITY_UTAS(*dbUtasUser) += num;
 }
 
-void InsertLastListUtas(Utas* val, ListDinUtas *dbUtasUser) {
+void InsertLastListUtas(Utas* val, ListDinUtas* dbUtasUser) {
     if (NEFF_UTAS(*dbUtasUser) == CAPACITY_UTAS(*dbUtasUser)) {
         ExpandListUtas(10, dbUtasUser);
     }
@@ -168,8 +172,8 @@ void InsertLastListUtas(Utas* val, ListDinUtas *dbUtasUser) {
     NEFF_UTAS(*dbUtasUser) += 1;
 }
 
-void LoadUtas(ListDinUtas *dbUtasUser, Word path) {
-    FILE* file = fopen(path.TabWord, "r");
+void LoadUtas(ListDinUtas* dbUtasUser, Word path) {
+    FILE* file = fopen(WordToString(path), "r");
     char line[300];
 
     if (file == NULL) {
@@ -194,7 +198,7 @@ void LoadUtas(ListDinUtas *dbUtasUser, Word path) {
         LENGTH(U) = 0;
 
         for (int j = 0; j < banyak_utas; j++) {
-            
+
             fgets(line, 300, file);
             StringToWord(line, &currentWord);
             Word text = removeNewline(currentWord);
