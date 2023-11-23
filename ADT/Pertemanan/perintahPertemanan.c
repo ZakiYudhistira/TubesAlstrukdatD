@@ -172,6 +172,9 @@ void perintahSetujuiPertemanan(Matrix_pertemanan *m, Queue_Teman *q, id_user id,
             printWord(nama(array,id2));
             int i;
             for(i = 0 ; i < (*mp).length ; i++){
+                if((*mp).permintaan_teman[i][0] == id2){
+                    (*mp).permintaan_teman[i][2]++;
+                }
                 if((*mp).permintaan_teman[i][0] == id){
                     (*mp).permintaan_teman[i][2]++;
                 }
