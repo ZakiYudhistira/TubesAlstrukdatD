@@ -5,7 +5,7 @@
 
 
 #include "../boolean.h"
-#include "../Mesin Kata/wordmachine.h"
+#include "../Perintah/wordmachine.h"
 #include "../Matrix/matrix.h"
 #include "../Pertemanan/pertemanan.h"
 

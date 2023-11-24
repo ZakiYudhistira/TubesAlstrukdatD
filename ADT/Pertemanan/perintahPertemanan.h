@@ -16,7 +16,7 @@ void perintahTambahTeman(Matrix_Permintaan* pm, id_user id, databaseprofil* arra
 /*I.S. id terdaftar, queue pertemnan harus kosong*/
 /*F.S. mengirimkan permintaan pertemanan kepada seorang user terdaftar*/
 
-void perintahHapusTeman(Matrix_pertemanan* m, id_user id, databaseprofil* array);
+void perintahHapusTeman(Matrix_pertemanan* m, id_user id, databaseprofil* array, Matrix_Permintaan *mp);
 /*I.S. sembarang*/
 /*F.S. menghapus relasi pertemanan antar pengguna*/
 
