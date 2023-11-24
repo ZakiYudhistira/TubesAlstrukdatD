@@ -145,9 +145,9 @@ void deleteUtas(Word User, int IDUtas, int index, ListDinUtas* dbUtasUser) {
     }
     else {
         Utas U;
-        U = ELMT_LISTUTAS(*dbUtasUser, IDUtas);
+        U = ELMT_LISTUTAS(*dbUtasUser, IDUtas-1);
 
-        if (index >= LENGTH_UTAS(U)) {
+        if (index > LENGTH_UTAS(U)) {
             printf("Kicauan sambungan dengan index %d tidak ditemukan pada utas!\n", index);
         }
         else if (!isSame(User, AUTHOR_UTAS(U))) {
@@ -155,7 +155,10 @@ void deleteUtas(Word User, int IDUtas, int index, ListDinUtas* dbUtasUser) {
         }
         else {
             deleteAtUtas(&U, index-1);
+            printf("Kicauan sambungan berhasil dihapus!\n");
         }
+
+        ELMT_LISTUTAS(*dbUtasUser, IDUtas-1) = U;
     }
 }
 
@@ -206,14 +209,14 @@ void deleteFirstUtas(Utas* U) {
     LENGTH_UTAS(*U)--;
 }
 void deleteAtUtas(Utas* U, int idx) {
-    if (idx + 1 == 1) {
+    if (idx == 0) {
         deleteFirstUtas(U);
     }
     else {
         Address p1 = FIRST_UTAS(*U);
         Address p2 = NEXT(p1);
 
-        for (int i = 2; i < idx; i++) {
+        for (int i = 1; i < idx; i++) {
             p1 = NEXT(p1);
             p2 = NEXT(p2);
         }
