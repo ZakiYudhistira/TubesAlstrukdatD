@@ -78,7 +78,7 @@ void perintahTambahTeman(Matrix_Permintaan *pm, id_user id, databaseprofil *arra
 {
     if(isEmptyQT(queue)){
         printf("Masukkan nama pengguna:\n");
-        perintah(300, true);
+        perintah(300, false);
         ADV();
         int i, count = 0;
         for(i = 0 ; i < colEffT(m) ; i++){
