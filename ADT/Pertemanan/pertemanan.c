@@ -116,7 +116,7 @@ void loadMatrixTemanandPermintaanTeman(Matrix_pertemanan *m, Matrix_Permintaan *
 
     fgets(line, 300, file);
     StringToWord(line, &currentWord);
-    int banyak_pengguna = WordToInt(removeNewline(currentWord));
+    int banyak_pengguna = WordToInt(removeNewline(removeNewline(currentWord)));
     rowEffT(*m) = banyak_pengguna;
     colEffT(*m) = banyak_pengguna;
 

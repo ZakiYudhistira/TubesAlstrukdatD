@@ -148,7 +148,7 @@ int main() {
                 printf("Wah Anda sudah masuk. Keluar dulu yuk!\n");
             }
             else {
-                if(listLength(&list_database) == 0) {
+                if (listLength(&list_database) == 0) {
                     printf("Pengguna masih berjumlah 0 di database, silahkan daftar terlebih dahulu \n");
                 }
                 else {
@@ -257,7 +257,7 @@ int main() {
         // Perintah Permintaan Pertemanan
         else if (isValid(currentWord, "HAPUS_TEMAN")) {
             if (isLoggedIn) {
-                perintahHapusTeman(&matriks_pertemanan, idPengguna, &list_database);
+                perintahHapusTeman(&matriks_pertemanan, idPengguna, &list_database, &matriks_permintaan);
             }
             else {
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
@@ -452,7 +452,7 @@ int main() {
                 printWord(currentWord);
                 printf(". Akan dilakukan pembuatan ");
                 printWord(currentWord);
-                printf("terlebih dahulu.\n\n");
+                printf(" terlebih dahulu.\n\n");
 
                 printf("Mohon tunggu...\n");
                 printf("1...\n");
