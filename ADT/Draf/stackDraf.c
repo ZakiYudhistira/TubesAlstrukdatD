@@ -6,9 +6,10 @@
 #include "../Kicauan/kicauan.h"
 
 /* Primitive Function Stack */
-void CreateEmptyStackDraf(StackDraf *SD, Word namaAuthor) {
+void CreateEmptyStackDraf(StackDraf *SD, Word namaAuthor, listStackDraf *lsd) {
     IDXTOP_SD(*SD) = -1;
     AUTHOR_SD(*SD) = namaAuthor;
+    insertLastListStack(lsd, *SD);
 }
 boolean IsEmptyStackDraf(StackDraf SD) {
     return IDXTOP_SD(SD) == -1;
@@ -93,12 +94,13 @@ void CreateDraf(Word User, listStackDraf *lsd, ListDinKicau *l) {
     int idxUser = getIdxUserListStackDraf(*lsd, User);
 
     if (idxUser == -1) {
-        CreateEmptyStackDraf(&SD, User);
+        CreateEmptyStackDraf(&SD, User, lsd);
+        idxUser = NEFF_LISTSTACK(*lsd) - 1;
     } else {
         SD = GET_LISTSTACK(*lsd, idxUser);
     }
 
-    printf("Masukkan draf:\n");
+    printf("\nMasukkan draf:\n");
     perintah(100, 0);
     TEXT_DRAF(D) = currentWord;
     ADV();
@@ -116,6 +118,10 @@ void CreateDraf(Word User, listStackDraf *lsd, ListDinKicau *l) {
     if (isValid(input, "TERBIT")) {
         PublishDraf(User, lsd, l);
         printf("\nSelamat! Draf kicauan telah diterbitkan!\n");
+
+        Kicauan kicau = ELMT_KICAU(*l, NEFF_KICAU(*l)-1);
+        printf("Detil kicauan:\n");
+        DisplayKicauan(kicau);
     } else if (isValid(input, "HAPUS")) {
         DeleteDraf(User, lsd);
         printf("\nDraf telah berhasil dihapus!\n");
@@ -126,21 +132,16 @@ void CreateDraf(Word User, listStackDraf *lsd, ListDinKicau *l) {
     }
 }
 // Untuk input == 'LIHAT_DRAF'
-void DisplayDraf(Word User, listStackDraf lsd, ListDinKicau *l) {
+void DisplayDraf(Word User, listStackDraf *lsd, ListDinKicau *l) {
     StackDraf SD;
     Word input;
 
-    int idxUser = getIdxUserListStackDraf(lsd, User);
+    int idxUser = getIdxUserListStackDraf(*lsd, User);
 
     if (idxUser == -1) {
-        CreateEmptyStackDraf(&SD, User);
-    } else {
-        SD = GET_LISTSTACK(lsd, idxUser);
-    }
-
-    if (IsEmptyStackDraf(SD)) {
         printf("Yah, anda belum memiliki draf apapun! Buat dulu ya :D\n");
     } else {
+        SD = GET_LISTSTACK(*lsd, idxUser);
         Draf D = LASTDRAF_SD(SD);
 
         printf("Ini draf terakhir anda:");
@@ -153,13 +154,17 @@ void DisplayDraf(Word User, listStackDraf lsd, ListDinKicau *l) {
         ADV();
 
         if (isValid(input, "TERBIT")) {
-            PublishDraf(User, &lsd, l);
+            PublishDraf(User, lsd, l);
             printf("\nSelamat! Draf kicauan telah diterbitkan!\n");
+
+            Kicauan kicau = ELMT_KICAU(*l, NEFF_KICAU(*l)-1);
+            printf("Detil kicauan:\n");
+            DisplayKicauan(kicau);
         } else if (isValid(input, "HAPUS")) {
-            DeleteDraf(User, &lsd);
+            DeleteDraf(User, lsd);
             printf("\nDraf telah berhasil dihapus!\n");
         } else if (isValid(input, "UBAH")) {
-            EditDraf(User, &lsd, l);
+            EditDraf(User, lsd, l);
         } else if (isValid(input, "KEMBALI")) {
             /* do nothing */
         } else {
@@ -208,6 +213,8 @@ void PublishDraf(Word User, listStackDraf *lsd, ListDinKicau *l) {
     ID_KICAU(kicau) = ListKicauMaxId(*l) + 1;
 
     InsertLastKicau(l, kicau);
+
+    GET_LISTSTACK(*lsd, idxUser) = SD;
 }
 
 void LoadDraf(listStackDraf *lsd, Word path) {
@@ -234,7 +241,7 @@ void LoadDraf(listStackDraf *lsd, Word path) {
 
         banyakDrafInt = WordToInt(removeNewline(banyakDraf));
         
-        CreateEmptyStackDraf(&SD, namaUser);
+        CreateEmptyStackDraf(&SD, namaUser, lsd);
 
         for (int j = 0; j < banyakDrafInt; j++) {
             Draf D;
@@ -251,6 +258,7 @@ void LoadDraf(listStackDraf *lsd, Word path) {
         }
 
         InverseStackDraf(&SD);
+        deleteAtListStack(lsd, NEFF_LISTSTACK(*lsd));
         insertLastListStack(lsd, SD);
     }
 

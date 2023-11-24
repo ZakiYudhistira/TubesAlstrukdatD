@@ -383,7 +383,7 @@ int main() {
 
         else if (isValid(currentWord, "LIHAT_DRAF")) {
             if (isLoggedIn) {
-                DisplayDraf(nama(list_database, idPengguna), list_draf, &list_kicau);
+                DisplayDraf(nama(list_database, idPengguna), &list_draf, &list_kicau);
             }
             else {
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");

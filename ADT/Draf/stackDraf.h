@@ -29,7 +29,7 @@ typedef struct {
 #define GET_LISTSTACK(lsd, idx) (lsd).list[idx]
 
 /* Primitive Function Stack */
-void CreateEmptyStackDraf(StackDraf *SD, Word namaAuthor);
+void CreateEmptyStackDraf(StackDraf *SD, Word namaAuthor, listStackDraf *lsd);
 boolean IsEmptyStackDraf(StackDraf SD);
 boolean IsFullStackDraf(StackDraf SD);
 int LengthStackDraf(StackDraf SD);
@@ -48,7 +48,7 @@ void deleteAtListStack(listStackDraf *lsd, int idx);
 // Untuk input == 'BUAT_DRAF'
 void CreateDraf(Word User, listStackDraf *lsd, ListDinKicau *l);
 // Untuk input == 'LIHAT_DRAF'
-void DisplayDraf(Word User, listStackDraf lsd, ListDinKicau *l);
+void DisplayDraf(Word User, listStackDraf *lsd, ListDinKicau *l);
 // Untuk input == 'HAPUS'
 void DeleteDraf(Word User, listStackDraf *lsd);
 // Untuk input == 'UBAH'
