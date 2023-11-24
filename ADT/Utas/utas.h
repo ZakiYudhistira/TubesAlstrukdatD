@@ -35,10 +35,10 @@ typedef struct utas {
 #define AUTHOR_UTAS(U) (U).Author
 #define IDKICAU_UTAS(U) (U).idKicauan
 
-typedef struct listdinutas{
-   Utas* buffer; /* memori tempat penyimpan elemen (container) */
-   int nEff;       /* >=0, banyaknya elemen efektif */
-   int capacity;   /* ukuran elemen */
+typedef struct listdinutas {
+    Utas* buffer; /* memori tempat penyimpan elemen (container) */
+    int nEff;       /* >=0, banyaknya elemen efektif */
+    int capacity;   /* ukuran elemen */
 } ListDinUtas;
 
 /* ********** SELEKTOR ********** */
@@ -48,29 +48,38 @@ typedef struct listdinutas{
 #define CAPACITY_LISTUTAS(l) (l).capacity
 
 // Untuk input == "UTAS [IDKicau]"
-void createEmptyUtas(Word User, int IDKicau, ListDinUtas *dbUtasUser, ListDinKicau* l);
+void createEmptyUtas(Word User, int IDKicau, ListDinUtas* dbUtasUser, ListDinKicau* l);
 // Untuk input == "CETAK_UTAS [IDUtas]"
-void displayUtas(Word User, int IDUtas, ListDinUtas *dbUtasUser, ListDinKicau* l, databaseprofil db, Matrix_pertemanan m);
+void displayUtas(Word User, int IDUtas, ListDinUtas* dbUtasUser, ListDinKicau* l, databaseprofil db, Matrix_pertemanan m);
 // Untuk input == "SAMBUNG_UTAS [IDUtas] [index]"
-void sambungUtas(Word User, int IDUtas, int index, ListDinUtas *dbUtasUser);
+void sambungUtas(Word User, int IDUtas, int index, ListDinUtas* dbUtasUser);
 // Untuk input == "HAPUS_UTAS [IDUtas] [index]"
-void deleteUtas(Word User, int IDUtas, int index, ListDinUtas *dbUtasUser);
+void deleteUtas(Word User, int IDUtas, int index, ListDinUtas* dbUtasUser);
 
 /* Primitive Function Utas */
-void insertFirstUtas(Utas *U, Word val, DATETIME D);
-void insertAtUtas(Utas *U, Word val, DATETIME D, int idx);
-void insertLastUtas(Utas *U, Word val, DATETIME D);
-void deleteFirstUtas(Utas *U);
-void deleteAtUtas(Utas *U, int idx);
-void deleteLastUtas(Utas *U);
+void insertFirstUtas(Utas* U, Word val, DATETIME D);
+void insertAtUtas(Utas* U, Word val, DATETIME D, int idx);
+void insertLastUtas(Utas* U, Word val, DATETIME D);
+void deleteFirstUtas(Utas* U);
+void deleteAtUtas(Utas* U, int idx);
+void deleteLastUtas(Utas* U);
 
 /* Primitive Function ListDin Utas*/
-void initListDinUtas(ListDinUtas *dbUtasUser);
-void insertLastListUtas(Utas *val, ListDinUtas *dbUtasUser);
-void expandListUtas(int num, ListDinUtas *dbUtasUser);
+void initListDinUtas(ListDinUtas* dbUtasUser);
+void insertLastListUtas(Utas* val, ListDinUtas* dbUtasUser);
+void expandListUtas(int num, ListDinUtas* dbUtasUser);
 
-void loadUtas(ListDinUtas *dbUtasUser, Word path);
+void loadUtas(ListDinUtas* dbUtasUser, Word path);
 
 // Fungsi Bantuan
 int getIDUtas(int IDKicau, ListDinUtas dbUtasUser);
+
+boolean isUtas(Word option);
+
+boolean isSambungUtas(Word option);
+
+boolean isHapusUtas(Word option);
+
+boolean isCetakUtas(Word option);
+
 #endif

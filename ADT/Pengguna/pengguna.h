@@ -5,6 +5,7 @@
 
 
 #include "../boolean.h"
+#include "../Perintah/wordmachine.h"
 #include "../Matrix/matrix.h"
 #include "../Pertemanan/pertemanan.h"
 
