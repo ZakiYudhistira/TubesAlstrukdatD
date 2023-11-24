@@ -40,10 +40,10 @@ void perintahDisplayDaftarTeman(Matrix_pertemanan m, id_user id, databaseprofil 
     }   
 }
 
-void perintahHapusTeman(Matrix_pertemanan *m, id_user id, databaseprofil *array)
+void perintahHapusTeman(Matrix_pertemanan *m, id_user id, databaseprofil *array, Matrix_Permintaan *mp)
 {
     printf("Masukkan nama pengguna:\n");
-    perintah(300, true);
+    perintah(300, false);
     ADV();
 
     id_user id_hapus = getId(array, currentWord);
@@ -62,6 +62,15 @@ void perintahHapusTeman(Matrix_pertemanan *m, id_user id, databaseprofil *array)
                 hapusTeman(m, id, id_hapus);
                 printWord(nama(*array, id_hapus));
                 printf(" berhasil dihapus dari daftar teman Anda.\n");
+                int i;
+                for(i = 0 ; i < (*mp).length ; i++){
+                    if((*mp).permintaan_teman[i][0] == id_hapus){
+                        (*mp).permintaan_teman[i][2]--;
+                    }
+                    if((*mp).permintaan_teman[i][0] == id){
+                        (*mp).permintaan_teman[i][2]--;
+                    }
+                }
             } else {
                 printf("Penghapusan teman dibatalkan.\n");
             }
@@ -90,7 +99,7 @@ void perintahTambahTeman(Matrix_Permintaan *pm, id_user id, databaseprofil *arra
         if(id_tambah == -1){
             printf("Pengguna bernama "); 
             printWord(currentWord);
-            printf("tidak ditemukan.\n");
+            printf(" tidak ditemukan.\n");
         } else {
             boolean isSent = false;
             int i;
