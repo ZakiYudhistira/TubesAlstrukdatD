@@ -116,6 +116,10 @@ void CreateDraf(Word User, listStackDraf *lsd, ListDinKicau *l) {
     if (isValid(input, "TERBIT")) {
         PublishDraf(User, lsd, l);
         printf("\nSelamat! Draf kicauan telah diterbitkan!\n");
+
+        Kicauan kicau = ELMT_KICAU(*l, NEFF_KICAU(*l)-1);
+        printf("Detil kicauan:\n");
+        DisplayKicauan(kicau);
     } else if (isValid(input, "HAPUS")) {
         DeleteDraf(User, lsd);
         printf("\nDraf telah berhasil dihapus!\n");
@@ -155,6 +159,10 @@ void DisplayDraf(Word User, listStackDraf lsd, ListDinKicau *l) {
         if (isValid(input, "TERBIT")) {
             PublishDraf(User, &lsd, l);
             printf("\nSelamat! Draf kicauan telah diterbitkan!\n");
+
+            Kicauan kicau = ELMT_KICAU(*l, NEFF_KICAU(*l)-1);
+            printf("Detil kicauan:\n");
+            DisplayKicauan(kicau);
         } else if (isValid(input, "HAPUS")) {
             DeleteDraf(User, &lsd);
             printf("\nDraf telah berhasil dihapus!\n");
