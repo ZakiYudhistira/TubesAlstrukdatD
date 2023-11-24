@@ -31,15 +31,14 @@ Word inputusername() {
     STARTWORDPengguna();
     ADV();
     int panjang = currentWord.Length;
-    if (panjang >= 20) {
-        while (kata.Length < 20) {
-            kata.TabWord[kata.Length] = currentWord.TabWord[kata.Length];
-            kata.Length += 1;
-        }
+    while (panjang > 20) {
+        printf("Username lebih dari 20 karakter, masukkan kembali. \n");
+        printf("Silahkan masukkan username: \n");
+        STARTWORDPengguna();
+        ADV();
+        panjang = currentWord.Length;
     }
-    else {
-        kata = currentWord;
-    }
+    kata = currentWord;
     return kata;
 }
 
@@ -49,15 +48,14 @@ Word inputpass() {
     STARTWORDPengguna();
     ADV();
     int panjang = currentWord.Length;
-    if (panjang >= 20) {
-        while (kat.Length < 20) {
-            kat.TabWord[kat.Length] = currentWord.TabWord[kat.Length];
-            kat.Length += 1;
-        }
+    while (panjang > 20) {
+        printf("Password lebih dari 20 karakter, masukkan kembali. \n");
+        printf("Silahkan masukkan password: \n");
+        STARTWORDPengguna();
+        ADV();
+        panjang = currentWord.Length;
     }
-    else {
-        kat = currentWord;
-    }
+    kat = currentWord;
     return kat;
 }
 
@@ -67,15 +65,14 @@ Word inputbio() {
     STARTWORDPengguna();
     ADV();
     int panjang = currentWord.Length;
-    if (panjang >= 135) {
-        while (kat.Length < 135) {
-            kat.TabWord[kat.Length] = currentWord.TabWord[kat.Length];
-            kat.Length += 1;
-        }
+    while (panjang > 135) {
+        printf("Bio lebih dari 135 karakter, masukkan kembali. \n");
+        printf("Silahkan masukkan bio: \n");
+        STARTWORDPengguna();
+        ADV();
+        panjang = currentWord.Length;
     }
-    else {
-        kat = currentWord;
-    }
+    kat = currentWord;
     return kat;
 }
 
@@ -340,32 +337,41 @@ void createDatabase(databaseprofil* l) {
 }
 
 int login(databaseprofil* data) {
+    int id = -1;
     Word uname;
-    printf("Silahkan masukkan username: \n");
-    STARTWORDPengguna();
-    ADV();
-    for (int i = 0; i < listLength(data); i++) {
-        if (isWordEqual(currentWord, nama(*data, i))) {
-            boolean passwordbetul = false;
-            while (passwordbetul == false) {
-                printf("Silahkan masukkan password: \n");
-                // printf("\n");
-                STARTWORDPengguna();
-                ADV();
-                if (isWordEqual(currentWord, password(*data, i))) {
-                    printf("Selamat datang, ");
-                    printWord(nama(*data, i));
-                    printf("\n");
-                    return i;
-                }
-                else {
-                    printf("Salah bos ulang kembali mengisi password\n");
-                }
+    boolean username = false;
+    while (username == false) {
+        printf("Silahkan masukkan username: \n");
+        STARTWORDPengguna();
+        ADV();
+        for (int i = 0; i < listLength(data); i++) {
+            if (isWordEqual(currentWord, nama(*data, i))) {
+                username = true;
+                id = i;
             }
         }
+        if (id == -1) {
+            printf("Username yang anda masukkan tidak ditemukan, silahkan masukkan kembali\n");
+        }
     }
-    printf("Maaf, username yang anda masukan tidak ada\n");
-    return -1;
+    boolean password = false;
+    while (password == false) {
+        printf("Silahkan masukkan password: \n");
+        STARTWORDPengguna();
+        ADV();
+        for (int i = 0; i < listLength(data); i++) {
+            if (isWordEqual(currentWord, password(*data, i))) {
+                password = true;
+                printf("Selamat datang, ");
+                printWord(nama(*data,i));
+                printf("\n");
+            }
+        }
+        if (password == false) {
+            printf("Password yang anda masukkan salah, silahkan masukkan kembali\n");
+        }
+    }
+    return id;
 }
 
 
@@ -433,30 +439,31 @@ void ubahProfil(databaseprofil* l, int id) {
     hpbefore = hp(*l,id);
     STARTWORDPengguna();
     ADV();
-    boolean isValid = inputHP(currentWord);
-    while (isValid == false) {
-        printf("No HP salah, masukkan no HP kembali\n");
-        printf("Masukkan No HP: \n");
-        STARTWORDPengguna();
-        ADV();
-        isValid = inputHP(currentWord);
-    }
-
-    if (isValid == true) {
-        if (currentWord.Length > 0) {
-            if (currentWord.Length > 15) {
-                hp(*l, id).Length = 0;
-                for (int i = 0; i < 15; i++) {
-                    hp(*l, id).TabWord[i] = currentWord.TabWord[i];
-                    hp(*l, id).Length += 1;
+    boolean valid = false;
+    while (valid == false) {
+        if (currentWord.Length > 15) {
+            printf("No HP tidak boleh lebih dari 15 karakter. \n");
+            printf("Masukkan No HP: \n");
+            STARTWORDPengguna();
+            ADV();
+        }
+        else {
+            if (inputHP(currentWord)) {
+                if (currentWord.Length > 0) {
+                    hp(*l,id) = currentWord;
+                    valid = true;
+                }
+                else {
+                    hp(*l,id) = hpbefore;
+                    valid = true;
                 }
             }
             else {
-                hp(*l, id) = currentWord;
+                printf("Nomor HP hanya boleh berisi angka\n");
+                printf("Masukkan No HP: \n");
+                STARTWORDPengguna();
+                ADV();
             }
-        }
-        else {
-            hp(*l, id) = hpbefore;
         }
     }
 }
