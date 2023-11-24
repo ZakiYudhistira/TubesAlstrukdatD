@@ -134,10 +134,13 @@ int main() {
                 if (listLength(&list_database) == 20) {
                     printf("Jumlah pengguna sudah penuh\n");
                 }
+                else if (listLength(&list_database) == 0) {
+                    printf("Belum ada akun di database, daftarkan akun terlebih dahulu.\n");
+                }
                 else {
                     ReadPengguna(&p, &list_database);
-                    matriks_pertemanan.colEff++;
-                    matriks_pertemanan.rowEff++;
+                    matriks_pertemanan.colEff = listLength(&list_database);
+                    matriks_pertemanan.rowEff = listLength(&list_database);
                     matriks_pertemanan.buffer[matriks_pertemanan.colEff-1][matriks_pertemanan.rowEff-1] = 1;
                 }
             }
