@@ -107,7 +107,7 @@ int main() {
     StringToWord(concatString(WordToString(path), "/balasan.config"), &pathBalasan);
     LoadBalasan(&list_balasan, pathBalasan);
     StringToWord(concatString(WordToString(path), "/utas.config"), &pathUtas);
-    LoadUtas(&list_utas, pathUtas);
+    loadUtas(&list_utas, pathUtas);
     StringToWord(concatString(WordToString(path), "/draf.config"), &pathDraf);
     LoadDraf(&list_draf, pathDraf);
 
@@ -210,9 +210,9 @@ int main() {
             Word user = getUser(currentWord);
             int idprofil = getId(&list_database, user);
             if (isLoggedIn) {
-                if (jenis(list_database,idprofil) == 1) {
-                    if (isTeman(matriks_pertemanan,idPengguna,idprofil)) {
-                        cekProfil(idprofil,&list_database);
+                if (jenis(list_database, idprofil) == 1) {
+                    if (isTeman(matriks_pertemanan, idPengguna, idprofil)) {
+                        cekProfil(idprofil, &list_database);
                     }
                     else {
                         printf("Ikuti user ini agar mendapat profil mengenai dirinya\n");
@@ -434,12 +434,45 @@ int main() {
             perintah(300, false);
             ADV();
 
-            if (isValid(currentWord, "test")) {
-                StringToWord(concatString("./Konfigurasi/", WordToString(currentWord)), &path);
-                writePertemananConfig(matriks_pertemanan, matriks_permintaan, list_database, path);
-                writeKicauanConfig(list_kicau, path);
-                writeBalasanConfig(list_balasan, path);
+            StringToWord(concatString("./Konfigurasi/", WordToString(currentWord)), &path);
+
+            struct stat stats;
+            stat(path.TabWord, &stats);
+            // Check for file existence
+            if (!(S_ISDIR(stats.st_mode))) {
+                printf("Belum terdapat ");
+                printWord(currentWord);
+                printf(". Akan dilakukan pembuatan ");
+                printWord(currentWord);
+                printf("terlebih dahulu.\n\n");
+
+                printf("Mohon tunggu...\n");
+                printf("1...\n");
+                printf("2...\n");
+                printf("3...\n\n");
+
+                mkdir(WordToString(path), 0777);
+
+                printWord(currentWord);
+                printf(" sudah berhasil dibuat.\n\n");
             }
+
+            printf("Anda akan melakukan penyimpanan di ");
+            printWord(currentWord);
+            printf(".\n\n");
+
+            printf("Mohon tunggu...\n");
+            printf("1...\n");
+            printf("2...\n");
+            printf("3...\n\n");
+
+            writePertemananConfig(matriks_pertemanan, matriks_permintaan, list_database, path);
+            writeKicauanConfig(list_kicau, path);
+            writeBalasanConfig(list_balasan, path);
+            writeUtasConfig(list_utas, path);
+            writeDrafConfig(list_draf, path);
+
+            printf("Penyimpanan telah berhasil dilakukan!\n");
         }
 
         else if (isValid(currentWord, "MUAT")) {
@@ -477,7 +510,7 @@ int main() {
                     StringToWord(concatString(WordToString(path), "/balasan.config"), &pathBalasan);
                     LoadBalasan(&list_balasan, pathBalasan);
                     StringToWord(concatString(WordToString(path), "/utas.config"), &pathBalasan);
-                    LoadUtas(&list_utas, pathBalasan);
+                    loadUtas(&list_utas, pathBalasan);
 
                     printf("Pemuatan selesai!\n");
                 }

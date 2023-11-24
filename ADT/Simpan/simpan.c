@@ -226,7 +226,7 @@ void writeUtasConfig(ListDinUtas dbUtasUser, Word path) {
     Address p;
 
     char* path_config = WordToString(path);
-    FILE* file = fopen(concatString(path_config, "/draf.config"), "w+");
+    FILE* file = fopen(concatString(path_config, "/utas.config"), "w+");
 
     int banyak_utas = NEFF_LISTUTAS(dbUtasUser);
     fprintf(file, "%s\n", intToString(banyak_utas));
@@ -238,8 +238,8 @@ void writeUtasConfig(ListDinUtas dbUtasUser, Word path) {
         fprintf(file, "%s\n", intToString(IDKICAU_UTAS(U)));
         fprintf(file, "%s\n", intToString(banyak_sambungDraf));
 
+        p = FIRST_UTAS(U);
         for (int j = 0; j < banyak_sambungDraf; j++) {
-            p = FIRST_UTAS(U);
 
             fprintf(file, "%s\n", WordToString(INFO(p)));
             fprintf(file, "%s\n", WordToString(AUTHOR_UTAS(U)));

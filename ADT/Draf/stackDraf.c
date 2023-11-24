@@ -71,7 +71,7 @@ int getIdxUserListStackDraf(listStackDraf lsd, Word User) {
     return -1;
 }
 void insertLastListStack(listStackDraf *lsd, StackDraf SD) {
-    int neff = NEFF_LIST(*lsd);
+    int neff = NEFF_LISTSTACK(*lsd);
     GET_LISTSTACK(*lsd, neff) = SD;
     NEFF_LISTSTACK(*lsd) += 1;
 }
@@ -245,7 +245,7 @@ void LoadDraf(listStackDraf *lsd, Word path) {
 
             fgets(line, 300, file);
             StringToWord(line, &currentWord);
-            DATETIME(D) = WordToTime(removeNewline(currentWord));
+            DATETIME_DRAF(D) = WordToTime(removeNewline(currentWord));
 
             PushStackDraf(&SD, D);
         }

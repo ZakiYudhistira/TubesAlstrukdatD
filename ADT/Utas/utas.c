@@ -17,18 +17,21 @@ Address newNode_Utas(Word val, DATETIME date) {
 }
 
 // Untuk input == "UTAS [IDKicau]"
-void createEmptyUtas(Word User, int IDKicau, ListDinUtas *dbUtasUser, ListDinKicau* l) {
+void createEmptyUtas(Word User, int IDKicau, ListDinUtas* dbUtasUser, ListDinKicau* l) {
     int IDUtas = getIDUtas(IDKicau, *dbUtasUser);
-    
+
     if (!isIdKicauValid(*l, IDKicau)) {
         printf("Kicauan tidak ditemukan.\n");
-    } else if (!isSame(User, AUTHOR_KICAU(ELMT_KICAU(*l, IDKicau-1)))) {
+    }
+    else if (!isSame(User, AUTHOR_KICAU(ELMT_KICAU(*l, IDKicau - 1)))) {
         printf("Kicauan ini bukan milik anda!\n");
-    } else if (IDUtas != -1) {
+    }
+    else if (IDUtas != -1) {
         printf("Kicauan telah memiliki utas dengan IDUtas %d!\n", IDUtas);
-    } else {
+    }
+    else {
         Utas U;
-        
+
         LENGTH_UTAS(U) = 0;
         IDKICAU_UTAS(U) = IDKicau;
         FIRST_UTAS(U) = NULL;
@@ -52,46 +55,49 @@ void createEmptyUtas(Word User, int IDKicau, ListDinUtas *dbUtasUser, ListDinKic
             LENGTH_UTAS(U) += 1;
 
             printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK)\n");
-            
+
             perintah(100, 0);
             ADV();
             text = currentWord;
 
             if (isValid(text, "NO")) {
                 lanjut = false;
-            } else {
+            }
+            else {
                 printf("GAS LANJUT\n");
             }
         }
 
-        InsertLastListUtas(&U, dbUtasUser);
+        insertLastListUtas(&U, dbUtasUser);
 
         printf("Utas selesai!\n");
     }
 }
 // Untuk input == "CETAK_UTAS [IDUtas]"
-void displayUtas(Word User, int IDUtas, ListDinUtas *dbUtasUser, ListDinKicau* l, databaseprofil db, Matrix_pertemanan m) {
+void displayUtas(Word User, int IDUtas, ListDinUtas* dbUtasUser, ListDinKicau* l, databaseprofil db, Matrix_pertemanan m) {
     if (IDUtas > NEFF_LISTUTAS(*dbUtasUser)) {
         printf("Utas tidak ditemukan\n");
-    } else {
-        Utas U = ELMT_LISTUTAS(*dbUtasUser, IDUtas-1);
+    }
+    else {
+        Utas U = ELMT_LISTUTAS(*dbUtasUser, IDUtas - 1);
 
-        int idCurrUser = getId(l, User);
-        int idAuthor = getId(l, AUTHOR_UTAS(U));
+        int idCurrUser = getId(&db, User);
+        int idAuthor = getId(&db, AUTHOR_UTAS(U));
 
         if (!isTeman(m, idCurrUser, idAuthor) && (jenis(db, idAuthor) == 1)) {
             printf("Akun yang membuat utas ini adalah akun privat! Ikuti dahulu akun ini untuk melihat utasnya!\n");
-        } else {
+        }
+        else {
             Kicauan k;
             Word author;
 
-            int idKicauan = IDKicau(U);
+            int idKicauan = IDKICAU_UTAS(U);
 
             DisplayKicauan(ELMT_KICAU(*l, idKicauan - 1));
 
-            Address p = FIRST(U);
-            for (int i = 0; i < LENGTH(U); i++) {
-                printf("\n    | INDEX = %d", (i+1));
+            Address p = FIRST_UTAS(U);
+            for (int i = 0; i < LENGTH_UTAS(U); i++) {
+                printf("\n    | INDEX = %d", (i + 1));
                 printf("\n    | "); printWord(AUTHOR_UTAS(U));
                 printf("\n    | "); TulisDATETIME(DATE(p));
                 printf("\n    | "); printWord(INFO(p));
@@ -103,18 +109,21 @@ void displayUtas(Word User, int IDUtas, ListDinUtas *dbUtasUser, ListDinKicau* l
     }
 }
 // Untuk input == "SAMBUNG_UTAS [IDUtas] [index]"
-void sambungUtas(Word User, int IDUtas, int index, ListDinUtas *dbUtasUser) {
+void sambungUtas(Word User, int IDUtas, int index, ListDinUtas* dbUtasUser) {
     if (IDUtas > NEFF_LISTUTAS(*dbUtasUser)) {
         printf("Utas tidak ditemukan\n");
-    } else {
+    }
+    else {
         Utas U;
         U = ELMT_LISTUTAS(*dbUtasUser, IDUtas);
 
         if (index > LENGTH_UTAS(U)) {
             printf("Index terlalu tinggi!\n", index);
-        } else if (!isSame(User, AUTHOR_UTAS(U))) {
+        }
+        else if (!isSame(User, AUTHOR_UTAS(U))) {
             printf("Anda tidak bisa menghapus kicauan dalam utas ini!\n");
-        } else {
+        }
+        else {
             deleteAtUtas(&U, index);
             printf("Masukkan kicauan:\n");
 
@@ -125,39 +134,44 @@ void sambungUtas(Word User, int IDUtas, int index, ListDinUtas *dbUtasUser) {
 
             DATETIME D;
             GetLocalDATETIME(&D);
-            insertAtUtas(&U, text, D, index+1);
+            insertAtUtas(&U, text, D, index + 1);
             LENGTH_UTAS(U) += 1;
         }
     }
 }
 // Untuk input == "HAPUS_UTAS [IDUtas] [index]"
-void deleteUtas(Word User, int IDUtas, int index, ListDinUtas *dbUtasUser) {
+void deleteUtas(Word User, int IDUtas, int index, ListDinUtas* dbUtasUser) {
     if (IDUtas > NEFF_LISTUTAS(*dbUtasUser)) {
         printf("Utas tidak ditemukan\n");
-    } else if (index == 0) {
+    }
+    else if (index == 0) {
         printf("Anda tidak bisa menghapus kicauan utama!\n");
-    } else {
+    }
+    else {
         Utas U;
         U = ELMT_LISTUTAS(*dbUtasUser, IDUtas);
 
         if (index > LENGTH_UTAS(U)) {
             printf("Kicauan sambungan dengan index %d tidak ditemukan pada utas!\n", index);
-        } else if (!isSame(User, AUTHOR_UTAS(U))) {
+        }
+        else if (!isSame(User, AUTHOR_UTAS(U))) {
             printf("Anda tidak bisa menghapus kicauan dalam utas ini!\n");
-        } else {
+        }
+        else {
             deleteAtUtas(&U, index);
         }
     }
 }
 
 /* Primitive Function Utas */
-void insertFirstUtas(Utas *U, Word val, DATETIME D) {
+void insertFirstUtas(Utas* U, Word val, DATETIME D) {
     Address p = newNode_Utas(val, D);
 
-    if (LENGTH(*U) == 0) {
-        LENGTH_UTAS(*U) = p;    
-    } else {
-        Address f = FIRST(*U);
+    if (LENGTH_UTAS(*U) == 0) {
+        FIRST_UTAS(*U) = p;
+    }
+    else {
+        Address f = FIRST_UTAS(*U);
         NEXT(p) = NEXT(f);
         FIRST_UTAS(*U) = p;
     }
@@ -167,11 +181,12 @@ void insertFirstUtas(Utas *U, Word val, DATETIME D) {
 void insertAtUtas(Utas* U, Word val, DATETIME D, int idx) {
     if (idx == 0) {
         insertFirstUtas(U, val, D);
-    } else {
+    }
+    else {
         Address new = newNode_Utas(val, D);
-        Address p = FIRST(*U);
+        Address p = FIRST_UTAS(*U);
 
-        for (int i = 2; i < idx; i++) {
+        for (int i = 1; i < idx; i++) {
             p = NEXT(p);
         }
 
@@ -181,22 +196,23 @@ void insertAtUtas(Utas* U, Word val, DATETIME D, int idx) {
         LENGTH_UTAS(*U)++;
     }
 }
-void insertLastUtas(Utas *U, Word val, DATETIME D) {
-    insertAtUtas(U, val, D, LENGTH(*U));
+void insertLastUtas(Utas* U, Word val, DATETIME D) {
+    insertAtUtas(U, val, D, LENGTH_UTAS(*U));
 }
-void deleteFirstUtas(Utas *U) {
-    Address p = FIRST(*U);
+void deleteFirstUtas(Utas* U) {
+    Address p = FIRST_UTAS(*U);
 
     FIRST_UTAS(*U) = NEXT(p);
     free(p);
 
     LENGTH_UTAS(*U)--;
 }
-void deleteAtUtas(Utas *U, int idx) {
-    if (idx+1 == 1) {
+void deleteAtUtas(Utas* U, int idx) {
+    if (idx + 1 == 1) {
         deleteFirstUtas(U);
-    } else {
-        Address p1 = FIRST(*U);
+    }
+    else {
+        Address p1 = FIRST_UTAS(*U);
         Address p2 = NEXT(p1);
 
         for (int i = 2; i < idx; i++) {
@@ -210,19 +226,19 @@ void deleteAtUtas(Utas *U, int idx) {
         LENGTH_UTAS(*U)--;
     }
 }
-void deleteLastUtas(Utas *U) {
-    deleteAtUtas(U, LENGTH(*U));
+void deleteLastUtas(Utas* U) {
+    deleteAtUtas(U, LENGTH_UTAS(*U));
 }
 
 /* Primitive Function ListDin Utas*/
-void initListDinUtas(ListDinUtas *dbUtasUser) {
+void initListDinUtas(ListDinUtas* dbUtasUser) {
     NEFF_LISTUTAS(*dbUtasUser) = 0;
 }
-void expandListUtas(int num, ListDinUtas *dbUtasUser) {
+void expandListUtas(int num, ListDinUtas* dbUtasUser) {
     BUFFER_LISTUTAS(*dbUtasUser) = realloc(BUFFER_LISTUTAS(*dbUtasUser), (CAPACITY_LISTUTAS(*dbUtasUser) + num) * sizeof(Utas));
     CAPACITY_LISTUTAS(*dbUtasUser) += num;
 }
-void insertLastListUtas(Utas* val, ListDinUtas *dbUtasUser) {
+void insertLastListUtas(Utas* val, ListDinUtas* dbUtasUser) {
     if (NEFF_LISTUTAS(*dbUtasUser) == CAPACITY_LISTUTAS(*dbUtasUser)) {
         expandListUtas(10, dbUtasUser);
     }
@@ -230,7 +246,7 @@ void insertLastListUtas(Utas* val, ListDinUtas *dbUtasUser) {
     NEFF_LISTUTAS(*dbUtasUser) += 1;
 }
 
-void loadUtas(ListDinUtas *dbUtasUser, Word path) {
+void loadUtas(ListDinUtas* dbUtasUser, Word path) {
     FILE* file = fopen(path.TabWord, "r");
     char line[300];
 
@@ -264,6 +280,7 @@ void loadUtas(ListDinUtas *dbUtasUser, Word path) {
             fgets(line, 300, file);
             StringToWord(line, &currentWord);
             Word author = removeNewline(currentWord);
+            AUTHOR_UTAS(U) = author;
 
             fgets(line, 300, file);
             StringToWord(line, &currentWord);

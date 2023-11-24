@@ -17,7 +17,7 @@ typedef struct {
 } StackDraf;
 
 #define IDXTOP_SD(SD) (SD).IDXTOP_SD
-#define LASTDRAF_SD(SD) (SD).T[IDXTOP(SD)]
+#define LASTDRAF_SD(SD) (SD).T[IDXTOP_SD(SD)]
 #define AUTHOR_SD(SD) (SD).Author_Draf
 
 typedef struct {
