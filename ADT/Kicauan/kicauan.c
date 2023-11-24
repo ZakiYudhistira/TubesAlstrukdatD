@@ -210,6 +210,8 @@ void HandleKicau(ListDinKicau* l, Word username, int* idKicauan) {
     CreateKicauan(&k);
 
     printf("Masukan kicauan:\n");
+    currentWord.TabWord[0] = '\0';
+    currentWord.Length = 0;
     perintah(280, false);
     ADV();
 
@@ -233,7 +235,7 @@ void HandleKicau(ListDinKicau* l, Word username, int* idKicauan) {
     DisplayKicauan(k);
     printf("\n");
     InsertLastKicau(l, k);
-    *idKicauan++;
+    *idKicauan = *idKicauan + 1;
 }
 
 void HandleKicauan(ListDinKicau l, Word username, Matrix_pertemanan m, databaseprofil p) {
@@ -281,6 +283,8 @@ void HandleUbahKicau(ListDinKicau* l, Word username, int idKicauan) {
         if (isSame(AUTHOR_KICAU(ELMT_KICAU(*l, i)), username)) {
             DATETIME D;
             printf("Masukan kicauan baru:\n");
+            currentWord.TabWord[0] = '\0';
+            currentWord.Length = 0;
             perintah(280, false);
             ADV();
 

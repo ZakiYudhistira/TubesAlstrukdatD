@@ -322,29 +322,30 @@ void split3Word(Word w, Word* w1, Word* w2, Word* w3) {
 }
 
 char* intToString(int num) {
-    if(num == 0){
+    if (num == 0) {
         return "0";
     }
     int digits = 0;
     int temp = num;
-    while(temp){
+    while (temp) {
         temp /= 10;
         digits++;
     }
-    if(num >= 0){
-        char* result = malloc(sizeof(char)*(digits+1));
+    if (num >= 0) {
+        char* result = malloc(sizeof(char) * (digits + 1));
         result[digits] = '\0';
-        while(digits > 0){
-            result[digits-1] = '0' + (num % 10);
+        while (digits > 0) {
+            result[digits - 1] = '0' + (num % 10);
             num /= 10;
             digits--;
         }
         return result;
-    } else {
-        char* result = malloc(sizeof(char)*(digits+2));
-        result[digits+1] = '\0';
+    }
+    else {
+        char* result = malloc(sizeof(char) * (digits + 2));
+        result[digits + 1] = '\0';
         num = -num;
-        while(digits >= 1){
+        while (digits >= 1) {
             result[digits] = '0' + (num % 10);
             num /= 10;
             digits--;
