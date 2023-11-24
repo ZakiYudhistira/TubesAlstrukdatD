@@ -23,14 +23,16 @@ Burbir merupakan aplilasi berbasis CLI (Command line interfacr) yang memungkinka
 | NIM | Name | Work |
 | :---: | :---: | :---: |
 | 13522005 | Ahmad Naufal Ramadhan | Inisisalisas, Perintah, Kicauan, Balasan, Simpan dan Muat |
-| 13522009 | Muhammad Haidar Akita Tresnadi | Inisilasisasi, Perintah, Simpan dan Muat |
-| 13522031 | Muhhamad Syauqi Jannatan | Teman, Permintaan Pertemanan, Simpan dan Muat |
+| 13522009 | Yusuf Rafi | Inisilasisasi, Perintah, Simpan dan Muat |
+| 13522031 | Zaki Yudhistira Candra | Teman, Permintaan Pertemanan, Simpan dan Muat |
 | 13522041 | Ahmad Hasan Albana | Draf Kicauan, Utas, Simpan dan Muat |
 | 13522052 | Haikal Assyauqi | Profil, Pengguna, Teman, Permintaan Pertemanan, Simpan dan Muat |
 
 ## Cara menjalankan program
 1. Pastikan Anda berada pada environment WSL
 
-2. Run Makefile
+2. Run Makefile di CLI
 
-`gcc AdventureTime.c -o main`
+`make`
+
+3. Program siap dijalankan
