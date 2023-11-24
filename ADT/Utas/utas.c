@@ -166,8 +166,6 @@ void deleteUtas(Word User, int IDUtas, int index, ListDinUtas* dbUtasUser) {
 void insertFirstUtas(Utas* U, Word val, DATETIME D) {
     Address p = newNode_Utas(val, D);
 
-    printf("ABD");
-
     if (LENGTH_UTAS(*U) == 0) {
         FIRST_UTAS(*U) = p;
     }

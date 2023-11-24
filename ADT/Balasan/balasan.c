@@ -405,7 +405,7 @@ void HandleBalas(Word idKicau, Word idBalas, ListDinKicau k, ListDinBalasan* b, 
         if (t != NULL) {
             Tree* t2 = getTreeFromIdParent(t, WordToInt(idBalas));
             if (t2 != NULL) {
-                if (isTeman(m, getId(&p, username), getId(&p, AUTHOR_BALASAN(BALASAN(t2)))) || jenis(p, getId(&p, AUTHOR_BALASAN(BALASAN(t2))))) {
+                if (isTeman(m, getId(&p, username), getId(&p, AUTHOR_BALASAN(BALASAN(t2)))) || jenis(p, getId(&p, AUTHOR_BALASAN(BALASAN(t2)))) == 0) {
                     Balasan ba;
                     createBalasan(&ba);
 

@@ -1,35 +1,35 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "ADT/Balasan/balasan.h"
-// #include "ADT/Balasan/balasan.c"
+#include "ADT/Balasan/balasan.c"
 #include "ADT/Datetime/datetime.h"
-// #include "ADT/Datetime/datetime.c"
+#include "ADT/Datetime/datetime.c"
 #include "ADT/Kicauan/kicauan.h"
-// #include "ADT/Kicauan/kicauan.c"
+#include "ADT/Kicauan/kicauan.c"
 #include "ADT/Matrix/matrix.h"
-// #include "ADT/Matrix/matrix.c"
+#include "ADT/Matrix/matrix.c"
 #include "ADT/Mesin Karakter/charmachine.h"
-// #include "ADT/Mesin Karakter/charmachine.c"
+#include "ADT/Mesin Karakter/charmachine.c"
 #include "ADT/PColor/pcolor.h"
-// #include "ADT/PColor/pcolor.c"
+#include "ADT/PColor/pcolor.c"
 #include "ADT/Pengguna/pengguna.h"
-// #include "ADT/Pengguna/pengguna.c"
+#include "ADT/Pengguna/pengguna.c"
 #include "ADT/Perintah/perintah.h"
-// #include "ADT/Perintah/perintah.c"
+#include "ADT/Perintah/perintah.c"
 #include "ADT/Pertemanan/pertemanan.h"
-// #include "ADT/Pertemanan/pertemanan.c"
+#include "ADT/Pertemanan/pertemanan.c"
 #include "ADT/Pertemanan/perintahPertemanan.h"
-// #include "ADT/Pertemanan/perintahPertemanan.c"
+#include "ADT/Pertemanan/perintahPertemanan.c"
 #include "ADT/Pertemanan/ADTRequirements/queuelinked.h"
-// #include "ADT/Pertemanan/ADTRequirements/queuelinked.c"
+#include "ADT/Pertemanan/ADTRequirements/queuelinked.c"
 #include "ADT/Draf/stackDraf.h"
-// #include "ADT/Draf/stackDraf.c"
+#include "ADT/Draf/stackDraf.c"
 #include "ADT/Simpan/simpan.h"
-// #include "ADT/Simpan/simpan.c"
+#include "ADT/Simpan/simpan.c"
 #include "ADT/Time/time.h"
-// #include "ADT/Time/time.c"
+#include "ADT/Time/time.c"
 #include "ADT/Utas/utas.h"
-// #include "ADT/Utas/utas.c"
+#include "ADT/Utas/utas.c"
 #include <sys/stat.h>
 
 Word isDirectoryExists() {
@@ -148,7 +148,7 @@ int main() {
                 printf("Wah Anda sudah masuk. Keluar dulu yuk!\n");
             }
             else {
-                if(listLength(&list_database) == 0) {
+                if (listLength(&list_database) == 0) {
                     printf("Pengguna masih berjumlah 0 di database, silahkan daftar terlebih dahulu \n");
                 }
                 else {
@@ -517,8 +517,10 @@ int main() {
                     LoadKicauan(&list_kicau, pathKicauan);
                     StringToWord(concatString(WordToString(path), "/balasan.config"), &pathBalasan);
                     LoadBalasan(&list_balasan, pathBalasan);
-                    StringToWord(concatString(WordToString(path), "/utas.config"), &pathBalasan);
-                    loadUtas(&list_utas, pathBalasan);
+                    StringToWord(concatString(WordToString(path), "/utas.config"), &pathUtas);
+                    loadUtas(&list_utas, pathUtas);
+                    StringToWord(concatString(WordToString(path), "/draf.config"), &pathDraf);
+                    LoadDraf(&list_draf, pathDraf);
 
                     printf("Pemuatan selesai!\n");
                 }
