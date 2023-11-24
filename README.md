@@ -1,4 +1,4 @@
-# Burbir - Burung Biro
+# Burbir - Burung Biru
 ## Tugas Besar 1 IF2110 - Algoritma dan Struktur Data
 
 ## Tentang Program
