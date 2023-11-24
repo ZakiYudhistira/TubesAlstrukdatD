@@ -23,7 +23,7 @@ Burbir merupakan aplilasi berbasis CLI (Command line interfacr) yang memungkinka
 | NIM | Name | Work |
 | :---: | :---: | :---: |
 | 13522005 | Ahmad Naufal Ramadhan | Inisisalisas, Perintah, Kicauan, Balasan, Simpan dan Muat |
-| 13522009 | Yusuf Rafi | Inisilasisasi, Perintah, Simpan dan Muat |
+| 13522009 | Muhammad Yusuf Rafi | Inisilasisasi, Perintah, Simpan dan Muat |
 | 13522031 | Zaki Yudhistira Candra | Teman, Permintaan Pertemanan, Simpan dan Muat |
 | 13522041 | Ahmad Hasan Albana | Draf Kicauan, Utas, Simpan dan Muat |
 | 13522052 | Haikal Assyauqi | Profil, Pengguna, Teman, Permintaan Pertemanan, Simpan dan Muat |
