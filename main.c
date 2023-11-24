@@ -148,7 +148,12 @@ int main() {
                 printf("Wah Anda sudah masuk. Keluar dulu yuk!\n");
             }
             else {
-                idPengguna = login(&list_database);
+                if(listLength(&list_database) == 0) {
+                    printf("Pengguna masih berjumlah 0 di database, silahkan daftar terlebih dahulu \n");
+                }
+                else {
+                    idPengguna = login(&list_database);
+                }
                 if (idPengguna != -1) {
                     isLoggedIn = true;
                 }
