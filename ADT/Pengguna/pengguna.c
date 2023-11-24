@@ -222,7 +222,7 @@ void ReadPengguna(Pengguna* p, databaseprofil* l) {
     boolean namavalid = false;
     while (namavalid == false)
     {
-        printf("Silahkan masukkan username: ");
+        printf("Silahkan masukkan username: \n");
         Word kata = inputusername();
         int sama = 0;
         for (int i = 0; i < listLength(l); i++) {
@@ -240,7 +240,7 @@ void ReadPengguna(Pengguna* p, databaseprofil* l) {
             namavalid = true;
         }
     }
-    printf("Silahkan masukkan password: ");
+    printf("Silahkan masukkan password: \n");
     Word password = inputpass();
     PASSWORD(*p) = password;
     JENIS(*p) = 0;
@@ -341,14 +341,14 @@ void createDatabase(databaseprofil* l) {
 
 int login(databaseprofil* data) {
     Word uname;
-    printf("Silahkan masukkan username: ");
+    printf("Silahkan masukkan username: \n");
     STARTWORDPengguna();
     ADV();
     for (int i = 0; i < listLength(data); i++) {
         if (isWordEqual(currentWord, nama(*data, i))) {
             boolean passwordbetul = false;
             while (passwordbetul == false) {
-                printf("Silahkan masukkan password: ");
+                printf("Silahkan masukkan password: \n");
                 // printf("\n");
                 STARTWORDPengguna();
                 ADV();
@@ -391,6 +391,26 @@ void ubahProfil(databaseprofil* l, int id) {
     Word biobefore;
     Word hpbefore;
     Word kata;
+        printf("Nama: ");
+    for (int i = 0; i < nama(*l,i).Length; i++) {
+        printf("%c", nama(*l,i).TabWord[i]);
+    }
+    printf("\n");
+    printf("Bio: ");
+    for (int i = 0; i < bio(*l,i).Length; i++) {
+        printf("%c", bio(*l,i).TabWord[i]);
+    }
+    printf("\n");
+    printf("HP: ");
+    for (int i = 0; i < hp(*l,id).Length; i++) {
+        printf("%c", hp(*l,id).TabWord[i]);
+    }
+    printf("\n");
+    printf("Weton: ");
+    for (int i = 0; i < weton(*l,id).Length; i++) {
+        printf("%c",weton(*l,id).TabWord[i]);
+    }
+    printf("\n");
     printf("Masukkan bio: ");
     kata.Length = 0;
     currentWord.Length = 0;
