@@ -230,7 +230,6 @@ void ReadPengguna(Pengguna* p, databaseprofil* l) {
         }
         if (sama > 0) {
             printf("Username telah digunakan, silahkan masukkan yang lain\n");
-            return;
         }
         else {
             NAMA(*p) = kata;
