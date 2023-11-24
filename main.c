@@ -252,7 +252,7 @@ int main() {
         // Perintah Permintaan Pertemanan
         else if (isValid(currentWord, "HAPUS_TEMAN")) {
             if (isLoggedIn) {
-                perintahHapusTeman(&matriks_pertemanan, idPengguna, &list_database);
+                perintahHapusTeman(&matriks_pertemanan, idPengguna, &list_database, &matriks_pertemanan);
             }
             else {
                 printf("Anda belum masuk! Masuk terlebih dahulu untuk menikmati layanan BurBir.\n");
