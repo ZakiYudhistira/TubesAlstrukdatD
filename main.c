@@ -451,7 +451,7 @@ int main() {
                 printf("2...\n");
                 printf("3...\n\n");
 
-                mkdir(WordToString(path), 0777);
+                mkdir(WordToString(path));
 
                 printWord(currentWord);
                 printf(" sudah berhasil dibuat.\n\n");
