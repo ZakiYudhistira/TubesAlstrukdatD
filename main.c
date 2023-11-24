@@ -434,14 +434,45 @@ int main() {
             perintah(300, false);
             ADV();
 
-            if (isValid(currentWord, "test")) {
-                StringToWord(concatString("./Konfigurasi/", WordToString(currentWord)), &path);
-                writePertemananConfig(matriks_pertemanan, matriks_permintaan, list_database, path);
-                writeKicauanConfig(list_kicau, path);
-                writeBalasanConfig(list_balasan, path);
-                writeDrafConfig(list_draf, path);
-                writeUtasConfig(list_utas, path);
+            StringToWord(concatString("./Konfigurasi/", WordToString(currentWord)), &path);
+
+            struct stat stats;
+            stat(path.TabWord, &stats);
+            // Check for file existence
+            if (!(S_ISDIR(stats.st_mode))) {
+                printf("Belum terdapat ");
+                printWord(currentWord);
+                printf(". Akan dilakukan pembuatan ");
+                printWord(currentWord);
+                printf("terlebih dahulu.\n\n");
+
+                printf("Mohon tunggu...\n");
+                printf("1...\n");
+                printf("2...\n");
+                printf("3...\n\n");
+
+                mkdir(WordToString(path), 0777);
+
+                printWord(currentWord);
+                printf(" sudah berhasil dibuat.\n\n");
             }
+
+            printf("Anda akan melakukan penyimpanan di ");
+            printWord(currentWord);
+            printf(".\n\n");
+
+            printf("Mohon tunggu...\n");
+            printf("1...\n");
+            printf("2...\n");
+            printf("3...\n\n");
+
+            writePertemananConfig(matriks_pertemanan, matriks_permintaan, list_database, path);
+            writeKicauanConfig(list_kicau, path);
+            writeBalasanConfig(list_balasan, path);
+            writeUtasConfig(list_utas, path);
+            writeDrafConfig(list_draf, path);
+
+            printf("Penyimpanan telah berhasil dilakukan!\n");
         }
 
         else if (isValid(currentWord, "MUAT")) {

@@ -186,7 +186,7 @@ void insertAtUtas(Utas* U, Word val, DATETIME D, int idx) {
         Address new = newNode_Utas(val, D);
         Address p = FIRST_UTAS(*U);
 
-        for (int i = 2; i < idx; i++) {
+        for (int i = 1; i < idx; i++) {
             p = NEXT(p);
         }
 
