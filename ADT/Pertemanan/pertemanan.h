@@ -6,7 +6,7 @@
 
 #include "../boolean.h"
 #include "../Mesin Karakter/charmachine.h"
-#include "../Mesin Kata/wordmachine.h"
+#include "../Perintah/wordmachine.h"
 #include "../Perintah/perintah.h"
 #include "../Pengguna/pengguna.h"
 #include "ADTRequirements/queuelinked.h"
@@ -66,5 +66,9 @@ void loadMatrixTeman(Matrix_pertemanan *m, char* folder);
 void loadQueuePertemanan(Queue_Teman *q, Matrix_Permintaan array, id_user id);
 /*I.S. q sembarang, array terisi permintaan pertemanan*/
 /*F.S. q terisi urutan permintaan pertemanan user tertentu*/
+
+void createMatrixPermintaan(Matrix_Permintaan *m);
+
+void loadMatrixTemanandPermintaanTeman(Matrix_pertemanan *m, Matrix_Permintaan *pm, Word path);
 
 #endif
