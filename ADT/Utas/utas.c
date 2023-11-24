@@ -41,18 +41,17 @@ void createEmptyUtas(Word User, int IDKicau, ListDinUtas* dbUtasUser, ListDinKic
 
         boolean lanjut = true;
 
+        Word text;
+        DATETIME D;
         while (lanjut) {
             printf("Masukkan kicauan:\n");
 
-            Word text;
             perintah(100, 0);
             ADV();
             text = currentWord;
 
-            DATETIME D;
             GetLocalDATETIME(&D);
             insertLastUtas(&U, text, D);
-            LENGTH_UTAS(U) += 1;
 
             printf("Apakah Anda ingin melanjutkan utas ini? (YA/TIDAK)\n");
 
@@ -60,11 +59,8 @@ void createEmptyUtas(Word User, int IDKicau, ListDinUtas* dbUtasUser, ListDinKic
             ADV();
             text = currentWord;
 
-            if (isValid(text, "NO")) {
+            if (isValid(text, "TIDAK")) {
                 lanjut = false;
-            }
-            else {
-                printf("GAS LANJUT\n");
             }
         }
 
@@ -76,7 +72,7 @@ void createEmptyUtas(Word User, int IDKicau, ListDinUtas* dbUtasUser, ListDinKic
 // Untuk input == "CETAK_UTAS [IDUtas]"
 void displayUtas(Word User, int IDUtas, ListDinUtas* dbUtasUser, ListDinKicau* l, databaseprofil db, Matrix_pertemanan m) {
     if (IDUtas > NEFF_LISTUTAS(*dbUtasUser)) {
-        printf("Utas tidak ditemukan\n");
+        printf("Utas tidak ditemukan!\n");
     }
     else {
         Utas U = ELMT_LISTUTAS(*dbUtasUser, IDUtas - 1);
@@ -111,20 +107,19 @@ void displayUtas(Word User, int IDUtas, ListDinUtas* dbUtasUser, ListDinKicau* l
 // Untuk input == "SAMBUNG_UTAS [IDUtas] [index]"
 void sambungUtas(Word User, int IDUtas, int index, ListDinUtas* dbUtasUser) {
     if (IDUtas > NEFF_LISTUTAS(*dbUtasUser)) {
-        printf("Utas tidak ditemukan\n");
+        printf("Utas tidak ditemukan!\n");
     }
     else {
         Utas U;
-        U = ELMT_LISTUTAS(*dbUtasUser, IDUtas);
+        U = ELMT_LISTUTAS(*dbUtasUser, IDUtas-1);
 
         if (index > LENGTH_UTAS(U)) {
-            printf("Index terlalu tinggi!\n", index);
+            printf("Index terlalu tinggi!\n");
         }
         else if (!isSame(User, AUTHOR_UTAS(U))) {
-            printf("Anda tidak bisa menghapus kicauan dalam utas ini!\n");
+            printf("Anda tidak bisa menyambung utas ini!\n");
         }
         else {
-            deleteAtUtas(&U, index);
             printf("Masukkan kicauan:\n");
 
             Word text;
@@ -134,22 +129,23 @@ void sambungUtas(Word User, int IDUtas, int index, ListDinUtas* dbUtasUser) {
 
             DATETIME D;
             GetLocalDATETIME(&D);
-            insertAtUtas(&U, text, D, index + 1);
-            LENGTH_UTAS(U) += 1;
+            insertAtUtas(&U, text, D, index-1);
         }
+
+        ELMT_LISTUTAS(*dbUtasUser, IDUtas-1) = U;
     }
 }
 // Untuk input == "HAPUS_UTAS [IDUtas] [index]"
 void deleteUtas(Word User, int IDUtas, int index, ListDinUtas* dbUtasUser) {
     if (IDUtas > NEFF_LISTUTAS(*dbUtasUser)) {
-        printf("Utas tidak ditemukan\n");
+        printf("Utas tidak ditemukan!\n");
     }
     else if (index == 0) {
         printf("Anda tidak bisa menghapus kicauan utama!\n");
     }
     else {
         Utas U;
-        U = ELMT_LISTUTAS(*dbUtasUser, IDUtas);
+        U = ELMT_LISTUTAS(*dbUtasUser, IDUtas-1);
 
         if (index > LENGTH_UTAS(U)) {
             printf("Kicauan sambungan dengan index %d tidak ditemukan pada utas!\n", index);
@@ -158,8 +154,11 @@ void deleteUtas(Word User, int IDUtas, int index, ListDinUtas* dbUtasUser) {
             printf("Anda tidak bisa menghapus kicauan dalam utas ini!\n");
         }
         else {
-            deleteAtUtas(&U, index);
+            deleteAtUtas(&U, index-1);
+            printf("Kicauan sambungan berhasil dihapus!\n");
         }
+
+        ELMT_LISTUTAS(*dbUtasUser, IDUtas-1) = U;
     }
 }
 
@@ -167,12 +166,14 @@ void deleteUtas(Word User, int IDUtas, int index, ListDinUtas* dbUtasUser) {
 void insertFirstUtas(Utas* U, Word val, DATETIME D) {
     Address p = newNode_Utas(val, D);
 
+    printf("ABD");
+
     if (LENGTH_UTAS(*U) == 0) {
         FIRST_UTAS(*U) = p;
     }
     else {
         Address f = FIRST_UTAS(*U);
-        NEXT(p) = NEXT(f);
+        NEXT(p) = f;
         FIRST_UTAS(*U) = p;
     }
 
@@ -208,14 +209,14 @@ void deleteFirstUtas(Utas* U) {
     LENGTH_UTAS(*U)--;
 }
 void deleteAtUtas(Utas* U, int idx) {
-    if (idx + 1 == 1) {
+    if (idx == 0) {
         deleteFirstUtas(U);
     }
     else {
         Address p1 = FIRST_UTAS(*U);
         Address p2 = NEXT(p1);
 
-        for (int i = 2; i < idx; i++) {
+        for (int i = 1; i < idx; i++) {
             p1 = NEXT(p1);
             p2 = NEXT(p2);
         }
