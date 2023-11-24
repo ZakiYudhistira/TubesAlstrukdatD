@@ -1,6 +1,5 @@
 #include "pengguna.h"
 #include "../Matrix/matrix.h"
-#include "../Mesin Kata/wordmachine.h"
 #include "../Mesin Karakter/charmachine.h"
 #include "../Pertemanan/pertemanan.h"
 #include "../PColor/pcolor.h"
@@ -192,7 +191,7 @@ Word inputWeton() {
             }
             printf("Hari yang anda masukkan salah, masukkan kembali\n");
             hari.Length = 0;
-            printf("Masukkan weton: ");
+            printf("Masukkan weton: \n");
             currentWord.Length = 0;
             STARTWORDPengguna();
             ADV();
@@ -391,14 +390,14 @@ void ubahProfil(databaseprofil* l, int id) {
     Word biobefore;
     Word hpbefore;
     Word kata;
-        printf("Nama: ");
-    for (int i = 0; i < nama(*l,i).Length; i++) {
-        printf("%c", nama(*l,i).TabWord[i]);
+    printf("Nama: ");
+    for (int i = 0; i < nama(*l,id).Length; i++) {
+        printf("%c", nama(*l,id).TabWord[i]);
     }
     printf("\n");
     printf("Bio: ");
-    for (int i = 0; i < bio(*l,i).Length; i++) {
-        printf("%c", bio(*l,i).TabWord[i]);
+    for (int i = 0; i < bio(*l,id).Length; i++) {
+        printf("%c", bio(*l,id).TabWord[i]);
     }
     printf("\n");
     printf("HP: ");
@@ -411,7 +410,8 @@ void ubahProfil(databaseprofil* l, int id) {
         printf("%c",weton(*l,id).TabWord[i]);
     }
     printf("\n");
-    printf("Masukkan bio: ");
+    printf("\n");
+    printf("Masukkan bio: \n");
     kata.Length = 0;
     currentWord.Length = 0;
     kata = inputbio();
@@ -422,20 +422,20 @@ void ubahProfil(databaseprofil* l, int id) {
     else {
         bio(*l,id) = biobefore;
     }
-    printf("Masukkan weton: ");
+    printf("Masukkan weton: \n");
     kata.Length = 0;
     kata = inputWeton();
     if (kata.Length > 0) {
         weton(*l, id) = kata;
     }
-    printf("Masukkan No HP: ");
+    printf("Masukkan No HP: \n");
     hpbefore = hp(*l,id);
     STARTWORDPengguna();
     ADV();
     boolean isValid = inputHP(currentWord);
     while (isValid == false) {
         printf("No HP salah, masukkan no HP kembali\n");
-        printf("Masukkan No HP: ");
+        printf("Masukkan No HP: \n");
         STARTWORDPengguna();
         ADV();
         isValid = inputHP(currentWord);

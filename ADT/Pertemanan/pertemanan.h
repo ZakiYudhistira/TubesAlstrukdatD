@@ -6,7 +6,6 @@
 
 #include "../boolean.h"
 #include "../Mesin Karakter/charmachine.h"
-#include "../Mesin Kata/wordmachine.h"
 #include "../Perintah/perintah.h"
 #include "../Pengguna/pengguna.h"
 #include "ADTRequirements/queuelinked.h"
