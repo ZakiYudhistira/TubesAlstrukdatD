@@ -107,7 +107,7 @@ int main() {
     StringToWord(concatString(WordToString(path), "/balasan.config"), &pathBalasan);
     LoadBalasan(&list_balasan, pathBalasan);
     StringToWord(concatString(WordToString(path), "/utas.config"), &pathUtas);
-    LoadUtas(&list_utas, pathUtas);
+    loadUtas(&list_utas, pathUtas);
     StringToWord(concatString(WordToString(path), "/draf.config"), &pathDraf);
     LoadDraf(&list_draf, pathDraf);
 
@@ -210,9 +210,9 @@ int main() {
             Word user = getUser(currentWord);
             int idprofil = getId(&list_database, user);
             if (isLoggedIn) {
-                if (jenis(list_database,idprofil) == 1) {
-                    if (isTeman(matriks_pertemanan,idPengguna,idprofil)) {
-                        cekProfil(idprofil,&list_database);
+                if (jenis(list_database, idprofil) == 1) {
+                    if (isTeman(matriks_pertemanan, idPengguna, idprofil)) {
+                        cekProfil(idprofil, &list_database);
                     }
                     else {
                         printf("Ikuti user ini agar mendapat profil mengenai dirinya\n");
@@ -439,6 +439,8 @@ int main() {
                 writePertemananConfig(matriks_pertemanan, matriks_permintaan, list_database, path);
                 writeKicauanConfig(list_kicau, path);
                 writeBalasanConfig(list_balasan, path);
+                writeDrafConfig(list_draf, path);
+                writeUtasConfig(list_utas, path);
             }
         }
 
@@ -477,7 +479,7 @@ int main() {
                     StringToWord(concatString(WordToString(path), "/balasan.config"), &pathBalasan);
                     LoadBalasan(&list_balasan, pathBalasan);
                     StringToWord(concatString(WordToString(path), "/utas.config"), &pathBalasan);
-                    LoadUtas(&list_utas, pathBalasan);
+                    loadUtas(&list_utas, pathBalasan);
 
                     printf("Pemuatan selesai!\n");
                 }
