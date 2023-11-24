@@ -31,6 +31,8 @@ Burbir merupakan aplilasi berbasis CLI (Command line interfacr) yang memungkinka
 ## Cara menjalankan program
 1. Pastikan Anda berada pada environment WSL
 
-2. Run Makefile
+2. Run Makefile di CLI
 
-`gcc AdventureTime.c -o main`
+`make`
+
+3. Program siap dijalankan
