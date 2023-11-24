@@ -245,6 +245,7 @@ void ReadPengguna(Pengguna* p, databaseprofil* l) {
     PASSWORD(*p) = password;
     JENIS(*p) = 0;
     insertLast(l, *p);
+    printf("Registrasi akun Anda berhasil\n");
 }
 /* I.S. sembarang */
 /* F.S. Sebuah p terbentuk dengan isi masing-masing berupa Word yang diakuisisi
