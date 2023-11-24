@@ -136,6 +136,9 @@ int main() {
                 }
                 else {
                     ReadPengguna(&p, &list_database);
+                    matriks_pertemanan.colEff++;
+                    matriks_pertemanan.rowEff++;
+                    matriks_pertemanan.buffer[matriks_pertemanan.colEff-1][matriks_pertemanan.rowEff-1] = 1;
                 }
             }
         }
@@ -451,7 +454,7 @@ int main() {
                 printf("2...\n");
                 printf("3...\n\n");
 
-                mkdir(WordToString(path), 0777);
+                mkdir(WordToString(path));
 
                 printWord(currentWord);
                 printf(" sudah berhasil dibuat.\n\n");
