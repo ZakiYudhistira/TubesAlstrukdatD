@@ -1,6 +1,6 @@
 #include "pengguna.h"
 #include "../Matrix/matrix.h"
-#include "../Mesin Kata/wordmachine.h"
+#include "../Perintah/wordmachine.h"
 #include "../Mesin Karakter/charmachine.h"
 #include "../Pertemanan/pertemanan.h"
 #include "../PColor/pcolor.h"
@@ -354,7 +354,7 @@ int login(databaseprofil* data) {
                 ADV();
                 if (isWordEqual(currentWord, password(*data, i))) {
                     printf("Selamat datang, ");
-                    printWord(nama(*data,i));
+                    printWord(nama(*data, i));
                     printf("\n");
                     return i;
                 }
@@ -395,12 +395,12 @@ void ubahProfil(databaseprofil* l, int id) {
     kata.Length = 0;
     currentWord.Length = 0;
     kata = inputbio();
-    biobefore = bio(*l,id);
+    biobefore = bio(*l, id);
     if (kata.Length > 0) {
         bio(*l, id) = kata;
     }
     else {
-        bio(*l,id) = biobefore;
+        bio(*l, id) = biobefore;
     }
     printf("Masukkan weton: ");
     kata.Length = 0;
@@ -409,7 +409,7 @@ void ubahProfil(databaseprofil* l, int id) {
         weton(*l, id) = kata;
     }
     printf("Masukkan No HP: ");
-    hpbefore = hp(*l,id);
+    hpbefore = hp(*l, id);
     STARTWORDPengguna();
     ADV();
     boolean isValid = inputHP(currentWord);
@@ -420,18 +420,18 @@ void ubahProfil(databaseprofil* l, int id) {
         ADV();
         isValid = inputHP(currentWord);
     }
-    
+
     if (isValid == true) {
-        if(currentWord.Length > 0) {
+        if (currentWord.Length > 0) {
             if (currentWord.Length > 15) {
-                hp(*l,id).Length = 0;
+                hp(*l, id).Length = 0;
                 for (int i = 0; i < 15; i++) {
-                    hp(*l,id).TabWord[i] = currentWord.TabWord[i];
-                    hp(*l,id).Length += 1;
+                    hp(*l, id).TabWord[i] = currentWord.TabWord[i];
+                    hp(*l, id).Length += 1;
                 }
             }
             else {
-                hp(*l,id) = currentWord;
+                hp(*l, id) = currentWord;
             }
         }
         else {
@@ -558,7 +558,7 @@ void LoadPengguna(databaseprofil* l, Word path) {
         StringToWord(line, &currentWord);
         Word status;
         status = removeNewline(currentWord);
-        if (isValid(status,"Privat")) {
+        if (isValid(status, "Privat")) {
             JENIS(user) = 1;
         }
         else {
@@ -566,8 +566,8 @@ void LoadPengguna(databaseprofil* l, Word path) {
         }
         int idx = 0;
         fgets(line, 300, file);
-        StringToWord(line,&currentWord);
-        for(int i = 0; i < 5; i++) {
+        StringToWord(line, &currentWord);
+        for (int i = 0; i < 5; i++) {
             PROFIL(user).mem[0][i].warna = currentWord.TabWord[idx];
             idx += 2;
             PROFIL(user).mem[0][i].simbol = currentWord.TabWord[idx];
@@ -575,8 +575,8 @@ void LoadPengguna(databaseprofil* l, Word path) {
         }
         idx = 0;
         fgets(line, 300, file);
-        StringToWord(line,&currentWord);
-        for(int i = 0; i < 5; i++) {
+        StringToWord(line, &currentWord);
+        for (int i = 0; i < 5; i++) {
             PROFIL(user).mem[1][i].warna = currentWord.TabWord[idx];
             idx += 2;
             PROFIL(user).mem[1][i].simbol = currentWord.TabWord[idx];
@@ -584,8 +584,8 @@ void LoadPengguna(databaseprofil* l, Word path) {
         }
         idx = 0;
         fgets(line, 300, file);
-        StringToWord(line,&currentWord);
-        for(int i = 0; i < 5; i++) {
+        StringToWord(line, &currentWord);
+        for (int i = 0; i < 5; i++) {
             PROFIL(user).mem[2][i].warna = currentWord.TabWord[idx];
             idx += 2;
             PROFIL(user).mem[2][i].simbol = currentWord.TabWord[idx];
@@ -593,8 +593,8 @@ void LoadPengguna(databaseprofil* l, Word path) {
         }
         idx = 0;
         fgets(line, 300, file);
-        StringToWord(line,&currentWord);
-        for(int i = 0; i < 5; i++) {
+        StringToWord(line, &currentWord);
+        for (int i = 0; i < 5; i++) {
             PROFIL(user).mem[3][i].warna = currentWord.TabWord[idx];
             idx += 2;
             PROFIL(user).mem[3][i].simbol = currentWord.TabWord[idx];
@@ -602,8 +602,8 @@ void LoadPengguna(databaseprofil* l, Word path) {
         }
         idx = 0;
         fgets(line, 300, file);
-        StringToWord(line,&currentWord);
-        for(int i = 0; i < 5; i++) {
+        StringToWord(line, &currentWord);
+        for (int i = 0; i < 5; i++) {
             PROFIL(user).mem[4][i].warna = currentWord.TabWord[idx];
             idx += 2;
             PROFIL(user).mem[4][i].simbol = currentWord.TabWord[idx];

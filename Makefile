@@ -1,2 +1,2 @@
 main:
-	gcc -o program main.c
+	gcc -o program main.c ./ADT/Balasan/balasan.c ./ADT/Datetime/datetime.c ./ADT/Kicauan/kicauan.c ./ADT/Matrix/matrix.c "./ADT/Mesin Karakter/charmachine.c" ./ADT/PColor/pcolor.c ./ADT/Pengguna/pengguna.c ./ADT/Perintah/perintah.c ./ADT/Pertemanan/pertemanan.c ./ADT/Pertemanan/perintahPertemanan.c ./ADT/Pertemanan/ADTRequirements/queuelinked.c ./ADT/Draf/stackDraf.c ./ADT/Simpan/simpan.c ./ADT/Time/time.c ./ADT/Utas/utas.c
